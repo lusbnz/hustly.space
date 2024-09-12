@@ -1,0 +1,106 @@
+.left-container{
+    margin-left: calc(((960 / 6) / 960) * 50vw);
+    margin-top: calc((54 / 960) * 100vh);
+}
+
+.logo-container{
+    width: calc((142 / 1920) * 100vw);
+    height: calc((54 / 1080) * 100vh);
+}
+
+.logo-auth{
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.form-container{
+    margin-top: calc((160 / 1080) * 100vh);
+}
+
+.form-header{
+    h1{
+        margin-bottom: calc((16 / 1080) * 100vh);
+        font-size: clamp(16px, calc((38 / 1920) * 100vw), 48px);
+        font-weight: 500;
+        line-height: 1;
+    }
+    h3{
+        color: #727272;
+        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+        font-weight: 500;
+        line-height: 1;  
+    }
+}
+
+.form-wrapper{
+    margin-top: calc((56 / 1080) * 100vh);
+    width: calc((484 / 1920) * 100vw);
+}
+
+.form-double-item{
+    display: flex;
+    flex-direction: row;
+    gap: calc((12 / 1920) * 100vw);
+}
+
+.form-item{
+    display: flex;
+    flex-direction: column;
+    gap: calc((8 / 1080) * 100vh);
+    margin-bottom: calc((18 / 1080) * 100vh);
+    label{
+        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+        font-weight: 500;
+        line-height: 1;  
+    }
+    input{
+        border: 1px solid #D9D9D9;
+        border-radius: 10px;
+        width: 100%;
+        height: calc((60 / 1080) * 100vh);
+        padding-left: calc((20 / 1920) * 100vw);
+        box-sizing: border-box;
+    }
+
+    input::placeholder {
+        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+    }
+}
+
+.form-footer{
+    display: flex;
+    flex-direction: column;
+    padding-top: calc((14 / 1080) * 100vh);
+    button{
+        border-radius: 10px;
+        background-color: #000000;
+        color: #FFFFFF;
+        width: 100%;
+        height: calc((60 / 1080) * 100vh);
+        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+    }
+    button:hover{
+        opacity: 0.8;
+    }
+    span{
+        margin-top: calc((20 / 1080) * 100vh);
+        color: #7F7F7F;
+        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        text-align: center;
+    }
+    a{
+        color: #000000;
+        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        text-align: center;
+    }
+}
+
+.banner-auth{
+    object-fit: cover;
+    object-position: center;
+    width: calc(((1920 - 44) / 1920) * 50vw);
+    height: calc(((1080 - 44) / 1080) * 100vh);
+    border-radius: 12px;
+}
