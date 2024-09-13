@@ -1,0 +1,84 @@
+.sidebar-wrapper{
+    width: calc((375 / 1920) * 100vw);
+    padding: calc((28 / 1920) * 100vw);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header{
+    height: calc((144 / 1080) * 100vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-bottom: calc((46 / 1080) * 100vh);
+    .wrapper{
+        height: calc((42 / 1080) * 100vh);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: calc((24 / 1080) * 100vh);
+        .logo-container{
+            width: calc((120 / 1920) * 100vw);
+            height: calc((42 / 1080) * 100vh);
+        }
+        .search-container{
+            width: calc((26 / 1920) * 100vw);
+            height: calc((26 / 1080) * 100vh);
+        }
+    }
+    .search-input{
+        width: calc((320 / 1920) * 100vw);
+        height: calc((52 / 1080) * 100vh);
+        padding-left: calc((16 / 1920) * 100vw);
+        box-sizing: border-box;
+    }
+
+    .search-input::placeholder {
+        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+    }
+}
+
+.sidebar-content{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: calc((24 / 1080) * 100vh);
+    .item{
+        display: flex;
+        flex-direction: column;
+        gap: calc((8 / 1080) * 100vh);
+    }
+}
+
+.sidebar-footer{
+    height: calc((100 / 1080) * 100vh);
+    display: flex;
+    align-items: center;
+    gap: calc((14 / 1920) * 100vw);
+    .avatar{
+        width: calc((64 / 1920) * 100vw);
+        height: calc((64 / 1920) * 100vw);
+        background-color: #383838;
+        border-radius: 100%;
+    }
+    .info{
+        gap: calc((12 / 1080) * 100vh);
+        .title{
+            color: #000000;
+            font-size: clamp(12px, calc((19 / 1920) * 100vw), 32px);
+            font-weight: 500;
+        }
+        .setting{
+            color: #9B9B9B;
+            font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            .settings-container{
+                color: #9B9B9B;
+                width: calc((17 / 1920) * 100vw);
+                height: calc((17 / 1080) * 100vh);
+            }
+        }
+    }
+}

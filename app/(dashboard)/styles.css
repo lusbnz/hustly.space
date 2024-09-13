@@ -1,0 +1,6 @@
+.wrapper{
+    height: 100vh;
+    padding: calc((22 / 1920) * 100vw);
+    display: flex;
+    gap: calc((20 / 1920) * 100vw);
+}

@@ -1,15 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import Logo from "@/public/images/logo.png";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
+import Link from "next/link";
+import InputForm from "@/components/common/InputForm";
+import ButtonPrimary from "@/components/common/ButtonPrimary";
+import { useRouter } from "next/navigation";
 
 const AuthLogin = () => {
+  const router = useRouter();
+
+  const handleLogin = () => {
+    router.push("/news");
+  };
+
   return (
-    <div className="w-[100vw] h-[100vh] flex">
+    <div className="w-[100vw] h-[100vh] flex bg-[#FFFFFF]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
-          <Image src={Logo} alt="logo" className="logo-auth" />
+          <Image src={Logo} alt="logo" className="image" />
         </div>
         <div className="form-container">
           <div className="form-header">
@@ -18,23 +30,23 @@ const AuthLogin = () => {
           </div>
           <div className="form-wrapper">
             <form>
-              <div className="form-item">
-                <label>
-                  Email
-                </label>
-                <input placeholder="Enter your email..."/>
-              </div>
-
-              <div className="form-item">
-                <label>
-                  Password
-                </label>
-                <input placeholder="Enter your password..."/>
-              </div>
-
+              <InputForm title={"Email"} placeholder={"Enter your email..."} />
+              <InputForm
+                title={"Password"}
+                placeholder={"Enter your password..."}
+              />
               <div className="form-footer">
-                <button type="submit">Login</button>
-                <span>Already have an account? <a href="#">Create my account</a></span>
+                <ButtonPrimary
+                  type={"button"}
+                  title={"Login"}
+                  onClick={handleLogin}
+                />
+                <span>
+                  Already have an account?
+                  <Link className="action" href={"/auth-register"}>
+                    Create my account
+                  </Link>
+                </span>
               </div>
             </form>
           </div>
