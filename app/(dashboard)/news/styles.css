@@ -1,0 +1,82 @@
+.news-wrapper{
+    padding-top: calc((90 / 1080) * 100vh);
+    margin-left: calc((100 / 1920) * 100vw);
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.greeting{
+    color: #000000;
+    font-size: clamp(36px, calc((60 / 1920) * 100vw), 80px);
+    font-weight: 500;
+    line-height: clamp(40px, calc((63 / 1920) * 100vw), 84px);
+}
+
+.description{
+    color: rgba(0, 0, 0, 0.40);
+    font-size: clamp(36px, calc((60 / 1920) * 100vw), 80px);
+    font-weight: 500;
+    line-height: clamp(40px, calc((63 / 1920) * 100vw), 84px);
+}
+
+.card-wrapper{
+    margin-top: calc((64 / 1080) * 100vh);
+    gap: calc((20 / 1920) * 100vw);
+}
+
+.card-item{
+    border: 1px solid #E5E5E5;
+    border-radius: 20px;
+    width: calc((454 / 1920) * 100vw);
+    min-height: calc((288 / 1080) * 100vh); 
+    cursor: pointer;
+    padding: calc((24 / 1920) * 100vw);
+    &:hover{
+        border: 1px solid #000000;
+    }
+}
+
+.card-header{
+    .avatar{
+        width: calc((64 / 1920) * 100vw);
+        height: calc((64 / 1920) * 100vw);
+        background-color: #383838;
+        border-radius: 50%;
+        margin-right: calc((12 / 1920) * 100vw);
+    }
+
+    .info{
+        gap: calc((12 / 1080) * 100vh);
+    }
+
+    .name{
+        color: #000000;
+        font-size: clamp(12px, calc((19 / 1920) * 100vw), 29px);
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    .location{
+        color: #9B9B9B;
+        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        font-weight: 500;
+        line-height: 1;
+    }
+}
+
+.card-body{
+    margin-top: calc((18 / 1080) * 100vh);
+    .description{
+        color: rgba(0, 0, 0, 0.40);
+        font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    .tags{
+        display: flex;
+        align-items: center;
+        gap: calc((8 / 1920) * 100vw);
+        margin-top: calc((20 / 1080) * 100vh);
+    }
+}

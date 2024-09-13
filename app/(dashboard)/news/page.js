@@ -1,9 +1,42 @@
-import React from 'react'
+import React from "react";
+import "./styles.css";
+import Badge from "@/components/common/Badge";
 
 const News = () => {
   return (
-    <div>News</div>
-  )
-}
+    <div className="news-wrapper">
+      <div className="flex flex-col">
+        <span className="greeting">Hello Duc!</span>
+        <span className="description">Have you found a partner yet?</span>
+      </div>
+      <div className="card-wrapper grid grid-cols-2">
+        {Array(1, 2, 3, 4, 5, 6, 7, 8).map((item, index) => (
+          <div className="card-item" key={index}>
+            <div className="card-header flex">
+              <div className="avatar"></div>
+              <div className="flex flex-col info">
+                <span className="name">Daniel Simon {index + 1}</span>
+                <span className="location">Hanoi</span>
+              </div>
+            </div>
+            <div className="card-body">
+              <span className="description">
+                Are you a passionate Python developer eager to create meaningful
+                products? Were looking for you to help us build a free online
+                learning platform to provide education for underprivileged
+                children. Join us in making a difference!
+              </span>
+              <div className="tags">
+                <Badge backgroundColor={"#DAF4E0"} color={"#009723"} name={"Finance"} />
+                <Badge backgroundColor={"#DAF5FF"} color={"#007DEA"} name={"Business"} />
+                <Badge backgroundColor={"#FFF0DB"} color={"#ED6600"} name={"Marketing"} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default News
+export default News;

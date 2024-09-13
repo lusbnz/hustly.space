@@ -41,3 +41,13 @@
         font-weight: 500;
     }
 }
+
+.badge{
+    padding: calc((8 / 1080) * 100vh) calc((8 / 1920) * 100vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+    font-weight: 500;
+}

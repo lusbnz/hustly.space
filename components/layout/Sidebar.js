@@ -7,7 +7,6 @@ import Image from "next/image";
 import Search from "@/public/icons/search-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
-import Select, { components } from "react-select";
 import SelectForm from "../common/SelectForm";
 
 const Sidebar = () => {
