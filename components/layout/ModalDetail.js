@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 const ModalDetail = ({ isOpen }) => {
   const router = useRouter()
   const handleOpenChat = () => {
-    router.push("/chats");
+    router.push(`/chats?${isOpen+1}`);
   };
   return (
     <div
