@@ -8,30 +8,11 @@ import Search from "@/public/icons/search-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Select, { components } from "react-select";
+import SelectForm from "../common/SelectForm";
 
 const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
-
-  const CustomSingleValue = ({ children, ...props }) => (
-    <components.SingleValue {...props}>
-      <div style={{ borderRadius: "20px", width: '100%' }}>icon {children}</div>
-    </components.SingleValue>
-  );
-
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      borderRadius: '8px', 
-      boxShadow: 'none',
-    }),
-  };
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "strawberry", label: "Strawberry" },
-  ];
 
   const handleOpenChat = () => {
     if (pathname === "/chats") {
@@ -59,16 +40,12 @@ const Sidebar = () => {
         />
       </div>
       <div className="sidebar-content">
-        <div className="item">
-          <label htmlFor="custom-select">UNIVERSITY:</label>
-          <Select
-            id="custom-select"
-            placeholder="Placeholder"
-            options={options}
-            components={{ SingleValue: CustomSingleValue }}
-            styles={customStyles}
-          />
-        </div>
+        <SelectForm />
+        <SelectForm />
+        <SelectForm />
+        <SelectForm />
+        <SelectForm />
+        <SelectForm />
       </div>
       <div className="sidebar-footer">
         <div className="avatar"></div>

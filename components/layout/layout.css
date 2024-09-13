@@ -31,6 +31,10 @@
         height: calc((52 / 1080) * 100vh);
         padding-left: calc((16 / 1920) * 100vw);
         box-sizing: border-box;
+        border: 1px solid #ccc;
+        &:focus{
+            outline: 1px solid #000000;
+        }
     }
 
     .search-input::placeholder {
@@ -43,11 +47,10 @@
     display: flex;
     flex-direction: column;
     gap: calc((24 / 1080) * 100vh);
-    .item{
-        display: flex;
-        flex-direction: column;
-        gap: calc((8 / 1080) * 100vh);
-    }
+    max-height: calc((1000 / 1080) * 100vh);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10;
 }
 
 .sidebar-footer{

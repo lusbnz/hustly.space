@@ -30,3 +30,14 @@
     height: calc((60 / 1080) * 100vh);
     font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
 }
+
+.select-form{
+    display: flex;
+    flex-direction: column;
+    gap: calc((8 / 1080) * 100vh);
+    label{
+        color: #C4C4C4;
+        font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
+        font-weight: 500;
+    }
+}
