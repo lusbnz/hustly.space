@@ -6,8 +6,13 @@ import FacebookIcon from "@/public/icons/facebook-icon.svg";
 import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
+import { useRouter } from "next/navigation";
 
 const ModalDetail = ({ isOpen }) => {
+  const router = useRouter()
+  const handleOpenChat = () => {
+    router.push("/chats");
+  };
   return (
     <div
       className={`flex w-100 justify-end flex-1 modal-detail ${
@@ -56,6 +61,7 @@ const ModalDetail = ({ isOpen }) => {
                 title={"Message"}
                 backgroundColor={"#FFFFFF"}
                 color={"#000000"}
+                onClick={handleOpenChat}
               />
             </div>
             <div className="infomation">

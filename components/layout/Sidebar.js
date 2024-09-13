@@ -21,11 +21,19 @@ const Sidebar = () => {
     }
   };
 
+  const handleOpenSetting = () => {
+    router.push("/settings");
+  };
+
+  const handleOpenNews = () => {
+    router.push("/news");
+  };
+
   return (
     <div className="h-100 bg-[#F9F9F9] rounded-[20px] sidebar-wrapper">
       <div className="sidebar-header">
         <div className="wrapper">
-          <div className="logo-container">
+          <div className="logo-container" onClick={handleOpenNews}>
             <Image src={Logo} alt="logo" className="image" />
           </div>
           <div className="search-container" onClick={handleOpenChat}>
@@ -50,7 +58,7 @@ const Sidebar = () => {
         <div className="avatar"></div>
         <div className="flex flex-col info">
           <span className="title">Daniel Simon</span>
-          <span className="setting">
+          <span className="setting" onClick={handleOpenSetting}>
             <div className="settings-container">
               <Image src={Settings} alt="settings" className="image" />
             </div>

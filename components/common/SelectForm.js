@@ -19,7 +19,12 @@ const SelectForm = () => {
           fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
         }}
       >
-        <div style={{ width: "", height: "" }}>
+        <div
+          style={{
+            width: "calc((18 / 1920) * 100vw)",
+            height: "calc((18 / 1920) * 100vw)",
+          }}
+        >
           <Image src={University} alt="university" className="image" />
         </div>{" "}
         {children}

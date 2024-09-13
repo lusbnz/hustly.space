@@ -13,7 +13,7 @@ const ButtonComponent = ({
   
   return (
     <button
-      className={`btn ${border && `border-[1px] border-[#${color}]`}`}
+      className={`btn ${border && `border-[1px] border-[#D3D3D3]`}`}
       style={{
         backgroundColor: backgroundColor || "#000000",
         color: color || "#ffffff",
