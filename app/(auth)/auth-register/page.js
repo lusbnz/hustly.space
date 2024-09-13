@@ -7,7 +7,7 @@ import Banner from "@/public/images/banner.png";
 import "../styles.css";
 import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
-import ButtonPrimary from "@/components/common/ButtonPrimary";
+import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
 
 const AuthRegister = () => {
@@ -40,7 +40,7 @@ const AuthRegister = () => {
                 placeholder={"Enter your password..."}
               />
               <div className="form-footer">
-                <ButtonPrimary type={"button"} title={"Sign up"} onClick={handleRegister}/>
+                <ButtonComponent type={"button"} title={"Sign up"} onClick={handleRegister}/>
                 <span>
                   Already have an account?
                   <Link className="action" href={"/auth-login"}>

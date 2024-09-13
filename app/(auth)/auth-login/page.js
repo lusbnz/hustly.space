@@ -7,7 +7,7 @@ import Banner from "@/public/images/banner.png";
 import "../styles.css";
 import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
-import ButtonPrimary from "@/components/common/ButtonPrimary";
+import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
 
 const AuthLogin = () => {
@@ -36,7 +36,7 @@ const AuthLogin = () => {
                 placeholder={"Enter your password..."}
               />
               <div className="form-footer">
-                <ButtonPrimary
+                <ButtonComponent
                   type={"button"}
                   title={"Login"}
                   onClick={handleLogin}

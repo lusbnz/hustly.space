@@ -22,13 +22,12 @@
     }
 }
 
-.btn-primary{
+.btn{
     border-radius: 10px;
-    background-color: #000000;
-    color: #FFFFFF;
     width: 100%;
     height: calc((60 / 1080) * 100vh);
     font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+    font-weight: 500;
 }
 
 .select-form{

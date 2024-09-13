@@ -85,3 +85,14 @@
         }
     }
 }
+
+.modal-detail {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.modal-detail.show {
+    opacity: 1;
+    transform: translateX(0);
+}

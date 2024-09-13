@@ -1,0 +1,46 @@
+.contact{
+    margin-top: calc((22 / 1080) * 100vh);
+    margin-bottom: calc((10 / 1080) * 100vh);
+    span{
+        color: #484848;
+        font-size: clamp(8px, calc((15 / 1920) * 100vw), 25px);
+        font-weight: 500;
+    }
+}
+
+.social{
+    gap: calc((18 / 1080) * 100vh);
+    margin-top: calc((10 / 1080) * 100vh);
+}
+
+.social-icon{
+    width: calc((24 / 1920) * 100vw);
+    height: calc((24 / 1920) * 100vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.action-wrapper{
+    margin-top: calc((32 / 1080) * 100vh);
+}
+
+.infomation{
+    margin-top: calc((36 / 1080) * 100vh);
+    display: flex;
+    flex-direction: column;
+    gap: calc((20 / 1080) * 100vh);
+
+    .key{
+        color: #484848;
+        font-size: clamp(8px, calc((15 / 1920) * 100vw), 25px);
+        font-weight: 500;
+    }
+
+    .value{
+        color: #FFFFFF;
+        font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);
+        font-weight: 500;
+    }
+}
