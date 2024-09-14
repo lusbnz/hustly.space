@@ -1,0 +1,58 @@
+.cd-wrapper{
+    height: 100%;
+    .cd-header{
+        height: calc((56 / 1080) * 100vh);
+        margin-bottom: calc((28 / 1080) * 100vh);
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+
+        .cd-action{
+            display: flex;
+            gap: calc((14 / 1920) * 100vw);
+            .cd-icon{
+                height: calc((24 / 1080) * 100vh);
+                width: calc((24 / 1080) * 100vh);
+            }
+        }
+
+        .chat-avatar{
+            width: calc((56 / 1920) * 100vw);
+            height: calc((56 / 1920) * 100vw);
+            border-radius: 50%;
+            background-color: #383838;
+        }
+        .chat-infomation{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: start;
+            gap: calc((6 / 1080) * 100vh);
+            .chat-name{
+                color: #000000;
+                font-size: clamp(12px, calc((19 / 1920) * 100vw), 29px);
+                font-weight: 500;
+                line-height: 1.5;
+            }
+            .chat-location{
+                color: #9B9B9B;
+                font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);
+                font-weight: 500;
+                line-height: 1;
+            }
+        }
+    }
+    .cd-content{
+        margin-top: calc((32 / 1080) * 100vh);
+        height: 100%;
+        max-height: calc((700 / 1080) * 100vh);
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: end;
+        .message{
+            margin-top: calc((40 / 1080) * 100vh);
+        }
+    }
+}

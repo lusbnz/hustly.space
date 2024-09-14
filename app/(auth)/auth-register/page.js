@@ -21,7 +21,7 @@ const AuthRegister = () => {
     <div className="w-[100vw] h-[100vh] flex bg-[#FFFFFF]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
-          <Image src={Logo} alt="logo" className="image" />
+          <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
         </div>
         <div className="form-container">
           <div className="form-header">

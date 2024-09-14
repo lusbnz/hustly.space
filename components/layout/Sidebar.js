@@ -15,18 +15,18 @@ const Sidebar = () => {
 
   const handleOpenChat = () => {
     if (pathname === "/chats") {
-      router.push("/news");
+      router.replace(`/news`, undefined, { shallow: true });
     } else {
-      router.push("/chats");
+      router.replace(`/chats`, undefined, { shallow: true });
     }
   };
 
   const handleOpenSetting = () => {
-    router.push("/settings");
+    router.replace(`/settings`, undefined, { shallow: true });
   };
 
   const handleOpenNews = () => {
-    router.push("/news");
+    router.replace(`/news`, undefined, { shallow: true });
   };
 
   return (
@@ -34,10 +34,10 @@ const Sidebar = () => {
       <div className="sidebar-header">
         <div className="wrapper">
           <div className="logo-container" onClick={handleOpenNews}>
-            <Image src={Logo} alt="logo" className="image" />
+            <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
           </div>
           <div className="search-container" onClick={handleOpenChat}>
-            <Image src={Search} alt="search" className="image" />
+            <Image src={Search} alt="search" className="image" style={{objectFit: 'contain'}}/>
           </div>
         </div>
         <input
