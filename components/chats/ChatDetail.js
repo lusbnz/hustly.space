@@ -36,19 +36,25 @@ const ChatDetail = ({ chatId }) => {
       </div>
       <div className="cd-content">
         {Array.from({ length: 50 }).map((_, index) => (
-          <div
-            key={index}
-            className={`message ${index % 2 === 0 && "own"}`}
-            ref={contentRef}
-          >
-            {index % 2 === 1 ? <div className="message-avatar"></div> : <></>}
-            <div className={`message-content ${index % 2 === 0 && "own"}`}>
-              <span className="message-infomation">
-                {index % 2 === 1 ? "Daniel Simon - 14:00" : "You - 14:00"}
-              </span>
-              <div className={`message-content ${index % 2 === 0 && 'own'}`}>{'=))))) See yaa 🔥'}</div>
+          <>
+            {index === 2 && <div className="separator-date">today</div>}
+
+            <div
+              key={index}
+              className={`message ${index % 2 === 0 && "own"}`}
+              ref={contentRef}
+            >
+              {index % 2 === 1 ? <div className="message-avatar"></div> : <></>}
+              <div className={`message-content ${index % 2 === 0 && "own"}`}>
+                <span className="message-infomation">
+                  {index % 2 === 1 ? "Daniel Simon - 14:00" : "You - 14:00"}
+                </span>
+                <div className={`message-content ${index % 2 === 0 && "own"}`}>
+                  {"=))))) See yaa 🔥"}
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         ))}
       </div>
     </div>
