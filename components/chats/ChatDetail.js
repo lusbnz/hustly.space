@@ -41,7 +41,13 @@ const ChatDetail = ({ chatId }) => {
             className={`message ${index % 2 === 0 && "own"}`}
             ref={contentRef}
           >
-            Message {index + 1}
+            {index % 2 === 1 ? <div className="message-avatar"></div> : <></>}
+            <div className={`message-content ${index % 2 === 0 && "own"}`}>
+              <span className="message-infomation">
+                {index % 2 === 1 ? "Daniel Simon - 14:00" : "You - 14:00"}
+              </span>
+              <div className={`message-content ${index % 2 === 0 && 'own'}`}>{'=))))) See yaa 🔥'}</div>
+            </div>
           </div>
         ))}
       </div>

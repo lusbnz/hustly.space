@@ -53,6 +53,43 @@
         justify-content: end;
         .message{
             margin-top: calc((40 / 1080) * 100vh);
+            width: 100%;
+            display: flex;
+            align-items: start;
+        }
+        .message.own{
+            justify-content: end;
+            text-align: end;
+        }
+
+        .message-avatar{
+            width: calc((45 / 1920) * 100vw);
+            height: calc((45 / 1920) * 100vw);
+            border-radius: 100%;
+            background-color: #383838;
+            margin-right: calc((16 / 1920) * 100vw);
+        }
+
+        .message-content{
+            display: flex;
+            flex-direction: column;
+            gap: calc((14 / 1080) * 100vh);
+            .message-infomation{
+                color: #B9B9B9;
+                font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+                font-weight: 400;
+                line-height: 1.5;
+            }
+            .message-content{
+                padding: calc((20 / 1920) * 100vw);
+                background-color: #FFFFFF;
+                color: #000000;
+                border-radius: 15px;
+            }
+            .message-content.own{
+                background-color: #000000;
+                color: #FFFFFF;
+            }
         }
     }
 }
