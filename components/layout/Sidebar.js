@@ -30,7 +30,7 @@ const Sidebar = () => {
   // };
 
   const handleOpenSetting = () => {
-    router.replace(`/settings`, undefined, { shallow: true });
+    // router.replace(`/settings`, undefined, { shallow: true });
   };
 
   const handleOpenNews = () => {
