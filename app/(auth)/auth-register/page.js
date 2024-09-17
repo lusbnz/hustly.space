@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -12,12 +12,25 @@ import { useRouter } from "next/navigation";
 
 const AuthRegister = () => {
   const router = useRouter();
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsFirstLoading(false);
+    }, 500);
+  }, []);
 
   const handleRegister = () => {
     router.push("/news");
   };
 
-  return (
+  return isFirstLoading ? (
+    <>
+      <div className="w-[100vw] h-[100vh] flex items-center justify-center text-white bg-black font-[500] text-[24px]">
+        Loading...
+      </div>
+    </>
+  ) : (
     <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
