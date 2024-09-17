@@ -6,7 +6,7 @@ import Pin from "@/public/icons/pin-icon.svg";
 import Dots from "@/public/icons/dots-icon.svg";
 import Image from "next/image";
 
-const ChatDetail = ({ chatId }) => {
+const ChatDetail = ({ chatId, handleOpenDetail }) => {
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ChatDetail = ({ chatId }) => {
           <div className="cd-icon">
             <Image src={Pin} alt="pin" className="image" />
           </div>
-          <div className="cd-icon">
+          <div className="cd-icon" onClick={handleOpenDetail}>
             <Image src={Dots} alt="dots" className="image" />
           </div>
         </div>

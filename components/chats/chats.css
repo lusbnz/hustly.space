@@ -21,7 +21,7 @@
             width: calc((56 / 1920) * 100vw);
             height: calc((56 / 1920) * 100vw);
             border-radius: 50%;
-            background-color: #383838;
+            background-color: #8b8b8b;
         }
         .chat-infomation{
             display: flex;
@@ -30,7 +30,7 @@
             justify-content: start;
             gap: calc((6 / 1080) * 100vh);
             .chat-name{
-                color: #000000;
+                color: #ffffff;
                 font-size: clamp(12px, calc((19 / 1920) * 100vw), 29px);
                 font-weight: 500;
                 line-height: 1.5;
@@ -54,7 +54,7 @@
         .separator-date{
             width: 100%;
             text-align: center;
-            color: #B9B9B9;
+            color: #323232;
             font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
             font-weight: 400;
             line-height: 1;
@@ -76,7 +76,7 @@
             width: calc((45 / 1920) * 100vw);
             height: calc((45 / 1920) * 100vw);
             border-radius: 100%;
-            background-color: #383838;
+            background-color: #8b8b8b;
             margin-right: calc((16 / 1920) * 100vw);
         }
 

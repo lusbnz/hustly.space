@@ -65,11 +65,7 @@ const News = () => {
           ))}
         </div>
       </div>
-      {isModalOpen !== false && (
-        <ModalDetail
-          isOpen={isModalOpen}
-        />
-      )}
+      {isModalOpen !== false && <ModalDetail isOpen={isModalOpen} />}
     </>
   );
 };

@@ -1,14 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { useRouter } from "next/navigation";
 import ChatDetail from "@/components/chats/ChatDetail";
+import ModalDetail from "@/components/layout/ModalDetail";
 
 const Chats = () => {
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
   const [isActiveChat, setIsActiveChat] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const chatId = searchParams.get("chatId");
+
+    if (chatId) {
+      setIsActiveChat(chatId);
+      setIsModalOpen(chatId - 1);
+    }
+  }, []);
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
@@ -21,7 +33,18 @@ const Chats = () => {
 
   const handleOpenChatDetail = (id) => {
     setIsActiveChat(id);
+    setIsModalOpen(id - 1);
     router.replace(`/chats?chatId=${id}`, undefined, { shallow: true });
+  };
+
+  const handleOpenDetail = () => {
+    setIsModalOpen(isActiveChat - 1);
+  };
+
+  const handleCloseChat = () => {
+    router.replace(`/news`, undefined, { shallow: true });
+    setIsActiveChat(null);
+    setIsModalOpen(false);
   };
 
   const lastMessage = "Hahaha, sure brooo!";
@@ -30,11 +53,14 @@ const Chats = () => {
     <div className="cw flex">
       <div className="chat-wrapper flex flex-col">
         <div className="tab">
+          <div className="text-white cursor-pointer" onClick={handleCloseChat}>back</div>
           <h1>Chats</h1>
           <div className="tab-list flex gap-[6px] w-100 justify-between">
             <div
               className={`tab-item flex items-center justify-center ${
-                isActiveTab === "all" && "bg-[#000000] text-[#FFFFFF]"
+                isActiveTab === "all"
+                  ? "bg-[#ffffff] text-[#343434]"
+                  : "text-[#ffffff]"
               }`}
               onClick={() => handleSelectTab("all")}
             >
@@ -42,7 +68,9 @@ const Chats = () => {
             </div>
             <div
               className={`tab-item flex items-center justify-center ${
-                isActiveTab === "pinned" && "bg-[#000000] text-[#FFFFFF]"
+                isActiveTab === "pinned"
+                  ? "bg-[#ffffff] text-[#343434]"
+                  : "text-[#ffffff]"
               }`}
               onClick={() => handleSelectTab("pinned")}
             >
@@ -50,7 +78,9 @@ const Chats = () => {
             </div>
             <div
               className={`tab-item flex items-center justify-center ${
-                isActiveTab === "unread" && "bg-[#000000] text-[#FFFFFF]"
+                isActiveTab === "unread"
+                  ? "bg-[#ffffff] text-[#343434]"
+                  : "text-[#ffffff]"
               }`}
               onClick={() => handleSelectTab("unread")}
             >
@@ -62,7 +92,7 @@ const Chats = () => {
           {Array(1, 2, 3, 4, 5, 6, 7, 8).map((item, index) => (
             <div
               className={`chat-item ${
-                isActiveChat === index + 1 && "bg-[#ffffff]"
+                isActiveChat === index + 1 && "bg-[#222]"
               }`}
               key={index}
               onClick={() => handleOpenChatDetail(index + 1)}
@@ -85,8 +115,9 @@ const Chats = () => {
         </div>
       </div>
       <div className="chat-container">
-        <ChatDetail chatId={isActiveChat} />
+        <ChatDetail chatId={isActiveChat} handleOpenDetail={handleOpenDetail} />
       </div>
+      {isModalOpen !== false && <ModalDetail isOpen={isModalOpen} />}
     </div>
   );
 };

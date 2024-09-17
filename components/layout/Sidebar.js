@@ -13,13 +13,13 @@ const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleOpenChat = () => {
-    if (pathname === "/chats") {
-      router.replace(`/news`, undefined, { shallow: true });
-    } else {
-      router.replace(`/chats`, undefined, { shallow: true });
-    }
-  };
+  // const handleOpenChat = () => {
+  //   if (pathname === "/chats") {
+  //     router.replace(`/news`, undefined, { shallow: true });
+  //   } else {
+  //     router.replace(`/chats`, undefined, { shallow: true });
+  //   }
+  // };
 
   const handleOpenSetting = () => {
     router.replace(`/settings`, undefined, { shallow: true });
@@ -34,10 +34,23 @@ const Sidebar = () => {
       <div className="sidebar-header">
         <div className="sb-wrapper">
           <div className="logo-container" onClick={handleOpenNews}>
-            <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
+            <Image
+              src={Logo}
+              alt="logo"
+              className="image"
+              style={{ objectFit: "contain" }}
+            />
           </div>
-          <div className="search-container" onClick={handleOpenChat}>
-            <Image src={Search} alt="search" className="image" style={{objectFit: 'contain'}}/>
+          <div
+            className="search-container"
+            //  onClick={handleOpenChat}
+          >
+            <Image
+              src={Search}
+              alt="search"
+              className="image"
+              style={{ objectFit: "contain" }}
+            />
           </div>
         </div>
         <input
