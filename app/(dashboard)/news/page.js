@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Badge from "@/components/common/Badge";
 import ModalDetail from "@/components/layout/ModalDetail";
 
 const News = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
   const handleDetailCard = (index) => {
     if (isModalOpen === index) {
       setIsModalOpen(false);
@@ -15,7 +16,19 @@ const News = () => {
     }
   };
 
-  return (
+  useEffect(() => {
+    setTimeout(() => {
+      setIsFirstLoading(false);
+    }, 500);
+  }, []);
+
+  return isFirstLoading ? (
+    <>
+      <div className="w-[100vw] h-100 flex items-center justify-center text-white font-[500] text-[24px]">
+        Loading...
+      </div>
+    </>
+  ) : (
     <>
       <div className="news-wrapper">
         <div className="flex flex-col">

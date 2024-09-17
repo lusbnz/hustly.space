@@ -11,6 +11,7 @@ const Chats = () => {
   const [isActiveTab, setIsActiveTab] = useState("all");
   const [isActiveChat, setIsActiveChat] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -20,6 +21,10 @@ const Chats = () => {
       setIsActiveChat(chatId);
       setIsModalOpen(chatId - 1);
     }
+
+    setTimeout(() => {
+      setIsFirstLoading(false);
+    }, 500);
   }, []);
 
   const handleSelectTab = (tab) => {
@@ -43,17 +48,23 @@ const Chats = () => {
 
   const handleCloseChat = () => {
     router.replace(`/news`, undefined, { shallow: true });
-    setIsActiveChat(null);
-    setIsModalOpen(false);
   };
 
   const lastMessage = "Hahaha, sure brooo!";
 
-  return (
+  return isFirstLoading ? (
+    <>
+      <div className="w-[100vw] h-100 flex items-center justify-center text-white font-[500] text-[24px]">
+        Loading...
+      </div>
+    </>
+  ) : (
     <div className="cw flex">
       <div className="chat-wrapper flex flex-col">
         <div className="tab">
-          <div className="text-white cursor-pointer" onClick={handleCloseChat}>back</div>
+          <div className="text-white cursor-pointer" onClick={handleCloseChat}>
+            back
+          </div>
           <h1>Chats</h1>
           <div className="tab-list flex gap-[6px] w-100 justify-between">
             <div

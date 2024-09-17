@@ -13,10 +13,11 @@ const ButtonComponent = ({
   
   return (
     <button
-      className={`btn ${border && `border-[1px] border-[#484848]`}`}
+      className={`btn`}
       style={{
         backgroundColor: backgroundColor || "#ffffff",
         color: color || "#000000",
+        border: border ? "1px solid #343434" : "none",
       }}
       type={type}
       onClick={onClick}

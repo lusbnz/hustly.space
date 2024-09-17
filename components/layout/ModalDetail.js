@@ -6,13 +6,15 @@ import FacebookIcon from "@/public/icons/facebook-icon.svg";
 import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const ModalDetail = ({ isOpen }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const handleOpenChat = () => {
     router.push(`/chats?chatId=${isOpen + 1}`);
   };
+  const isHideMessage = pathname === "/chats";
   return (
     <div
       className={`flex w-100 justify-end flex-1 modal-detail ${
@@ -55,15 +57,20 @@ const ModalDetail = ({ isOpen }) => {
               </div>
             </div>
             <div className="flex w-100 gap-[6px] action-wrapper">
-              <ButtonComponent type={"button"} title={"Share"} border
+              <ButtonComponent
+                type={"button"}
+                title={"Share"}
+                border
                 backgroundColor={"transparent"}
                 color={"#ffffff"}
               />
-              <ButtonComponent
-                type={"button"}
-                title={"Message"}
-                onClick={handleOpenChat}
-              />
+              {!isHideMessage && (
+                <ButtonComponent
+                  type={"button"}
+                  title={"Message"}
+                  onClick={handleOpenChat}
+                />
+              )}
             </div>
             <div className="infomation">
               <div className="flex flex-col gap-[6px]">
