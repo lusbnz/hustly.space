@@ -14,7 +14,7 @@
     .sb-wrapper{
         width: 100%;
         height: calc((42 / 1080) * 100vh);
-        display: flex;
+        display: flex !important;
         align-items: center;
         justify-content: space-between;
         margin-bottom: calc((24 / 1080) * 100vh);
