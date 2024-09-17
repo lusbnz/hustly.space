@@ -9,9 +9,9 @@ import ButtonComponent from "../common/ButtonComponent";
 import { useRouter } from "next/navigation";
 
 const ModalDetail = ({ isOpen }) => {
-  const router = useRouter()
+  const router = useRouter();
   const handleOpenChat = () => {
-    router.push(`/chats?${isOpen+1}`);
+    router.push(`/chats?${isOpen + 1}`);
   };
   return (
     <div
@@ -19,7 +19,7 @@ const ModalDetail = ({ isOpen }) => {
         isOpen + 1 ? "show" : ""
       }`}
     >
-      <div className="sidebar-wrapper bg-black text-white rounded-[20px]">
+      <div className="sidebar-wrapper bg-[#171717] text-white rounded-[20px]">
         <div className="card-header flex">
           <div className="avatar"></div>
           <div className="flex flex-col justify-center info">
@@ -55,36 +55,37 @@ const ModalDetail = ({ isOpen }) => {
               </div>
             </div>
             <div className="flex w-100 gap-[6px] action-wrapper">
-              <ButtonComponent type={"button"} title={"Share"} border />
+              <ButtonComponent type={"button"} title={"Share"} border
+                backgroundColor={"transparent"}
+                color={"#ffffff"}
+              />
               <ButtonComponent
                 type={"button"}
                 title={"Message"}
-                backgroundColor={"#FFFFFF"}
-                color={"#000000"}
                 onClick={handleOpenChat}
               />
             </div>
             <div className="infomation">
-                <div className="flex flex-col gap-[6px]">
-                    <span className="key">UNIVERSITY</span>
-                    <span className="value">FPT University</span>
-                </div>
-                <div className="flex flex-col gap-[6px]">
-                    <span className="key">Competition</span>
-                    <span className="value">2021</span>
-                </div>
-                <div className="flex flex-col gap-[6px]">
-                    <span className="key">Team member</span>
-                    <span className="value">04</span>
-                </div>
-                <div className="flex flex-col gap-[6px]">
-                    <span className="key">Field - experience</span>
-                    <span className="value">BA Intern - 1 year</span>
-                </div>
-                <div className="flex flex-col gap-[6px]">
-                    <span className="key">SKILL SET</span>
-                    <span className="value">Presentation Skills</span>
-                </div>
+              <div className="flex flex-col gap-[6px]">
+                <span className="key">UNIVERSITY</span>
+                <span className="value">FPT University</span>
+              </div>
+              <div className="flex flex-col gap-[6px]">
+                <span className="key">Competition</span>
+                <span className="value">2021</span>
+              </div>
+              <div className="flex flex-col gap-[6px]">
+                <span className="key">Team member</span>
+                <span className="value">04</span>
+              </div>
+              <div className="flex flex-col gap-[6px]">
+                <span className="key">Field - experience</span>
+                <span className="value">BA Intern - 1 year</span>
+              </div>
+              <div className="flex flex-col gap-[6px]">
+                <span className="key">SKILL SET</span>
+                <span className="value">Presentation Skills</span>
+              </div>
             </div>
           </div>
         </div>

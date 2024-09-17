@@ -2,7 +2,7 @@
 
 import React from "react";
 import "./layout.css";
-import Logo from "@/public/images/logo.png";
+import Logo from "@/public/images/logo.svg";
 import Image from "next/image";
 import Search from "@/public/icons/search-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
@@ -30,9 +30,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-100 bg-[#F9F9F9] rounded-[20px] sidebar-wrapper">
+    <div className="h-100 bg-[#171717] rounded-[20px] sidebar-wrapper">
       <div className="sidebar-header">
-        <div className="wrapper">
+        <div className="sb-wrapper">
           <div className="logo-container" onClick={handleOpenNews}>
             <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
           </div>

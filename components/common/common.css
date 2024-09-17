@@ -7,18 +7,22 @@
         font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
         font-weight: 500;
         line-height: 1;  
+        color: #434343;
     }
     input{
-        border: 1px solid #D9D9D9;
+        border: 1px solid #2E2E2E;
         border-radius: 10px;
         width: 100%;
         height: calc((60 / 1080) * 100vh);
         padding-left: calc((20 / 1920) * 100vw);
         box-sizing: border-box;
+        background-color: transparent;
+        color: #ffffff;
     }
 
     input::placeholder {
         font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        color: #434343;
     }
 }
 

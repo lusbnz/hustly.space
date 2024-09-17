@@ -17,6 +17,7 @@ const SelectForm = () => {
           paddingLeft: "calc((18 / 1920) * 100vw)",
           paddingRight: "calc((18 / 1920) * 100vw)",
           fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
+          color: "#ffffff",
         }}
       >
         <div
@@ -66,11 +67,12 @@ const SelectForm = () => {
     }),
     control: (provided, state) => ({
       ...provided,
-      borderColor: state.isFocused ? "#000000" : "#cccccc",
+      borderColor: state.isFocused ? "#222222" : "#222222",
       borderRadius: "8px",
       boxShadow: "none",
+      backgroundColor: "#222222",
       "&:hover": {
-        borderColor: state.isFocused ? "#000000" : "#cccccc",
+        borderColor: state.isFocused ? "#222222" : "#222222",
       },
       height: "calc((52 / 1080) * 100vh)",
     }),
@@ -83,14 +85,18 @@ const SelectForm = () => {
     indicatorSeparator: () => ({
       display: "none",
     }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#333333",
+    }),
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected
-        ? "#bbbbbb"
+        ? "#222222"
         : state.isFocused
-        ? "#dddddd"
-        : "transparent",
-      color: "#000000",
+        ? "#222222"
+        : "#333333",
+      color: "#ffffff",
       cursor: "pointer",
     }),
   };
@@ -103,7 +109,7 @@ const SelectForm = () => {
 
   return (
     <div className="select-form">
-      <label htmlFor="custom-select">UNIVERSITY</label>
+      <label htmlFor="custom-select" style={{color: "#484848"}}>UNIVERSITY</label>
       <Select
         id="custom-select"
         placeholder="Choose University"

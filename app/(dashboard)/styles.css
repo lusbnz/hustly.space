@@ -4,4 +4,5 @@
     display: flex;
     gap: calc((20 / 1920) * 100vw);
     overflow-y: hidden;
+    background-color: #000000;
 }

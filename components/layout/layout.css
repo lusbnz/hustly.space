@@ -11,7 +11,8 @@
     flex-direction: column;
     justify-content: start;
     margin-bottom: calc((46 / 1080) * 100vh);
-    .wrapper{
+    .sb-wrapper{
+        width: 100%;
         height: calc((42 / 1080) * 100vh);
         display: flex;
         align-items: center;
@@ -31,9 +32,11 @@
         height: calc((52 / 1080) * 100vh);
         padding-left: calc((16 / 1920) * 100vw);
         box-sizing: border-box;
-        border: 1px solid #ccc;
+        border: 1px solid #222222;
+        color: #ffffff;
+        background-color: #222222;
         &:focus{
-            outline: 1px solid #000000;
+            outline: 1px solid #222222;
         }
     }
 
@@ -61,7 +64,7 @@
     .avatar{
         width: calc((64 / 1920) * 100vw);
         height: calc((64 / 1920) * 100vw);
-        background-color: #383838;
+        background-color: #B8B8B8;
         border-radius: 100%;
     }
     .info{
@@ -69,7 +72,7 @@
         align-items: center;
         justify-content: center;
         .title{
-            color: #000000;
+            color: #ffffff;
             font-size: clamp(12px, calc((19 / 1920) * 100vw), 32px);
             font-weight: 500;
             line-height: 1;

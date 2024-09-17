@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import Logo from "@/public/images/logo.png";
+import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
 import Link from "next/link";
@@ -18,7 +18,7 @@ const AuthLogin = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] flex bg-[#FFFFFF]">
+    <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
           <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>

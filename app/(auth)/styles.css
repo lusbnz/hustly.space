@@ -18,9 +18,10 @@
         font-size: clamp(16px, calc((38 / 1920) * 100vw), 48px);
         font-weight: 500;
         line-height: 1;
+        color: #FFFFFF;
     }
     h3{
-        color: #727272;
+        color: #6A6A6A;
         font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
         font-weight: 500;
         line-height: 1;  
@@ -49,7 +50,7 @@
         text-align: center;
     }
     .action{
-        color: #000000;
+        color: #ffffff;
         font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
         text-align: center;
     }
