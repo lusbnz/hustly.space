@@ -17,7 +17,7 @@ const AuthLogin = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsFirstLoading(false);
-    }, 500);
+    }, 100);
   }, []);
 
   const handleLogin = () => {

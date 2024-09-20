@@ -24,7 +24,7 @@ const Chats = () => {
 
     setTimeout(() => {
       setIsFirstLoading(false);
-    }, 500);
+    }, 100);
   }, []);
 
   const handleSelectTab = (tab) => {
@@ -126,9 +126,9 @@ const Chats = () => {
         </div>
       </div>
       <div className="chat-container">
-        <ChatDetail chatId={isActiveChat} handleOpenDetail={handleOpenDetail} />
+        <ChatDetail chatId={isActiveChat} handleOpenDetail={handleOpenDetail} tab={isActiveTab}/>
       </div>
-      {isModalOpen !== false && <ModalDetail isOpen={isModalOpen} />}
+      {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
     </div>
   );
 };

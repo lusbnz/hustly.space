@@ -17,7 +17,7 @@ const AuthRegister = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsFirstLoading(false);
-    }, 500);
+    }, 100);
   }, []);
 
   const handleRegister = () => {

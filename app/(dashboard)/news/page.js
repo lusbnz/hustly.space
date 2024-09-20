@@ -19,7 +19,7 @@ const News = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsFirstLoading(false);
-    }, 500);
+    }, 100);
   }, []);
 
   return isFirstLoading ? (

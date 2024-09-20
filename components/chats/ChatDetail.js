@@ -5,8 +5,9 @@ import "./chats.css";
 import Pin from "@/public/icons/pin-icon.svg";
 import Dots from "@/public/icons/dots-icon.svg";
 import Image from "next/image";
+import ButtonComponent from "../common/ButtonComponent";
 
-const ChatDetail = ({ chatId, handleOpenDetail }) => {
+const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -57,6 +58,18 @@ const ChatDetail = ({ chatId, handleOpenDetail }) => {
           </>
         ))}
       </div>
+      {tab === "unread" && (
+        <div className="flex items-center gap-[6px] w-100 mt-[40px]">
+          <ButtonComponent
+            type={"button"}
+            title={"Delete"}
+            border
+            backgroundColor={"transparent"}
+            color={"#ffffff"}
+          />
+          <ButtonComponent type={"button"} title={"Accept"} />
+        </div>
+      )}
     </div>
   );
 };

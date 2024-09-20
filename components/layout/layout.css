@@ -107,3 +107,10 @@
     opacity: 1;
     transform: translateX(0);
 }
+
+.m-title{
+    color: #ffffff;
+    font-size: clamp(24px, calc((35 / 1920) * 100vw), 48px);
+    font-weight: 500;
+    line-height: 1;
+}
