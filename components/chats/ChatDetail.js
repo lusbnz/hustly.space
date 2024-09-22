@@ -13,7 +13,13 @@ import TextEditor from "../common/TextEditor";
 import { p } from "@/data/data";
 import { deleteThread, updateThread } from "@/api/thread";
 
-const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) => {
+const ChatDetail = ({
+  chatId,
+  handleOpenDetail,
+  tab,
+  setChatId,
+  isChangeChat,
+}) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const recipientData = JSON.parse(localStorage.getItem("recipientData"));
 
@@ -57,10 +63,10 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) 
     }
   }, [chatId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsFirstRender(true);
     setIsLoading(true);
-  }, [isChangeChat])
+  }, [isChangeChat]);
 
   useEffect(() => {
     if (isFetched) {
@@ -110,11 +116,11 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) 
 
   return (
     <div className="cd-wrapper">
-      {isFirstRender && isLoading ? (
+      {isFirstRender && isLoading && !!chatId ? (
         <div className="w-100 h-[80vh] flex items-center justify-center">
           <BeatLoader color="#ffffff" size={16} />
         </div>
-      ) : chatId && !isLoading ? (
+      ) : !!chatId && !isLoading ? (
         <>
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">
@@ -135,7 +141,7 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) 
                 )}
               </div>
               <div className="chat-infomation">
-                <span className="chat-name">{recipientData?.first_name}</span>
+                <span className="chat-name">{recipientData?.first_name} {recipientData?.last_name}</span>
                 <span className="chat-location">
                   {
                     psOptions?.find(
@@ -165,7 +171,22 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) 
                   ref={contentRef}
                 >
                   {!checkIsMe(message) ? (
-                    <div className="message-avatar"></div>
+                    <div className="message-avatar">
+                      {recipientData?.avatar?.file && (
+                        <Image
+                          src={recipientData?.avatar?.file}
+                          alt="avatar"
+                          width={64}
+                          height={64}
+                          style={{
+                            objectFit: "cover",
+                            height: "100%",
+                            width: "100%",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      )}
+                    </div>
                   ) : (
                     <></>
                   )}
@@ -174,7 +195,7 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) 
                   >
                     <span className="message-infomation">
                       {!checkIsMe(message)
-                        ? `${message.sender} - ${moment(
+                        ? `${recipientData.first_name} ${recipientData.last_name} - ${moment(
                             message.timestamp
                           ).format("HH:mm")}`
                         : `You - ${moment(message.timestamp).format("HH:mm")}`}

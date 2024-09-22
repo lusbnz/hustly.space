@@ -120,6 +120,7 @@ const News = () => {
 
                     return (
                       <Badge
+                      key={item.id}
                         backgroundColor={"#DAF4E0"}
                         color={"#009723"}
                         name={sd}
