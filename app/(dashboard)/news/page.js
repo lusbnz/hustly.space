@@ -110,7 +110,7 @@ const News = () => {
 
                     if (pd === null) {
                       sd = domain?.find(
-                        (e) => e.id === item.parent_domain
+                        (e) => e.id === item.id
                       )?.name;
                     } else {
                       sd = domain
