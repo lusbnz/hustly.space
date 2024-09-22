@@ -26,12 +26,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       first_name: userData.first_name,
       age: userData.age,
       color: userData.color,
-    }
+      city: userData.city,
+      district: userData.district,
+      // university: userData.university,
+      team_member_count: userData.team_member_count,
+      bio: userData.bio,
+    },
   });
-
-  useEffect(() => {
-    console.log("userData", userData);
-  }, []);
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -82,7 +83,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   });
 
   const dsOptions = d
-    ?.filter((item) => item.province_code === 1)
+    ?.filter((item) => String(item.province_code) === String(watch("city")))
     .map((item) => ({
       value: item.code,
       label: item.name,
@@ -208,7 +209,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               cstyle={{ marginBottom: "12px" }}
               name={"color"}
               handleChange={handleChange}
-              value={watch("color")}
+              defaultValue={watch("color")}
             />
             <InputForm
               title={"Age"}
@@ -224,6 +225,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 noIcon={true}
                 name={"city"}
                 handleChange={handleChange}
+                defaultValue={watch("city")}
               />
               <SelectForm
                 options={dsOptions}
@@ -232,6 +234,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 noIcon={true}
                 name={"district"}
                 handleChange={handleChange}
+                defaultValue={watch("district")}
               />
             </div>
             <div className="form-double-item">
@@ -250,6 +253,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 noIcon={true}
                 name={"team_member_count"}
                 handleChange={handleChange}
+                defaultValue={watch("team_member_count")}
               />
             </div>
             <div className="form-double-item">
@@ -299,6 +303,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               cstyle={{ marginBottom: "12px" }}
               name={"archivement"}
               handleChange={handleChange}
+            />
+            <InputForm
+              title={"Bio"}
+              placeholder={"Bio"}
+              register={register}
+              name={"bio"}
             />
           </div>
           <div className="absolute bottom-4 w-[484px]">

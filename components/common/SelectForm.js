@@ -14,7 +14,7 @@ const SelectForm = ({
   cstyle,
   handleChange,
   name,
-  value
+  defaultValue,
 }) => {
   const CustomSingleValue = ({ children, ...props }) => (
     <components.SingleValue {...props}>
@@ -146,8 +146,13 @@ const SelectForm = ({
           Placeholder: CustomPlaceholder,
         }}
         styles={customStyles}
-        value={options && options.find((option) => option.value === value)}
-        onChange={(e)=> handleChange(name, e.value)}
+        value={
+          options &&
+          options?.find(
+            (option) => String(option.value) === String(defaultValue)
+          )
+        }
+        onChange={(e) => handleChange(name, e.value)}
       />
     </div>
   );
