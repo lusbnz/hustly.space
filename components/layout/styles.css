@@ -52,3 +52,12 @@
     gap: calc((12 / 1920) * 100vw);
     margin-bottom: calc((20 / 1080) * 100vh);
 }
+
+.more{
+    label{
+        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+        font-weight: 500;
+        line-height: 1;  
+        color: #434343;
+    }
+}

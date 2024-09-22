@@ -1,14 +1,28 @@
 import React from "react";
-import './common.css';
+import "./common.css";
 
-const InputForm = ({ title, placeholder, register, name, required }) => {
+const InputForm = ({
+  title,
+  placeholder,
+  register,
+  name,
+  required,
+  isEditor,
+}) => {
   return (
     <div className="input-form">
       <label>{title}</label>
-      <input
-        placeholder={placeholder}
-        {...(register && register(name, { required }))}
-      />
+      {isEditor ? (
+        <textarea
+          placeholder={placeholder}
+          {...(register && register(name, { required }))}
+        />
+      ) : (
+        <input
+          placeholder={placeholder}
+          {...(register && register(name, { required }))}
+        />
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { updateProfile } from "@/api/profile";
 import { useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
 import { memberOptions, p, yearOptions, d } from "@/data/data";
+import AddIcon from "@/public/icons/add-icon.svg";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -31,6 +32,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       // university: userData.university,
       team_member_count: userData.team_member_count,
       bio: userData.bio,
+      bio_image: userData.bio_image,
     },
   });
 
@@ -309,7 +311,32 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               placeholder={"Bio"}
               register={register}
               name={"bio"}
+              isEditor={true}
             />
+            <div className="more">
+              <label>Bio Image</label>
+              <div className="flex items-center gap-[6px]">
+                {watch("bio_image")?.map((item) => {
+                  return (
+                    <Image
+                      src={item.file}
+                      alt="camera-icon"
+                      width={16}
+                      height={16}
+                    />
+                  );
+                })}
+                <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center">
+                  <Image
+                    src={AddIcon}
+                    alt="camera-icon"
+                    width={16}
+                    height={16}
+                    className="cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div className="absolute bottom-4 w-[484px]">
             <div className="flex items-center gap-[6px] w-100 ">
