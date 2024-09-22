@@ -12,7 +12,7 @@ const SelectForm = ({
   noLabel,
   haveSub,
   cstyle,
-  handleChange,
+  handleChangeFilter,
   name,
   defaultValue,
   isClear,
@@ -139,7 +139,7 @@ const SelectForm = ({
         </label>
       )}
       <Select
-        id="custom-select"
+        id={name}
         placeholder={placeholder || "Choose University"}
         options={options || fakeOptions}
         components={{
@@ -157,7 +157,7 @@ const SelectForm = ({
         }
         onChange={(e) => {
           if (e.value) {
-            handleChange(name, e.value);
+            handleChangeFilter(name, e.value);
           }
         }}
       />

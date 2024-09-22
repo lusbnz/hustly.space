@@ -10,13 +10,11 @@ import { getCompetion, getDomain, getUniversity } from "@/api/option";
 import { BeatLoader } from "react-spinners";
 
 export default function Layout({ children }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const token = localStorage.getItem("accessToken");
 
   const [openModalSetting, setOpenModalSetting] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isFirstRenderFilter, setIsFirstRenderFilter] = useState(true);
   const [isSidebarLoading, setIsSidebarLoading] = useState(true);
   const [filter, setFilter] = useState({
@@ -150,7 +148,7 @@ export default function Layout({ children }) {
             setFilter={setFilter}
           />
         )}
-        {isLoading ? (
+        {isLoading && pathname === "/news" ? (
           <div className="w-screen h-[80vh] bg-black flex items-center justify-center">
             <BeatLoader color="#fff" size={16} />
           </div>

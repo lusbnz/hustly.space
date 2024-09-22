@@ -11,14 +11,14 @@ import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import TextEditor from "../common/TextEditor";
 import { p } from "@/data/data";
-import { updateThread } from "@/api/thread";
+import { deleteThread, updateThread } from "@/api/thread";
 
-const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
+const ChatDetail = ({ chatId, handleOpenDetail, tab, setChatId, isChangeChat }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const recipientData = JSON.parse(localStorage.getItem("recipientData"));
 
   const contentRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [messages, setMessages] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
@@ -31,7 +31,6 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
   });
 
   const fetchMessage = () => {
-    setIsLoading(false);
     getMessage(userData.id, chatId)
       .then((res) => {
         setMessages(res.reverse());
@@ -40,6 +39,9 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .then(() => {
+        setIsFirstRender(false);
       });
   };
 
@@ -52,9 +54,13 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
   useEffect(() => {
     if (isFirstRender && chatId) {
       fetchMessage();
-      setIsFirstRender(false);
     }
   }, [chatId]);
+
+  useEffect(()=>{
+    setIsFirstRender(true);
+    setIsLoading(true);
+  }, [isChangeChat])
 
   useEffect(() => {
     if (isFetched) {
@@ -89,9 +95,26 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
     updateThread(userData.id, chatId, data);
   };
 
+  const handleDelete = () => {
+    deleteThread(userData.id, chatId);
+    handleOpenDetail(null);
+    setChatId(null);
+  };
+
+  const handleAccept = () => {
+    const data = {
+      is_matched: true,
+    };
+    updateThread(userData.id, chatId, data);
+  };
+
   return (
     <div className="cd-wrapper">
-      {chatId && !isLoading ? (
+      {isFirstRender && isLoading ? (
+        <div className="w-100 h-[80vh] flex items-center justify-center">
+          <BeatLoader color="#ffffff" size={16} />
+        </div>
+      ) : chatId && !isLoading ? (
         <>
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">
@@ -186,18 +209,19 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
                 border
                 backgroundColor={"transparent"}
                 color={"#ffffff"}
+                onClick={handleDelete}
               />
-              <ButtonComponent type={"button"} title={"Accept"} />
+              <ButtonComponent
+                type={"button"}
+                title={"Accept"}
+                onClick={handleAccept}
+              />
             </div>
           ) : (
             // <CKEditorComponent onSend={handleEditorSend} />
             <TextEditor handleSend={handleSend} />
           )}
         </>
-      ) : isLoading ? (
-        <div className="w-100 h-[80vh] flex items-center justify-center">
-          <BeatLoader color="#ffffff" size={16} />
-        </div>
       ) : (
         <></>
       )}

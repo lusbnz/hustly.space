@@ -17,7 +17,9 @@ const News = () => {
   const data = JSON.parse(localStorage.getItem("suggestions"));
 
   useEffect(() => {
-    setSuggestionData(data.data);
+    if (data.data[0]?.id !== suggestionData[0]?.id) {
+      setSuggestionData(data.data);
+    }
   }, [data]);
 
   const handleDetailCard = (index) => {
@@ -73,8 +75,8 @@ const News = () => {
                       <Image
                         src={LocationIcon}
                         alt="location-icon"
-                        width={16}
-                        height={16}
+                        width={14}
+                        height={14}
                       />
                       {item.city || "Hanoi"}
                     </span>
@@ -82,8 +84,8 @@ const News = () => {
                       <Image
                         src={BirthdayIcon}
                         alt="birth-icon"
-                        width={16}
-                        height={16}
+                        width={14}
+                        height={14}
                       />
                       {item.age || "18"}
                     </span>
@@ -91,8 +93,8 @@ const News = () => {
                       <Image
                         src={UserIcon}
                         alt="mem-icon"
-                        width={16}
-                        height={16}
+                        width={14}
+                        height={14}
                       />
                       {item.team_member_count}
                     </span>

@@ -151,7 +151,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     },
   ];
 
-  const handleChange = (name, value) => {
+  const handleChangeFilter = (name, value) => {
     setValue(name, value);
   };
 
@@ -234,7 +234,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               haveSub={true}
               cstyle={{ marginBottom: "12px" }}
               name={"color"}
-              handleChange={handleChange}
+              handleChangeFilter={handleChangeFilter}
               defaultValue={watch("color")}
             />
             <InputForm
@@ -250,7 +250,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"City"}
                 noIcon={true}
                 name={"city"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("city")}
               />
               <SelectForm
@@ -259,7 +259,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"District"}
                 noIcon={true}
                 name={"district"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("district")}
               />
             </div>
@@ -270,7 +270,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"University"}
                 noIcon={true}
                 name={"university"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("university")}
               />
               <SelectForm
@@ -279,7 +279,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"Team Member"}
                 noIcon={true}
                 name={"team_member_count"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("team_member_count")}
               />
             </div>
@@ -290,7 +290,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"Competition"}
                 noIcon={true}
                 name={"competition"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("competition")}
               />
               <SelectForm
@@ -299,7 +299,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder={"Year"}
                 noIcon={true}
                 name={"year_competition"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("year_competition")}
               />
             </div>
@@ -311,7 +311,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               haveSub={true}
               cstyle={{ marginBottom: "12px" }}
               name={"domain"}
-              handleChange={handleChange}
+              handleChangeFilter={handleChangeFilter}
               defaultValue={watch("domain")}
 
             />
@@ -323,7 +323,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               haveSub={true}
               cstyle={{ marginBottom: "12px" }}
               name={"skill_set"}
-              handleChange={handleChange}
+              handleChangeFilter={handleChangeFilter}
               defaultValue={watch("skill_set")}
             />
             <InputForm

@@ -25,12 +25,12 @@ const Sidebar = ({
   const [searchValue, setSearchValue] = useState("");
   const[ isClear, setIsClear] = useState(false);
 
-  const handleOpenChat = () => {
-    router.replace(`/chats`, undefined, { shallow: true });
+  const handleOpenChat = (e) => {
+    router.push(`/chats`);
   };
 
-  const handleOpenNews = () => {
-    router.replace(`/news`, undefined, { shallow: true });
+  const handleOpenNews = (e) => {
+    router.push(`/news`);
   };
 
   const handleSearch = (e) => {
@@ -53,7 +53,7 @@ const Sidebar = ({
     };
   });
 
-  const handleChange = (name, value) => {
+  const handleChangeFilter = (name, value) => {
     setFilter((prev) => ({
       ...prev,
       [name]: value,
@@ -124,6 +124,7 @@ const Sidebar = ({
                     alt="search"
                     className="image"
                     style={{ objectFit: "contain" }}
+                    onClick={handleOpenChat}
                   />
                 </div>
               </div>
@@ -143,14 +144,14 @@ const Sidebar = ({
                 options={universityOptions}
                 name={"university"}
                 isClear={isClear}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
               />
               <SelectForm
                 label={"Competion"}
                 placeholder={"Competion"}
                 options={competionOptions}
                 name={"competition__id"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
               />
               <SelectForm
@@ -158,7 +159,7 @@ const Sidebar = ({
                 placeholder={"City"}
                 name={"city"}
                 options={psOptions}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
               />
               <SelectForm
@@ -166,7 +167,7 @@ const Sidebar = ({
                 placeholder={"Team Member"}
                 options={memberOptions}
                 name={"team_member_count"}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
               />
               <SelectForm
@@ -175,7 +176,7 @@ const Sidebar = ({
                 options={domainOptions}
                 name={"domain_id"}
                 isClear={isClear}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
               />
               <SelectForm
                 label={"Skill set"}
@@ -183,7 +184,7 @@ const Sidebar = ({
                 name={"skill_set"}
                 options={s}
                 isClear={isClear}
-                handleChange={handleChange}
+                handleChangeFilter={handleChangeFilter}
               />
               <div
                 className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"

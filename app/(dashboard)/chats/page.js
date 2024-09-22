@@ -22,6 +22,7 @@ const Chats = () => {
   const [listThread, setListThread] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
+  const [isChangeChat, setIsChangeChat] = useState(false);
 
   const fetchThread = () => {
     getThread(userData.id)
@@ -31,6 +32,9 @@ const Chats = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsFirstRender(false);
       });
   };
 
@@ -44,7 +48,6 @@ const Chats = () => {
 
     if (isFirstRender) {
       fetchThread();
-      setIsFirstRender(false);
     }
   }, []);
 
@@ -87,6 +90,8 @@ const Chats = () => {
   const handleOpenChatDetail = (thread_id, recipient_id) => {
     setIsActiveChat(thread_id);
     setIsModalOpen(recipient_id);
+    setIsChangeChat(thread_id);
+
     router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
   };
 
@@ -102,45 +107,53 @@ const Chats = () => {
     <div className="cw flex">
       <div className="chat-wrapper flex flex-col">
         <div className="tab">
-          <div
-            className="text-white cursor-pointer flex items-center gap-[6px]"
-            onClick={handleCloseChat}
-          >
-            <Image src={BackIcon} alt="send" width={20} height={20} />
-            <h1>Chats</h1>
-          </div>
-          <div className="tab-list flex gap-[6px] w-100 justify-between">
-            <div
-              className={`tab-item flex items-center justify-center ${
-                isActiveTab === "all"
-                  ? "bg-[#ffffff] text-[#343434]"
-                  : "text-[#ffffff]"
-              }`}
-              onClick={() => handleSelectTab("all")}
-            >
-              All
+          {isFirstRender ? (
+            <div className="w-100 h-[80vh] flex items-center justify-center">
+              <BeatLoader color="#fff" size={16} />
             </div>
-            <div
-              className={`tab-item flex items-center justify-center ${
-                isActiveTab === "pinned"
-                  ? "bg-[#ffffff] text-[#343434]"
-                  : "text-[#ffffff]"
-              }`}
-              onClick={() => handleSelectTab("pinned")}
-            >
-              Pinned
-            </div>
-            <div
-              className={`tab-item flex items-center justify-center ${
-                isActiveTab === "unread"
-                  ? "bg-[#ffffff] text-[#343434]"
-                  : "text-[#ffffff]"
-              }`}
-              onClick={() => handleSelectTab("unread")}
-            >
-              Unread
-            </div>
-          </div>
+          ) : (
+            <>
+              <div
+                className="text-white cursor-pointer flex items-center gap-[6px]"
+                onClick={handleCloseChat}
+              >
+                <Image src={BackIcon} alt="send" width={20} height={20} />
+                <h1>Chats</h1>
+              </div>
+              <div className="tab-list flex gap-[6px] w-100 justify-between">
+                <div
+                  className={`tab-item flex items-center justify-center ${
+                    isActiveTab === "all"
+                      ? "bg-[#ffffff] text-[#343434]"
+                      : "text-[#ffffff]"
+                  }`}
+                  onClick={() => handleSelectTab("all")}
+                >
+                  All
+                </div>
+                <div
+                  className={`tab-item flex items-center justify-center ${
+                    isActiveTab === "pinned"
+                      ? "bg-[#ffffff] text-[#343434]"
+                      : "text-[#ffffff]"
+                  }`}
+                  onClick={() => handleSelectTab("pinned")}
+                >
+                  Pinned
+                </div>
+                <div
+                  className={`tab-item flex items-center justify-center ${
+                    isActiveTab === "unread"
+                      ? "bg-[#ffffff] text-[#343434]"
+                      : "text-[#ffffff]"
+                  }`}
+                  onClick={() => handleSelectTab("unread")}
+                >
+                  Unread
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div className="chat-detail">
           {listThread
@@ -152,6 +165,12 @@ const Chats = () => {
                 return thread.is_match === false;
               }
               return true;
+            })
+            ?.sort((a, b) => {
+              if (!a.is_pin && !a.is_match && !b.is_pin && !b.is_match) {
+                return new Date(b.updated_at) - new Date(a.updated_at);
+              }
+              return 0;
             })
             ?.map((thread) => {
               const sanitizedContent = thread?.last_message?.content.replace(
@@ -244,8 +263,10 @@ const Chats = () => {
       <div className="chat-container">
         <ChatDetail
           chatId={isActiveChat}
+          setChatId={setIsActiveChat}
           handleOpenDetail={handleOpenDetail}
           tab={isActiveTab}
+          isChangeChat={isChangeChat}
         />
       </div>
       {isModalOpen && <ModalDetail isOpen={isModalOpen} />}

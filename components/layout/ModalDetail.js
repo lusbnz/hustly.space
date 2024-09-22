@@ -16,6 +16,7 @@ import UserIcon from "@/public/icons/user-icon.svg";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
+import { s } from "@/data/data";
 
 const ModalDetail = ({ isOpen }) => {
   const userInfomation = JSON.parse(localStorage.getItem("userData"));
@@ -49,12 +50,14 @@ const ModalDetail = ({ isOpen }) => {
       fetchUserInfo();
     }
   }, [isOpen]);
+  
   const handleOpenChat = () => {
+    router.push(`/chats?recipientId=${isOpen}`);
+
     const data = {
       to_user_id: isOpen,
     };
     createThread(userInfomation.id, data);
-    router.push(`/chats?recipientId=${isOpen}`);
   };
   const isHideMessage = pathname === "/chats";
 
