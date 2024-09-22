@@ -73,7 +73,7 @@ const ChatDetail = ({
       const intervalId = setInterval(() => {
         fetchMessage();
         setIsFetched(false);
-      }, 1000);
+      }, 100);
       return () => clearInterval(intervalId);
     }
   }, [isFetched]);

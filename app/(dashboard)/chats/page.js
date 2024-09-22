@@ -71,7 +71,7 @@ const Chats = () => {
       const intervalId = setInterval(() => {
         fetchThread();
         setIsFetched(false);
-      }, 5000);
+      }, 4000);
       return () => clearInterval(intervalId);
     }
   }, [isFetched]);
