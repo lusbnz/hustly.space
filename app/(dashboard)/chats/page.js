@@ -10,6 +10,7 @@ import BackIcon from "@/public/icons/back-icon.svg";
 import moment from "moment";
 import BeatLoader from "react-spinners/BeatLoader";
 import Image from "next/image";
+import PinIcon from "@/public/icons/pin-icon.svg";
 
 const Chats = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -90,7 +91,7 @@ const Chats = () => {
   };
 
   const handleOpenDetail = () => {
-    setIsModalOpen(isActiveChat); // t -> r
+    setIsModalOpen(isActiveChat);
   };
 
   const handleCloseChat = () => {
@@ -168,10 +169,36 @@ const Chats = () => {
                   }
                 >
                   <div className="flex items-center gap-[6px]">
-                    <div className="chat-avatar"></div>
+                    <div className="chat-avatar">
+                      {thread?.recipient?.avatar?.file && (
+                        <Image
+                          src={thread?.recipient?.avatar?.file}
+                          alt="avatar"
+                          width={64}
+                          height={64}
+                          style={{
+                            objectFit: "cover",
+                            height: "100%",
+                            width: "100%",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      )}
+                    </div>
                     <div className="chat-infomation">
-                      <span className="chat-name">
+                      <span className="chat-name flex items-center">
                         {thread?.recipient?.name}
+                        {thread.is_pin && (
+                          <div className="chat-pin">
+                            <Image
+                              src={PinIcon}
+                              alt="pin"
+                              width={12}
+                              height={12}
+                              className="ml-1"
+                            />
+                          </div>
+                        )}
                       </span>
                       <span
                         className="last-message"

@@ -32,13 +32,15 @@
         width: 100%;
         height: calc((180 / 1080) * 100vh);
         padding-left: calc((20 / 1920) * 100vw);
+        padding-top: calc((20 / 1920) * 100vw);
         box-sizing: border-box;
         background-color: transparent;
         color: #ffffff;
+        font-size:  clamp(10px, calc((14 / 1920) * 100vw), 26px);
     }
 
     textarea::placeholder {
-        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        font-size: clamp(10px, calc((14 / 1920) * 100vw), 26px);
         color: #434343;
     }
 }

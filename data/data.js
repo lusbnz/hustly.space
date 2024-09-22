@@ -1,9 +1,9 @@
 export const memberOptions = [
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
+  { value: "1", label: "Chỉ mình tôi" },
+  { value: "2", label: "2 thành viên" },
+  { value: "3", label: "3 thành viên" },
+  { value: "4", label: "4 thành viên" },
+  { value: "5", label: "5 thành viên" },
 ];
 
 export const yearOptions = [
@@ -4563,4 +4563,22 @@ export const d = [
         "codename": "huyen_ngoc_hien",
         "province_code": 96,
     }
+]
+
+export const s = [
+    {value: "PRESENTATION", label: "Presentation Skills"},
+    {value: "CRITICAL_THINKING", label: "Critical Thinking Skills"},
+    {value: "RESEARCH", label: "Research Skills"},
+    {value: "SLIDE_DESIGN", label: "Slide Design Skills"},
+    {value: "TIME_MANAGEMENT", label: "Time Management Skills"},
+    {value: "RISK_MANAGEMENT", label: "Risk Management Skills"},
+    {value: "DATA_ANALYSIS", label: "Data Analysis Skills"},
+    {value: "CREATIVE_THINKING", label: "Creative Thinking Skills"},
+    {value: "COMMUNICATION", label: "Communication Skills"},
+    {value: "PROBLEM_SOLVING", label: "Problem-Solving Skills"},
+    {value: "STRATEGIC_PLANNING", label: "Strategic Planning Skills"},
+    {value: "LEADERSHIP", label: "Leadership Skills"},
+    {value: "TEAMWORK", label: "Teamwork Skills"},
+    {value: "FINANCIAL", label: "Financial Skills"},
+    {value: "PROJECT_MANAGEMENT", label: "Project Management Skills"},
 ]

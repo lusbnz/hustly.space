@@ -15,6 +15,7 @@ const SelectForm = ({
   handleChange,
   name,
   defaultValue,
+  isClear,
 }) => {
   const CustomSingleValue = ({ children, ...props }) => (
     <components.SingleValue {...props}>
@@ -43,9 +44,8 @@ const SelectForm = ({
             <Image src={University} alt="university" className="image" />
           </div>
         )}
-        {children}
-
-        {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>}
+        {children?.length > 15 ? children?.slice(0, 15) + "..." : children}
+        {/* {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>} */}
       </div>
     </components.SingleValue>
   );
@@ -118,6 +118,7 @@ const SelectForm = ({
         ? "#222222"
         : "#333333",
       color: "#ffffff",
+      fontSize: "14px",
       cursor: "pointer",
     }),
   };
@@ -147,12 +148,18 @@ const SelectForm = ({
         }}
         styles={customStyles}
         value={
-          options &&
-          options?.find(
-            (option) => String(option.value) === String(defaultValue)
-          )
+          isClear
+            ? null
+            : options &&
+              options?.find(
+                (option) => String(option.value) === String(defaultValue)
+              )
         }
-        onChange={(e) => handleChange(name, e.value)}
+        onChange={(e) => {
+          if (e.value) {
+            handleChange(name, e.value);
+          }
+        }}
       />
     </div>
   );

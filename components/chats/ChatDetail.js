@@ -10,14 +10,25 @@ import { getMessage, sendMessage } from "@/api/message";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import TextEditor from "../common/TextEditor";
+import { p } from "@/data/data";
+import { updateThread } from "@/api/thread";
 
 const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const recipientData = JSON.parse(localStorage.getItem("recipientData"));
+
   const contentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
+
+  const psOptions = p?.map((item) => {
+    return {
+      value: item.code,
+      label: item.name,
+    };
+  });
 
   const fetchMessage = () => {
     setIsLoading(false);
@@ -71,20 +82,48 @@ const ChatDetail = ({ chatId, handleOpenDetail, tab }) => {
       });
   };
 
+  const handlePin = () => {
+    const data = {
+      is_pin: true,
+    };
+    updateThread(userData.id, chatId, data);
+  };
+
   return (
     <div className="cd-wrapper">
       {chatId && !isLoading ? (
         <>
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">
-              <div className="chat-avatar"></div>
+              <div className="chat-avatar">
+                {recipientData?.avatar?.file && (
+                  <Image
+                    src={recipientData?.avatar?.file}
+                    alt="avatar"
+                    width={64}
+                    height={64}
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
+              </div>
               <div className="chat-infomation">
-                <span className="chat-name">{chatId}</span>
-                <span className="chat-location">Hanoi, Vietnam</span>
+                <span className="chat-name">{recipientData?.first_name}</span>
+                <span className="chat-location">
+                  {
+                    psOptions?.find(
+                      (e) => String(e.value) === String(recipientData?.city)
+                    )?.label
+                  }
+                </span>
               </div>
             </div>
             <div className="cd-action">
-              <div className="cd-icon">
+              <div className="cd-icon" onClick={handlePin}>
                 <Image src={Pin} alt="pin" className="image" />
               </div>
               <div className="cd-icon" onClick={handleOpenDetail}>

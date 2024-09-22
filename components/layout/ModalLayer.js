@@ -12,7 +12,7 @@ import { uploadFile } from "@/api/file";
 import { updateProfile } from "@/api/profile";
 import { useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
-import { memberOptions, p, yearOptions, d } from "@/data/data";
+import { memberOptions, p, yearOptions, d, s } from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
@@ -29,10 +29,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       color: userData.color,
       city: userData.city,
       district: userData.district,
-      // university: userData.university,
+      university: userData.university,
       team_member_count: userData.team_member_count,
       bio: userData.bio,
-      bio_image: userData.bio_image,
+      competition: userData.competition?.[0]?.id,
+      year_competition: userData.competition?.[0]?.year_competition,
+      domain: userData.domain?.[0]?.id,
+      skill_set: userData.skill_set,
+      // bio_image: userData.bio_image,
     },
   });
 
@@ -52,7 +56,29 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     }
   };
 
+  const handleUploadBio = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        const res = await uploadFile(data);
+        setSelectedImage(URL.createObjectURL(file));
+        setValue("bio_image", [res]);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
   const handleUpdateSetting = (data) => {
+    data.domain = [data.domain];
+    data.competition = [{
+      id: data.competition,
+      year_competition: data.year_competition,
+    }];
+    delete data.year_competition;
+    data.bio_image = [data.bio_image[0]?.id];
     updateProfile(data)
       .then((res) => {
         localStorage.setItem("userData", JSON.stringify(res));
@@ -72,7 +98,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
 
   const universityOptions = university?.map((item) => {
     return {
-      value: item.id,
+      value: String(item.id),
       label: item.name,
     };
   });
@@ -132,7 +158,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black opacity-70 z-20"
+        className="fixed inset-0 bg-black opacity-90 z-20"
         onClick={toggleOpenModalSetting}
       />
       <div className="w-[100vw] h-100 bg-transparent opacity-100 absolute z-30 p-[22px]">
@@ -150,7 +176,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             <div className="flex items-center justify-between my-[22px] gap-[12px]">
               <div className="flex items-center gap-[12px]">
                 {(selectedImage || userData?.avatar?.file) && !isEdit ? (
-                  <div className="m-av rounded-full overflow-hidden">
+                  <div className="m-av rounded-full overflow-hidden w-[90px] h-[90px]">
                     <Image
                       src={selectedImage || userData?.avatar?.file}
                       alt="avatar"
@@ -158,10 +184,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                       height={90}
                       className="rounded-full"
                       style={{
-                        maxWidth: "90px",
-                        maxHeight: "90px",
-                        height: "90px",
-                        width: "90px",
+                        height: "100%",
+                        width: "100%",
                         objectPosition: "center",
                         objectFit: "fill",
                       }}
@@ -247,6 +271,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 noIcon={true}
                 name={"university"}
                 handleChange={handleChange}
+                defaultValue={watch("university")}
               />
               <SelectForm
                 options={memberOptions}
@@ -266,14 +291,16 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 noIcon={true}
                 name={"competition"}
                 handleChange={handleChange}
+                defaultValue={watch("competition")}
               />
               <SelectForm
                 options={yearOptions}
                 label={"Year"}
                 placeholder={"Year"}
                 noIcon={true}
-                name={"year"}
+                name={"year_competition"}
                 handleChange={handleChange}
+                defaultValue={watch("year_competition")}
               />
             </div>
             <SelectForm
@@ -285,9 +312,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               cstyle={{ marginBottom: "12px" }}
               name={"domain"}
               handleChange={handleChange}
+              defaultValue={watch("domain")}
+
             />
             <SelectForm
-              options={domainOptions}
+              options={s}
               label={"Skill set"}
               placeholder={"Skill set"}
               noIcon={true}
@@ -295,16 +324,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               cstyle={{ marginBottom: "12px" }}
               name={"skill_set"}
               handleChange={handleChange}
+              defaultValue={watch("skill_set")}
             />
-            <SelectForm
-              options={domainOptions}
-              label={"Archivement"}
+            <InputForm
+              title={"Archivement"}
               placeholder={"Archivement"}
-              noIcon={true}
-              haveSub={true}
-              cstyle={{ marginBottom: "12px" }}
+              register={register}
               name={"archivement"}
-              handleChange={handleChange}
+              isEditor={true}
             />
             <InputForm
               title={"Bio"}
@@ -316,17 +343,27 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             <div className="more">
               <label>Bio Image</label>
               <div className="flex items-center gap-[6px]">
-                {watch("bio_image")?.map((item) => {
-                  return (
-                    <Image
-                      src={item.file}
-                      alt="camera-icon"
-                      width={16}
-                      height={16}
-                    />
-                  );
-                })}
-                <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center">
+                {watch("bio_image")?.length > 0 && (
+                  <Image
+                    src={watch("bio_image")?.[0].file}
+                    alt="camera-icon"
+                    width={150}
+                    height={150}
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                )}
+                <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={handleUploadBio}
+                  />
                   <Image
                     src={AddIcon}
                     alt="camera-icon"

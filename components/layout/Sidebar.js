@@ -8,11 +8,22 @@ import Search from "@/public/icons/search-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
+import { memberOptions, p, s } from "@/data/data";
 
-const Sidebar = ({ toggleOpenModalSetting, isSidebarLoading }) => {
+const Sidebar = ({
+  toggleOpenModalSetting,
+  isSidebarLoading,
+  search,
+  setFilter,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
+  const university = JSON.parse(localStorage.getItem("university"));
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const competion = JSON.parse(localStorage.getItem("competion"));
+  const domain = JSON.parse(localStorage.getItem("domain"));
+  const [searchValue, setSearchValue] = useState("");
+  const[ isClear, setIsClear] = useState(false);
 
   const handleOpenChat = () => {
     router.replace(`/chats`, undefined, { shallow: true });
@@ -21,6 +32,70 @@ const Sidebar = ({ toggleOpenModalSetting, isSidebarLoading }) => {
   const handleOpenNews = () => {
     router.replace(`/news`, undefined, { shallow: true });
   };
+
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSubmitSearch = (e) => {
+    if (e.key === "Enter") {
+      if (searchValue !== "") {
+        search(searchValue);
+        setSearchValue("");
+      }
+    }
+  };
+
+  const universityOptions = university?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+    };
+  });
+
+  const handleChange = (name, value) => {
+    setFilter((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleClear = () => {
+    setFilter(() => ({
+      university: "",
+      team_member_count: "",
+      city: "",
+      competition__id: "",
+      domain_id: "",
+      skill_set: "",
+    }));
+    setIsClear(true)
+  };
+
+  const psOptions = p?.map((item) => {
+    return {
+      value: item.code,
+      label: item.name,
+    };
+  });
+
+  const competionOptions = competion?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+    };
+  });
+
+  const domainOptions = domain?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+      subOptions: item.sub_domains.map((item) => ({
+        value: item.id,
+        label: item.name,
+      })),
+    };
+  });
 
   return (
     <>
@@ -56,15 +131,66 @@ const Sidebar = ({ toggleOpenModalSetting, isSidebarLoading }) => {
                 type="text"
                 placeholder="Search for anything..."
                 className="search-input rounded-[8px] h-[52px]"
+                value={searchValue}
+                onChange={handleSearch}
+                onKeyDown={handleSubmitSearch}
               />
             </div>
             <div className="sidebar-content">
-            <SelectForm label={"University"} placeholder={"University"} />
-              <SelectForm label={"Competion"} placeholder={"Competion"} />
-              <SelectForm label={"City"} placeholder={"City"} />
-              <SelectForm label={"Team Member"} placeholder={"Team Member"} />
-              <SelectForm label={"Domain"} placeholder={"Domain"} />
-              <SelectForm label={"Skill set"} placeholder={"Skill set"} />
+              <SelectForm
+                label={"University"}
+                placeholder={"University"}
+                options={universityOptions}
+                name={"university"}
+                isClear={isClear}
+                handleChange={handleChange}
+              />
+              <SelectForm
+                label={"Competion"}
+                placeholder={"Competion"}
+                options={competionOptions}
+                name={"competition__id"}
+                handleChange={handleChange}
+                isClear={isClear}
+              />
+              <SelectForm
+                label={"City"}
+                placeholder={"City"}
+                name={"city"}
+                options={psOptions}
+                handleChange={handleChange}
+                isClear={isClear}
+              />
+              <SelectForm
+                label={"Team Member"}
+                placeholder={"Team Member"}
+                options={memberOptions}
+                name={"team_member_count"}
+                handleChange={handleChange}
+                isClear={isClear}
+              />
+              <SelectForm
+                label={"Domain"}
+                placeholder={"Domain"}
+                options={domainOptions}
+                name={"domain_id"}
+                isClear={isClear}
+                handleChange={handleChange}
+              />
+              <SelectForm
+                label={"Skill set"}
+                placeholder={"Skill set"}
+                name={"skill_set"}
+                options={s}
+                isClear={isClear}
+                handleChange={handleChange}
+              />
+              <div
+                className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"
+                onClick={handleClear}
+              >
+                Clear all
+              </div>
             </div>
             <div className="sidebar-footer">
               {userData?.avatar ? (

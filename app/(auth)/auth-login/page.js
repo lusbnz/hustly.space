@@ -14,7 +14,11 @@ import { useForm } from "react-hook-form";
 
 const AuthLogin = () => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
     authLogin(data)
@@ -61,6 +65,9 @@ const AuthLogin = () => {
                 name="password"
                 required={true}
               />
+              {(errors.username || errors.password) && (
+                <div className="text-[#ff0000]">Please fill out all fields</div>
+              )}
               <div className="form-footer">
                 <ButtonComponent type={"submit"} title={"Login"} />
                 <span>

@@ -15,7 +15,12 @@ import { authRegister } from "@/api/auth";
 const AuthRegister = () => {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
     authRegister(data)
@@ -75,6 +80,11 @@ const AuthRegister = () => {
                 name="password"
                 required={true}
               />
+               {(errors.first_name || errors.last_name || errors.email || errors.password) && (
+                <div className="text-[#ff0000]">
+                  Please fill out all fields
+                </div>
+              )}
               <div className="form-footer">
                 <ButtonComponent type={"submit"} title={"Sign up"} />
                 <span>

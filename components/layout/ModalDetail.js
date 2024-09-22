@@ -19,16 +19,21 @@ import { BeatLoader } from "react-spinners";
 
 const ModalDetail = ({ isOpen }) => {
   const userInfomation = JSON.parse(localStorage.getItem("userData"));
+  const university = JSON.parse(localStorage.getItem("university"));
+  const competion = JSON.parse(localStorage.getItem("competion"));
+  const domain = JSON.parse(localStorage.getItem("domain"));
+
   const router = useRouter();
   const pathname = usePathname();
   const [userInfo, setUserInfo] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchUserInfo = () => {
     setIsLoading(true);
     getUser(isOpen)
       .then((res) => {
         setUserInfo(res);
+        localStorage.setItem("recipientData", JSON.stringify(res));
       })
       .catch((err) => {
         console.log(err);
@@ -40,6 +45,7 @@ const ModalDetail = ({ isOpen }) => {
 
   useEffect(() => {
     if (isOpen) {
+      setIsLoading(true);
       fetchUserInfo();
     }
   }, [isOpen]);
@@ -47,16 +53,11 @@ const ModalDetail = ({ isOpen }) => {
     const data = {
       to_user_id: isOpen,
     };
-    createThread(userInfomation.id, data)
-      .then((res) => {
-        router.push(`/chats?recipientId=${isOpen}`);
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push(`/chats?recipientId=${isOpen}`);
-      });
+    createThread(userInfomation.id, data);
+    router.push(`/chats?recipientId=${isOpen}`);
   };
   const isHideMessage = pathname === "/chats";
+
   return (
     <div
       className={`flex w-100 justify-end flex-1 modal-detail ${
@@ -71,7 +72,22 @@ const ModalDetail = ({ isOpen }) => {
         ) : (
           <>
             <div className="card-header flex">
-              <div className="avatar"></div>
+              <div className="avatar">
+                {userInfo?.avatar?.file && (
+                  <Image
+                    src={userInfo?.avatar?.file}
+                    alt="avatar"
+                    width={64}
+                    height={64}
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
+              </div>
               <div className="flex flex-col justify-center info">
                 <span className="name" style={{ color: "#FFFFFF" }}>
                   {userInfo?.first_name} {userInfo?.last_name}
@@ -139,15 +155,23 @@ const ModalDetail = ({ isOpen }) => {
                 <div className="infomation">
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">UNIVERSITY</span>
-                    <span className="value">FPT University</span>
+                    <span className="value">
+                      {
+                        university.find(
+                          (item) => item.id === userInfo.university
+                        )?.name
+                      }
+                    </span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">Competition</span>
-                    <span className="value">2021</span>
+                    <span className="value">
+                      {userInfo?.competition?.[0]?.year_competition}
+                    </span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">Team member</span>
-                    <span className="value">04</span>
+                    <span className="value">{userInfo?.team_member_count}</span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">Field - experience</span>
@@ -156,6 +180,21 @@ const ModalDetail = ({ isOpen }) => {
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">SKILL SET</span>
                     <span className="value">Presentation Skills</span>
+                  </div>
+                  <div className="flex flex-col gap-[6px]">
+                    {userInfo?.bio_image?.[0]?.file && (
+                      <Image
+                        src={userInfo?.bio_image?.[0]?.file}
+                        alt="icon"
+                        width={200}
+                        height={100}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100px",
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
