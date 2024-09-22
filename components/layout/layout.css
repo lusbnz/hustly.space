@@ -61,15 +61,22 @@
     display: flex;
     align-items: center;
     gap: calc((14 / 1920) * 100vw);
-    .avatar{
+    .avatar {
         width: calc((64 / 1920) * 100vw);
         height: calc((64 / 1920) * 100vw);
         background-color: #B8B8B8;
         border-radius: 100%;
     }
+      
+    .avatar-image {
+        width: calc((64 / 1920) * 100vw);
+        height: calc((64 / 1920) * 100vw);
+        border-radius: 100%;
+        overflow: hidden;
+    }
     .info{
         gap: calc((12 / 1080) * 100vh);
-        align-items: center;
+        align-items: start;
         justify-content: center;
         .title{
             color: #ffffff;
@@ -113,4 +120,19 @@
     font-size: clamp(24px, calc((35 / 1920) * 100vw), 48px);
     font-weight: 500;
     line-height: 1;
+}
+
+.m-upload{
+    width: calc((90 / 1920) * 100vw);
+    height: calc((90 / 1920) * 100vw);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.m-av{
+    width: calc((90 / 1920) * 100vw);
+    height: calc((90 / 1920) * 100vw);
 }

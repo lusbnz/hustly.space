@@ -8,27 +8,15 @@ import Search from "@/public/icons/search-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
-import ModalLayer from "./ModalLayer";
 
-const Sidebar = ({toggleOpenModalSetting}) => {
+const Sidebar = ({ toggleOpenModalSetting, isSidebarLoading }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
-  const [isFirstLoading, setIsFirstLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsFirstLoading(false);
-    }, 100);
-  }, []);
-
-  // const handleOpenChat = () => {
-  //   if (pathname === "/chats") {
-  //     router.replace(`/news`, undefined, { shallow: true });
-  //   } else {
-  //     router.replace(`/chats`, undefined, { shallow: true });
-  //   }
-  // };
+  const handleOpenChat = () => {
+    router.replace(`/chats`, undefined, { shallow: true });
+  };
 
   const handleOpenNews = () => {
     router.replace(`/news`, undefined, { shallow: true });
@@ -37,7 +25,7 @@ const Sidebar = ({toggleOpenModalSetting}) => {
   return (
     <>
       <div className="h-100 bg-[#171717] rounded-[20px] sidebar-wrapper">
-        {isFirstLoading ? (
+        {isSidebarLoading ? (
           <>
             <div className="w-100 h-[100vh] flex items-center justify-center text-white font-[500] text-[24px]">
               Loading...
@@ -55,10 +43,7 @@ const Sidebar = ({toggleOpenModalSetting}) => {
                     style={{ objectFit: "contain" }}
                   />
                 </div>
-                <div
-                  className="search-container"
-                  //  onClick={handleOpenChat}
-                >
+                <div className="search-container" onClick={handleOpenChat}>
                   <Image
                     src={Search}
                     alt="search"
@@ -74,17 +59,35 @@ const Sidebar = ({toggleOpenModalSetting}) => {
               />
             </div>
             <div className="sidebar-content">
-              <SelectForm />
-              <SelectForm />
-              <SelectForm />
-              <SelectForm />
-              <SelectForm />
-              <SelectForm />
+            <SelectForm label={"University"} placeholder={"University"} />
+              <SelectForm label={"Competion"} placeholder={"Competion"} />
+              <SelectForm label={"City"} placeholder={"City"} />
+              <SelectForm label={"Team Member"} placeholder={"Team Member"} />
+              <SelectForm label={"Domain"} placeholder={"Domain"} />
+              <SelectForm label={"Skill set"} placeholder={"Skill set"} />
             </div>
             <div className="sidebar-footer">
-              <div className="avatar"></div>
+              {userData?.avatar ? (
+                <div className="avatar-image">
+                  <Image
+                    src={userData?.avatar?.file}
+                    alt="avatar"
+                    className="avatar-image"
+                    width={64}
+                    height={64}
+                    objectFit="cover"
+                  />
+                </div>
+              ) : (
+                <div className="avatar"></div>
+              )}
               <div className="flex flex-col info">
-                <span className="title">Daniel Simon</span>
+                <span className="title">
+                  {userData?.first_name?.length > 15
+                    ? userData?.first_name?.slice(0, 15) + "..."
+                    : userData?.first_name}{" "}
+                  {userData?.last_name}
+                </span>
                 <span className="setting" onClick={toggleOpenModalSetting}>
                   <div className="settings-container">
                     <Image src={Settings} alt="settings" className="image" />

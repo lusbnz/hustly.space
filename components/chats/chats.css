@@ -46,7 +46,7 @@
     .cd-content{
         margin-top: calc((32 / 1080) * 100vh);
         height: 100%;
-        max-height: calc((700 / 1080) * 100vh);
+        max-height: calc((660 / 1080) * 100vh);
         overflow-y: scroll;
         display: flex;
         flex-direction: column-reverse;

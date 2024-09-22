@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -9,32 +9,36 @@ import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
+import { authLogin } from "@/api/auth";
+import { useForm } from "react-hook-form";
 
 const AuthLogin = () => {
   const router = useRouter();
-  const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const { register, handleSubmit } = useForm();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsFirstLoading(false);
-    }, 100);
-  }, []);
-
-  const handleLogin = () => {
-    router.push("/news");
+  const onSubmit = (data) => {
+    authLogin(data)
+      .then((res) => {
+        if (res) {
+          localStorage.setItem("accessToken", res.access);
+          router.push("/news");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  return isFirstLoading ? (
-    <>
-      <div className="w-[100vw] h-[100vh] flex items-center justify-center text-white bg-black font-[500] text-[24px]">
-        Loading...
-      </div>
-    </>
-  ) : (
+  return (
     <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
-          <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
+          <Image
+            src={Logo}
+            alt="logo"
+            className="image"
+            style={{ objectFit: "contain" }}
+          />
         </div>
         <div className="form-container">
           <div className="form-header">
@@ -42,18 +46,23 @@ const AuthLogin = () => {
             <h3>Welcome to Hustly.space, Lets create your account</h3>
           </div>
           <div className="form-wrapper">
-            <form>
-              <InputForm title={"Email"} placeholder={"Enter your email..."} />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <InputForm
+                title={"Email"}
+                placeholder={"Enter your email..."}
+                register={register}
+                name="username"
+                required={true}
+              />
               <InputForm
                 title={"Password"}
                 placeholder={"Enter your password..."}
+                register={register}
+                name="password"
+                required={true}
               />
               <div className="form-footer">
-                <ButtonComponent
-                  type={"button"}
-                  title={"Login"}
-                  onClick={handleLogin}
-                />
+                <ButtonComponent type={"submit"} title={"Login"} />
                 <span>
                   Already have an account?
                   <Link className="action" href={"/auth-register"}>
@@ -66,7 +75,7 @@ const AuthLogin = () => {
         </div>
       </div>
       <div className="flex-1 p-[22px]">
-        <Image src={Banner} alt="banner" className="banner-auth"/>
+        <Image src={Banner} alt="banner" className="banner-auth" />
       </div>
     </div>
   );

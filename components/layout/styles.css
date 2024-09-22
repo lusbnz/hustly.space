@@ -44,3 +44,11 @@
         font-weight: 500;
     }
 }
+
+.form-double-item{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: calc((12 / 1920) * 100vw);
+    margin-bottom: calc((20 / 1080) * 100vh);
+}

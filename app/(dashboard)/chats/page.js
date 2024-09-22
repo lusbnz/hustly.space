@@ -5,13 +5,33 @@ import "./styles.css";
 import { useRouter } from "next/navigation";
 import ChatDetail from "@/components/chats/ChatDetail";
 import ModalDetail from "@/components/layout/ModalDetail";
+import { getThread } from "@/api/thread";
+import BackIcon from "@/public/icons/back-icon.svg";
+import moment from "moment";
+import BeatLoader from "react-spinners/BeatLoader";
+import Image from "next/image";
 
 const Chats = () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
   const [isActiveChat, setIsActiveChat] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const [listThread, setListThread] = useState([]);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isFetched, setIsFetched] = useState(false);
+
+  const fetchThread = () => {
+    getThread(userData.id)
+      .then((res) => {
+        setListThread(res);
+        setIsFetched(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -19,16 +39,43 @@ const Chats = () => {
 
     if (chatId) {
       setIsActiveChat(chatId);
-      setIsModalOpen(chatId - 1);
     }
 
-    setTimeout(() => {
-      setIsFirstLoading(false);
-    }, 100);
+    if (isFirstRender) {
+      fetchThread();
+      setIsFirstRender(false);
+    }
   }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const recipientId = searchParams.get("recipientId");
+
+    if (recipientId && listThread.length > 0) {
+      const thread = listThread.find(
+        (item) => item.recipient.id === recipientId
+      );
+      if (thread) {
+        setIsActiveChat(thread.thread_id);
+        setIsModalOpen(recipientId);
+      }
+    }
+  }, [listThread]);
+
+  useEffect(() => {
+    if (isFetched) {
+      const intervalId = setInterval(() => {
+        fetchThread();
+        setIsFetched(false);
+      }, 5000);
+      return () => clearInterval(intervalId);
+    }
+  }, [isFetched]);
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
+    setIsActiveChat(null);
+    setIsModalOpen(false);
     if (tab === "all") {
       router.replace(`/chats`, undefined, { shallow: true });
     } else {
@@ -36,36 +83,31 @@ const Chats = () => {
     }
   };
 
-  const handleOpenChatDetail = (id) => {
-    setIsActiveChat(id);
-    setIsModalOpen(id - 1);
-    router.replace(`/chats?chatId=${id}`, undefined, { shallow: true });
+  const handleOpenChatDetail = (thread_id, recipient_id) => {
+    setIsActiveChat(thread_id);
+    setIsModalOpen(recipient_id);
+    router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
   };
 
   const handleOpenDetail = () => {
-    setIsModalOpen(isActiveChat - 1);
+    setIsModalOpen(isActiveChat); // t -> r
   };
 
   const handleCloseChat = () => {
     router.replace(`/news`, undefined, { shallow: true });
   };
 
-  const lastMessage = "Hahaha, sure brooo!";
-
-  return isFirstLoading ? (
-    <>
-      <div className="w-[100vw] h-100 flex items-center justify-center text-white font-[500] text-[24px]">
-        Loading...
-      </div>
-    </>
-  ) : (
+  return (
     <div className="cw flex">
       <div className="chat-wrapper flex flex-col">
         <div className="tab">
-          <div className="text-white cursor-pointer" onClick={handleCloseChat}>
-            back
+          <div
+            className="text-white cursor-pointer flex items-center gap-[6px]"
+            onClick={handleCloseChat}
+          >
+            <Image src={BackIcon} alt="send" width={20} height={20} />
+            <h1>Chats</h1>
           </div>
-          <h1>Chats</h1>
           <div className="tab-list flex gap-[6px] w-100 justify-between">
             <div
               className={`tab-item flex items-center justify-center ${
@@ -100,33 +142,84 @@ const Chats = () => {
           </div>
         </div>
         <div className="chat-detail">
-          {Array(1, 2, 3, 4, 5, 6, 7, 8).map((item, index) => (
-            <div
-              className={`chat-item ${
-                isActiveChat === index + 1 && "bg-[#222]"
-              }`}
-              key={index}
-              onClick={() => handleOpenChatDetail(index + 1)}
-            >
-              <div className="chat-avatar"></div>
-              <div className="chat-infomation">
-                <span className="chat-name">Daniel Simon {index + 1}</span>
-                <span className="last-message">
-                  {lastMessage.length > 10
-                    ? `${lastMessage.slice(0, 10)}...`
-                    : lastMessage}
-                </span>
-              </div>
-              <div className="chat-advance">
-                <div className="time">14:00</div>
-                <div className="notification">2</div>
-              </div>
-            </div>
-          ))}
+          {listThread
+            ?.filter((thread) => {
+              if (isActiveTab === "pinned") {
+                return thread.is_pin === true;
+              }
+              if (isActiveTab === "unread") {
+                return thread.is_match === false;
+              }
+              return true;
+            })
+            ?.map((thread) => {
+              const sanitizedContent = thread?.last_message?.content.replace(
+                /<br\s*\/?>/gi,
+                ""
+              );
+              return (
+                <div
+                  className={`chat-item ${
+                    isActiveChat === thread.recipient.id && "bg-[#222]"
+                  }`}
+                  key={thread.recipient.id}
+                  onClick={() =>
+                    handleOpenChatDetail(thread.thread_id, thread.recipient.id)
+                  }
+                >
+                  <div className="flex items-center gap-[6px]">
+                    <div className="chat-avatar"></div>
+                    <div className="chat-infomation">
+                      <span className="chat-name">
+                        {thread?.recipient?.name}
+                      </span>
+                      <span
+                        className="last-message"
+                        style={
+                          thread?.unread_count > 0 &&
+                          thread.last_message.sender !== userData.id
+                            ? { color: "rgba(255, 255, 255, 1)" }
+                            : { color: "rgba(255, 255, 255, 0.40)" }
+                        }
+                      >
+                        {sanitizedContent?.length > 15 ? (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: `${sanitizedContent.slice(0, 15)}...`,
+                            }}
+                          />
+                        ) : (
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizedContent,
+                            }}
+                          />
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="chat-advance">
+                    <div className="chat-time text-white">
+                      {moment(thread.updated_at).format("HH:mm")}
+                    </div>
+                    {thread?.unread_count > 0 &&
+                      thread.last_message.sender !== userData.id && (
+                        <div className="notification">
+                          {thread?.unread_count}
+                        </div>
+                      )}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className="chat-container">
-        <ChatDetail chatId={isActiveChat} handleOpenDetail={handleOpenDetail} tab={isActiveTab}/>
+        <ChatDetail
+          chatId={isActiveChat}
+          handleOpenDetail={handleOpenDetail}
+          tab={isActiveTab}
+        />
       </div>
       {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
     </div>

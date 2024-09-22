@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -9,32 +9,34 @@ import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { authRegister } from "@/api/auth";
 
 const AuthRegister = () => {
   const router = useRouter();
-  const [isFirstLoading, setIsFirstLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsFirstLoading(false);
-    }, 100);
-  }, []);
+  const { register, handleSubmit } = useForm();
 
-  const handleRegister = () => {
-    router.push("/news");
+  const onSubmit = (data) => {
+    authRegister(data)
+      .then((res) => {
+        router.push("/auth-login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  return isFirstLoading ? (
-    <>
-      <div className="w-[100vw] h-[100vh] flex items-center justify-center text-white bg-black font-[500] text-[24px]">
-        Loading...
-      </div>
-    </>
-  ) : (
+  return (
     <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
-          <Image src={Logo} alt="logo" className="image" style={{objectFit: 'contain'}}/>
+          <Image
+            src={Logo}
+            alt="logo"
+            className="image"
+            style={{ objectFit: "contain" }}
+          />
         </div>
         <div className="form-container">
           <div className="form-header">
@@ -42,18 +44,39 @@ const AuthRegister = () => {
             <h3>Welcome to Hustly.space, Lets create your account</h3>
           </div>
           <div className="form-wrapper">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-double-item">
-                <InputForm title={"First name"} placeholder={"First name..."} />
-                <InputForm title={"Last name"} placeholder={"Last name..."} />
+                <InputForm
+                  title="First name"
+                  placeholder="First name..."
+                  register={register}
+                  name="first_name"
+                  required={true}
+                />
+                <InputForm
+                  title="Last name"
+                  placeholder="Last name..."
+                  register={register}
+                  name="last_name"
+                  required={true}
+                />
               </div>
-              <InputForm title={"Email"} placeholder={"Enter your email..."} />
               <InputForm
-                title={"Password"}
-                placeholder={"Enter your password..."}
+                title="Email"
+                placeholder="Enter your email..."
+                register={register}
+                name="email"
+                required={true}
+              />
+              <InputForm
+                title="Password"
+                placeholder="Enter your password..."
+                register={register}
+                name="password"
+                required={true}
               />
               <div className="form-footer">
-                <ButtonComponent type={"button"} title={"Sign up"} onClick={handleRegister}/>
+                <ButtonComponent type={"submit"} title={"Sign up"} />
                 <span>
                   Already have an account?
                   <Link className="action" href={"/auth-login"}>

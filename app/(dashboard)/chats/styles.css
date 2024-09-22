@@ -68,7 +68,6 @@
                     line-height: 1.5;
                 }
                 .last-message{
-                    color: #fff;
                     font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);
                     font-weight: 500;
                     line-height: 1;
@@ -90,12 +89,13 @@
                     background-color: #fff;
                     color: #000;
                     border-radius: 100%;
-                    width: calc((16 / 1920) * 100vw);
-                    height: calc((16 / 1920) * 100vw);
+                    width: 12px;
+                    height: 12px;
+                    padding: 4px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: clamp(6px, calc((12 / 1920) * 100vw), 20px);
+                    font-size: 8px;
                     font-weight: 500;
                     line-height: 1;
                 }

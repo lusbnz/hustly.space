@@ -28,7 +28,7 @@
     border: 1px solid #363636;
     border-radius: 20px;
     width: calc((454 / 1920) * 100vw);
-    min-height: calc((288 / 1080) * 100vh); 
+    /* min-height: calc((288 / 1080) * 100vh);  */
     cursor: pointer;
     padding: calc((24 / 1920) * 100vw);
     &:hover{
