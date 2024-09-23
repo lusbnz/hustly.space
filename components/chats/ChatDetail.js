@@ -4,6 +4,7 @@ import React, { use, useEffect, useRef, useState } from "react";
 import "./chats.css";
 import Pin from "@/public/icons/pin-icon.svg";
 import Dots from "@/public/icons/dots-icon.svg";
+import Trash from "@/public/icons/trash-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
 import { getMessage, sendMessage } from "@/api/message";
@@ -22,7 +23,7 @@ const ChatDetail = ({
   isChangeChat,
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
-  const recipientData = useSelector((state) => state.recipientInfo)
+  const recipientData = useSelector((state) => state.recipientInfo)  
 
   const contentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -119,7 +120,7 @@ const ChatDetail = ({
     <div className="cd-wrapper">
       {isFirstRender && isLoading && !!chatId ? (
         <div className="w-100 h-[80vh] flex items-center justify-center">
-          <BeatLoader color="#ffffff" size={16} />
+          <BeatLoader color="#ffffff" size={10} />
         </div>
       ) : !!chatId && !isLoading ? (
         <>
@@ -156,8 +157,8 @@ const ChatDetail = ({
               <div className="cd-icon" onClick={handlePin}>
                 <Image src={Pin} alt="pin" className="image" />
               </div>
-              <div className="cd-icon" onClick={handleOpenDetail}>
-                <Image src={Dots} alt="dots" className="image" />
+              <div className="cd-icon" onClick={handleDelete}>
+                <Image src={Trash} alt="trash" className="image" />
               </div>
             </div>
           </div>

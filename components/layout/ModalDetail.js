@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRecipientInfo } from "@/reducers/recipientSlice";
 
 const ModalDetail = ({ isOpen }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const userInfomation = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
@@ -36,8 +36,8 @@ const ModalDetail = ({ isOpen }) => {
     setIsLoading(true);
     getUser(isOpen)
       .then((res) => {
+        dispatch(setRecipientInfo(res));
         setUserInfo(res);
-        dispatch(setRecipientInfo(res))
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +53,7 @@ const ModalDetail = ({ isOpen }) => {
       fetchUserInfo();
     }
   }, [isOpen]);
-  
+
   const handleOpenChat = () => {
     router.push(`/chats?recipientId=${isOpen}`);
 
@@ -95,8 +95,15 @@ const ModalDetail = ({ isOpen }) => {
                 )}
               </div>
               <div className="flex flex-col justify-center info">
-                <span className="name" style={{ color: "#FFFFFF" }}>
-                  {userInfo?.first_name} {userInfo?.last_name}
+                <span className="name flex items-end gap-[4px]">
+                  <span className="lh-1 h-[12px] text-[14px] text-center">
+                    {userInfo?.first_name} {userInfo?.last_name}
+                  </span>
+
+                  <div
+                    className={`w-[10px] h-[10px] rounded-full`}
+                    style={{ backgroundColor: userInfo?.color || "#ffffff" }}
+                  ></div>
                 </span>
                 <div className="flex gap-[12px]">
                   <span className="location flex items-center gap-[4px]">
