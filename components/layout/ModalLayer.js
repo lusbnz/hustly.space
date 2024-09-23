@@ -14,12 +14,15 @@ import { useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
 import { memberOptions, p, yearOptions, d, s } from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "@/reducers/userInfoSlice";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const university = JSON.parse(localStorage.getItem("university"));
-  const competion = JSON.parse(localStorage.getItem("competion"));
-  const domain = JSON.parse(localStorage.getItem("domain"));
+  const dispatch = useDispatch()
+  const userInfo = useSelector((state) => state.userInfo);
+  const university = useSelector((state) => state.university);
+  const competition = useSelector((state) => state.competition);
+  const domain = useSelector((state) => state.domain);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const { register, watch, setValue, handleSubmit } = useForm({
@@ -81,7 +84,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     data.bio_image = [data.bio_image[0]?.id];
     updateProfile(data)
       .then((res) => {
-        localStorage.setItem("userData", JSON.stringify(res));
+        dispatch(setUserInfo(res))
         toggleOpenModalSetting();
       })
       .catch((err) => {
@@ -89,7 +92,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       });
   };
 
-  const competionOptions = competion?.map((item) => {
+  const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
       label: item.name,
@@ -285,7 +288,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             </div>
             <div className="form-double-item">
               <SelectForm
-                options={competionOptions}
+                options={competitionOptions}
                 label={"Competition"}
                 placeholder={"Competition"}
                 noIcon={true}
@@ -334,8 +337,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               isEditor={true}
             />
             <InputForm
-              title={"Bio"}
-              placeholder={"Bio"}
+              title={"Tldr"}
+              placeholder={"Tôi tên là quốc anh đến từ neu, tôi học finance và thích ăn bánh bao + chơi bóng rổ"}
               register={register}
               name={"bio"}
               isEditor={true}

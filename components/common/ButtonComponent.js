@@ -18,6 +18,9 @@ const ButtonComponent = ({
         backgroundColor: backgroundColor || "#ffffff",
         color: color || "#000000",
         border: border ? "1px solid #343434" : "none",
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center"
       }}
       type={type}
       onClick={onClick}

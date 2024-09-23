@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -11,24 +11,38 @@ import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { authRegister } from "@/api/auth";
+import { BeatLoader } from "react-spinners";
 
 const AuthRegister = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-
+    setError,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     authRegister(data)
       .then((res) => {
         router.push("/auth-login");
       })
       .catch((err) => {
         console.log(err);
+        const errorMessage =
+          err.response?.data?.detail ||
+          "An unexpected error occurred. Please try again.";
+
+        setError("server", {
+          type: "manual",
+          message: errorMessage,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -66,6 +80,11 @@ const AuthRegister = () => {
                   required={true}
                 />
               </div>
+              {(errors.first_name || errors.last_name) && (
+                <div className="text-[#ff0000] mb-2 ">
+                  Please fill your name
+                </div>
+              )}
               <InputForm
                 title="Email"
                 placeholder="Enter your email..."
@@ -73,20 +92,36 @@ const AuthRegister = () => {
                 name="email"
                 required={true}
               />
+              {errors.email && (
+                <div className="text-[#ff0000] mb-2 ">
+                  Please check your email
+                </div>
+              )}
               <InputForm
                 title="Password"
                 placeholder="Enter your password..."
                 register={register}
                 name="password"
                 required={true}
+                isPassword={true}
               />
-               {(errors.first_name || errors.last_name || errors.email || errors.password) && (
-                <div className="text-[#ff0000]">
-                  Please fill out all fields
+              {errors.password && (
+                <div className="text-[#ff0000] mb-2 ">
+                  Password need text and number
+                </div>
+              )}
+              {errors.server && (
+                <div className="text-[#ff0000] mb-2 ">
+                  {errors.server.message}
                 </div>
               )}
               <div className="form-footer">
-                <ButtonComponent type={"submit"} title={"Sign up"} />
+                <ButtonComponent
+                  type={"submit"}
+                  title={
+                    isLoading ? <BeatLoader color="#000" size={6} /> : "Sign up"
+                  }
+                />
                 <span>
                   Already have an account?
                   <Link className="action" href={"/auth-login"}>

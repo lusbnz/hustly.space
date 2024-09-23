@@ -17,12 +17,15 @@ import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
 import { s } from "@/data/data";
+import { useDispatch, useSelector } from "react-redux";
+import { setRecipientInfo } from "@/reducers/userInfoSlice";
 
 const ModalDetail = ({ isOpen }) => {
-  const userInfomation = JSON.parse(localStorage.getItem("userData"));
-  const university = JSON.parse(localStorage.getItem("university"));
-  const competion = JSON.parse(localStorage.getItem("competion"));
-  const domain = JSON.parse(localStorage.getItem("domain"));
+  const dispatch = useDispatch()
+  const userInfomation = useSelector((state) => state.userInfo);
+  const university = useSelector((state) => state.university);
+  const competition = useSelector((state) => state.competition);
+  const domain = useSelector((state) => state.domain);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -34,7 +37,7 @@ const ModalDetail = ({ isOpen }) => {
     getUser(isOpen)
       .then((res) => {
         setUserInfo(res);
-        localStorage.setItem("recipientData", JSON.stringify(res));
+        dispatch(setRecipientInfo(res))
       })
       .catch((err) => {
         console.log(err);

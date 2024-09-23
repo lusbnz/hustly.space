@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -11,16 +11,20 @@ import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
 import { authLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
+import { BeatLoader } from "react-spinners";
 
 const AuthLogin = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     authLogin(data)
       .then((res) => {
         if (res) {
@@ -30,6 +34,17 @@ const AuthLogin = () => {
       })
       .catch((err) => {
         console.log(err);
+        const errorMessage =
+          err.response?.data?.detail ||
+          "An unexpected error occurred. Please try again.";
+
+        setError("server", {
+          type: "manual",
+          message: errorMessage,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -58,18 +73,33 @@ const AuthLogin = () => {
                 name="username"
                 required={true}
               />
+              {errors.username && (
+                <div className="text-[#ff0000]">
+                  Please fill your username or email
+                </div>
+              )}
               <InputForm
                 title={"Password"}
                 placeholder={"Enter your password..."}
                 register={register}
                 name="password"
                 required={true}
+                isPassword={true}
               />
-              {(errors.username || errors.password) && (
-                <div className="text-[#ff0000]">Please fill out all fields</div>
+              {errors.password && (
+                <div className="text-[#ff0000]">Please check your password</div>
+              )}
+              {errors.server && (
+                <div className="text-[#ff0000]">{errors.server.message}</div>
               )}
               <div className="form-footer">
-                <ButtonComponent type={"submit"} title={"Login"} />
+                <ButtonComponent
+                  type={"submit"}
+                  title={
+                    isLoading ? <BeatLoader color="#000" size={6} /> : "Sign in"
+                  }
+                />
+
                 <span>
                   Already have an account?
                   <Link className="action" href={"/auth-register"}>

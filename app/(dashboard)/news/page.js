@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Badge from "@/components/common/Badge";
 import ModalDetail from "@/components/layout/ModalDetail";
@@ -8,19 +8,18 @@ import UserIcon from "@/public/icons/user-icon.svg";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const News = () => {
-  const userInfo = JSON.parse(localStorage.getItem("userData"));
-  const domain = JSON.parse(localStorage.getItem("domain"));
+  const userInfo = useSelector((state) => state.userInfo);
+  const domain = useSelector((state) => state.domain);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suggestionData, setSuggestionData] = useState([]);
-  const data = JSON.parse(localStorage.getItem("suggestions"));
+  const suggestion = useSelector((state) => state.suggestion);
 
-  useEffect(() => {
-    if (data.data[0]?.id !== suggestionData[0]?.id) {
-      setSuggestionData(data.data);
-    }
-  }, [data]);
+  useEffect(() => {    
+    setSuggestionData(suggestion.data);
+  }, [suggestion]);
 
   const handleDetailCard = (index) => {
     if (isModalOpen === index) {
@@ -37,7 +36,7 @@ const News = () => {
           <span className="greeting">Hello {userInfo?.first_name}!</span>
           <span className="description">Have you found a partner yet?</span>
         </div>
-        <div className="card-wrapper grid grid-cols-1 md:grid-cols-2">
+        <div className="card-wrapper grid grid-cols-1 md:grid-cols-2 pb-12 mb-12">
           {suggestionData?.map((item) => (
             <div
               className="card-item"

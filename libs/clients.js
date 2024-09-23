@@ -1,5 +1,7 @@
+"use client";
+
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function getAuthToken() {
   return window.localStorage.getItem("accessToken") ?? "";
@@ -28,8 +30,9 @@ API.interceptors.response.use(response => response, async error => {
   const { config, response: { status } } = error
 
   const token = getAuthToken()
+  const router = useRouter();
   if (status === 401 && !!token) {
-    redirect("/auth-login")
+    router.push('/auth-login');
   }
   if (status === 400) {
     return error.response;

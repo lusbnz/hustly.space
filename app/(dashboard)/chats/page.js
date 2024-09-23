@@ -11,9 +11,10 @@ import moment from "moment";
 import BeatLoader from "react-spinners/BeatLoader";
 import Image from "next/image";
 import PinIcon from "@/public/icons/pin-icon.svg";
+import { useSelector } from "react-redux";
 
 const Chats = () => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userInfo = useSelector((state) => state.userInfo);
 
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");

@@ -8,10 +8,16 @@ import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
 import { getCompetion, getDomain, getUniversity } from "@/api/option";
 import { BeatLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/reducers/userInfoSlice";
+import { setcompetition } from "@/reducers/competitionSlice";
+import { setUniversity } from "@/reducers/universitySlice";
+import { setDomain } from "@/reducers/domainSlice";
+import { setSuggestion } from "@/reducers/suggestionSlice";
 
 export default function Layout({ children }) {
   const pathname = usePathname();
-
+  const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +42,7 @@ export default function Layout({ children }) {
     setIsLoading(true);
     getSuggestions(data)
       .then((res) => {
-        localStorage.setItem("suggestions", JSON.stringify(res));
+        dispatch(setSuggestion(res));
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +89,7 @@ export default function Layout({ children }) {
     setIsSidebarLoading(true);
     getProfile()
       .then((res) => {
-        localStorage.setItem("userData", JSON.stringify(res));
+        dispatch(setUserInfo(res));
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +99,7 @@ export default function Layout({ children }) {
   const fetchCompetion = () => {
     getCompetion()
       .then((res) => {
-        localStorage.setItem("competion", JSON.stringify(res));
+        dispatch(setcompetition(res));
       })
       .catch((err) => {
         console.log(err);
@@ -103,7 +109,7 @@ export default function Layout({ children }) {
   const fetchUniversity = () => {
     getUniversity()
       .then((res) => {
-        localStorage.setItem("university", JSON.stringify(res));
+        dispatch(setUniversity(res));
       })
       .catch((err) => {
         console.log(err);
@@ -113,7 +119,7 @@ export default function Layout({ children }) {
   const fetchDomain = () => {
     getDomain()
       .then((res) => {
-        localStorage.setItem("domain", JSON.stringify(res));
+        dispatch(setDomain(res));
       })
       .catch((err) => {
         console.log(err);

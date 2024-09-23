@@ -9,6 +9,7 @@ import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
 import { memberOptions, p, s } from "@/data/data";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -18,10 +19,10 @@ const Sidebar = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const university = JSON.parse(localStorage.getItem("university"));
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const competion = JSON.parse(localStorage.getItem("competion"));
-  const domain = JSON.parse(localStorage.getItem("domain"));
+  const university = useSelector((state) => state.university);
+  const userInfo = useSelector((state) => state.userInfo);
+  const competition = useSelector((state) => state.competition);
+  const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");
   const[ isClear, setIsClear] = useState(false);
 
@@ -79,7 +80,7 @@ const Sidebar = ({
     };
   });
 
-  const competionOptions = competion?.map((item) => {
+  const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
       label: item.name,
@@ -147,9 +148,9 @@ const Sidebar = ({
                 handleChangeFilter={handleChangeFilter}
               />
               <SelectForm
-                label={"Competion"}
-                placeholder={"Competion"}
-                options={competionOptions}
+                label={"Competition"}
+                placeholder={"Competition"}
+                options={competitionOptions}
                 name={"competition__id"}
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
@@ -194,10 +195,10 @@ const Sidebar = ({
               </div>
             </div>
             <div className="sidebar-footer">
-              {userData?.avatar ? (
+              {userInfo?.avatar ? (
                 <div className="avatar-image">
                   <Image
-                    src={userData?.avatar?.file}
+                    src={userInfo?.avatar?.file}
                     alt="avatar"
                     className="avatar-image"
                     width={64}
@@ -210,10 +211,10 @@ const Sidebar = ({
               )}
               <div className="flex flex-col info">
                 <span className="title">
-                  {userData?.first_name?.length > 15
-                    ? userData?.first_name?.slice(0, 15) + "..."
-                    : userData?.first_name}{" "}
-                  {userData?.last_name}
+                  {userInfo?.first_name?.length > 15
+                    ? userInfo?.first_name?.slice(0, 15) + "..."
+                    : userInfo?.first_name}{" "}
+                  {userInfo?.last_name}
                 </span>
                 <span className="setting" onClick={toggleOpenModalSetting}>
                   <div className="settings-container">

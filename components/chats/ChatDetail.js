@@ -12,6 +12,7 @@ import moment from "moment";
 import TextEditor from "../common/TextEditor";
 import { p } from "@/data/data";
 import { deleteThread, updateThread } from "@/api/thread";
+import { useSelector } from "react-redux";
 
 const ChatDetail = ({
   chatId,
@@ -20,8 +21,8 @@ const ChatDetail = ({
   setChatId,
   isChangeChat,
 }) => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const recipientData = JSON.parse(localStorage.getItem("recipientData"));
+  const userInfo = useSelector((state) => state.userInfo);
+  const recipientData = useSelector((state) => state.recipientInfo)
 
   const contentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);

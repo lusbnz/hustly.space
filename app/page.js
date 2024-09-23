@@ -1,5 +1,9 @@
-import { redirect } from 'next/navigation';
+"use client";
+
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
-  redirect('/auth-login');
+  const router = useRouter()
+  router.push('/auth-login');
 }
