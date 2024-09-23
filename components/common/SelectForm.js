@@ -188,7 +188,14 @@ const SelectForm = ({
           Placeholder: CustomPlaceholder,
         }}
         styles={customStyles}
-        value={selectedValue}
+        value={
+          isClear
+            ? null
+            : options &&
+              options?.find(
+                (option) => String(option.value) === String(defaultValue)
+              )
+        }
         onChange={(e) => {
           if (e.value) {
             setSelectedValue(e);

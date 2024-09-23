@@ -36,7 +36,7 @@ const ModalDetail = ({ isOpen }) => {
     getUser(isOpen)
       .then((res) => {
         setUserInfo(res);
-        localStorage.setItem("receive", JSON.stringify(res))
+        localStorage.setItem("receive", JSON.stringify(res));
       })
       .catch((err) => {
         console.log(err);
@@ -63,13 +63,24 @@ const ModalDetail = ({ isOpen }) => {
   };
   const isHideMessage = pathname === "/chats";
 
+  const domainOptions = domain?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+      subOptions: item.sub_domains.map((item) => ({
+        value: item.id,
+        label: item.name,
+      })),
+    };
+  });
+
   return (
     <div
       className={`flex w-100 justify-end flex-1 modal-detail ${
         isOpen ? "show" : ""
       }`}
     >
-      <div className="sidebar-wrapper bg-[#171717] text-white rounded-[20px]">
+      <div className="sidebar-wrapper bg-[#171717] text-white rounded-[20px] max-h-[100vh] overflow-y-auto">
         {isLoading ? (
           <div className="w-100 h-[80vh] flex items-center justify-center">
             <BeatLoader color="#FFFFFF" size={10} />
@@ -176,23 +187,42 @@ const ModalDetail = ({ isOpen }) => {
                     </span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
-                    <span className="key">Competition</span>
+                    <span className="key">COMPETITION</span>
                     <span className="value">
                       {userInfo?.competition?.[0]?.year_competition}
                     </span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
-                    <span className="key">Team member</span>
+                    <span className="key">TEAM MEMBER</span>
                     <span className="value">{userInfo?.team_member_count}</span>
                   </div>
                   <div className="flex flex-col gap-[6px]">
-                    <span className="key">Field - experience</span>
-                    <span className="value">BA Intern - 1 year</span>
+                    <span className="key">SKILL SET</span>
+                    <div>
+                      <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
+                        {
+                          s?.find((item) => item.value === userInfo?.skill_set)
+                            ?.label
+                        }
+                      </span>
+                    </div>
                   </div>
                   <div className="flex flex-col gap-[6px]">
-                    <span className="key">SKILL SET</span>
-                    <span className="value">Presentation Skills</span>
+                    <span className="key">DOMAIN</span>
+                    <div>
+                      <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
+                        {
+                          domainOptions?.find(
+                            (item) => item.value === userInfo?.domain[0]?.id
+                          )?.label
+                        }
+                      </span>
+                    </div>
                   </div>
+                  {/* <div className="flex flex-col gap-[6px]">
+                    <span className="key">ARCHIVEMENT</span>
+                    <span className="value">Presentation Skills</span>
+                  </div> */}
                   <div className="flex flex-col gap-[6px]">
                     {userInfo?.bio_image?.[0]?.file && (
                       <Image
