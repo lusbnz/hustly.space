@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./common.css";
 import Select, { components } from "react-select";
 import University from "@/public/icons/university-icon.svg";
@@ -85,6 +85,7 @@ const SelectForm = ({
           paddingLeft: "calc((18 / 1920) * 100vw)",
           paddingRight: "calc((18 / 1920) * 100vw)",
           fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
+          lineHeight: "clamp(10px, calc((16 / 1920) * 100vw), 26px)"
         }}
       >
         {noIcon ? (

@@ -8,6 +8,8 @@ import Search from "@/public/icons/search-icon.svg";
 import UserIcon from "@/public/icons/user-icon.svg";
 import UniversityIcon from "@/public/icons/university-icon.svg"
 import CupIcon from "@/public/icons/cup-icon.svg";
+import DomainIcon from "@/public/icons/domain-icon.svg";
+import SkillIcon from "@/public/icons/skill-icon.svg";
 import PlaceIcon from "@/public/icons/place-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
@@ -195,6 +197,9 @@ const Sidebar = ({
                 name={"domain_id"}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
+                icon={
+                  <Image src={DomainIcon} alt="domain" className="image" />
+                }
               />
               <SelectForm
                 label={"Skill set"}
@@ -203,6 +208,9 @@ const Sidebar = ({
                 options={s}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
+                icon={
+                  <Image src={SkillIcon} alt="skill" className="image" />
+                }
               />
               <div
                 className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"
