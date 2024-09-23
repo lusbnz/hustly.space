@@ -28,7 +28,17 @@ const AuthRegister = () => {
     setIsLoading(true);
     authRegister(data)
       .then((res) => {
-        router.push("/auth-login");
+        if (res) {
+          router.push("/auth-login");
+        } else {
+          const errorMessage =
+            "An unexpected error occurred. Please try again.";
+
+          setError("server", {
+            type: "manual",
+            message: errorMessage,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);

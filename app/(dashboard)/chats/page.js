@@ -24,6 +24,7 @@ const Chats = () => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
   const [isChangeChat, setIsChangeChat] = useState(false);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(true);
 
   const fetchThread = () => {
     getThread(userInfo?.id)
@@ -89,6 +90,7 @@ const Chats = () => {
   };
 
   const handleOpenChatDetail = (thread_id, recipient_id) => {
+    setIsLoadingDetail(true)
     setIsActiveChat(thread_id);
     setIsModalOpen(recipient_id);
     setIsChangeChat(thread_id);
@@ -269,6 +271,8 @@ const Chats = () => {
               handleOpenDetail={handleOpenDetail}
               tab={isActiveTab}
               isChangeChat={isChangeChat}
+              isLoading={isLoadingDetail}
+              setIsLoading={setIsLoadingDetail}
             />
           </div>
           {isModalOpen && <ModalDetail isOpen={isModalOpen} />}

@@ -1,6 +1,5 @@
 import competitionSlice from "@/reducers/competitionSlice";
 import domainSlice from "@/reducers/domainSlice";
-import recipientSlice from "@/reducers/recipientSlice";
 import suggestionSlice from "@/reducers/suggestionSlice";
 import universitySlice from "@/reducers/universitySlice";
 import userInfoSlice from "@/reducers/userInfoSlice";
@@ -13,7 +12,6 @@ const store = configureStore({
     university: universitySlice,
     competition: competitionSlice,
     suggestion: suggestionSlice,
-    recipient: recipientSlice,
   },
 });
 

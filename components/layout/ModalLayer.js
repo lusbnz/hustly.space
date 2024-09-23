@@ -185,8 +185,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         className="fixed inset-0 bg-black opacity-95 z-20"
         onClick={toggleOpenModalSetting}
       />
-      <div className="w-[100vw] h-100 bg-transparent opacity-100 absolute z-30 p-[22px]">
-        <div className="w-[532px] h-100 max-h-[95vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
+      <div className="w-[100vw] h-[90vh] bg-transparent opacity-100 absolute z-30 p-[22px]">
+        <div className="w-[532px] h-[90vh] max-h-[100vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
           <div className="border-b-[1px] pb-[28px] mb-[22px] border-b-[#212121] flex items-center">
             <div
               className="mr-2 cursor-pointer"
@@ -196,7 +196,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             </div>
             <span className="m-title">Profile Setting</span>
           </div>
-          <div className="mb-[40px] max-h-[510px] overflow-y-auto">
+          <div className="mb-[40px] max-h-[70vh] overflow-y-auto pb-12">
             <div className="flex items-center justify-between my-[22px] gap-[12px]">
               <div className="flex items-center gap-[12px]">
                 {(selectedImage || userInfo?.avatar?.file) && !isEdit ? (
@@ -405,7 +405,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-4 w-[484px]">
+          <div className="absolute bottom-4 w-[484px] bg-[#171717]">
             <div className="flex items-center gap-[6px] w-100 ">
               <ButtonComponent
                 type={"button"}

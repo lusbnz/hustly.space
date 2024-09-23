@@ -21,12 +21,13 @@ const ChatDetail = ({
   tab,
   setChatId,
   isChangeChat,
+  isLoading, 
+  setIsLoading
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
-  const recipientData = useSelector((state) => state.recipientInfo)  
+  const recipientInfo = JSON.parse(localStorage.getItem("receive"));
 
   const contentRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [messages, setMessages] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
@@ -127,9 +128,9 @@ const ChatDetail = ({
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">
               <div className="chat-avatar">
-                {recipientData?.avatar?.file && (
+                {recipientInfo?.avatar?.file && (
                   <Image
-                    src={recipientData?.avatar?.file}
+                    src={recipientInfo?.avatar?.file}
                     alt="avatar"
                     width={64}
                     height={64}
@@ -143,11 +144,11 @@ const ChatDetail = ({
                 )}
               </div>
               <div className="chat-infomation">
-                <span className="chat-name">{recipientData?.first_name} {recipientData?.last_name}</span>
+                <span className="chat-name">{recipientInfo?.first_name} {recipientInfo?.last_name}</span>
                 <span className="chat-location">
                   {
                     psOptions?.find(
-                      (e) => String(e.value) === String(recipientData?.city)
+                      (e) => String(e.value) === String(recipientInfo?.city)
                     )?.label
                   }
                 </span>
@@ -174,9 +175,9 @@ const ChatDetail = ({
                 >
                   {!checkIsMe(message) ? (
                     <div className="message-avatar">
-                      {recipientData?.avatar?.file && (
+                      {recipientInfo?.avatar?.file && (
                         <Image
-                          src={recipientData?.avatar?.file}
+                          src={recipientInfo?.avatar?.file}
                           alt="avatar"
                           width={64}
                           height={64}
@@ -197,7 +198,7 @@ const ChatDetail = ({
                   >
                     <span className="message-infomation">
                       {!checkIsMe(message)
-                        ? `${recipientData?.first_name} ${recipientData?.last_name} - ${moment(
+                        ? `${recipientInfo?.first_name} ${recipientInfo?.last_name} - ${moment(
                             message.timestamp
                           ).format("HH:mm")}`
                         : `You - ${moment(message.timestamp).format("HH:mm")}`}
