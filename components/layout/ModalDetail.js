@@ -199,24 +199,29 @@ const ModalDetail = ({ isOpen }) => {
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">SKILL SET</span>
                     <div>
-                      <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
-                        {
-                          s?.find((item) => item.value === userInfo?.skill_set)
-                            ?.label
-                        }
-                      </span>
+                      {userInfo?.skill_set && (
+                        <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
+                          {
+                            s?.find(
+                              (item) => item.value === userInfo?.skill_set
+                            )?.label
+                          }
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="flex flex-col gap-[6px]">
                     <span className="key">DOMAIN</span>
                     <div>
-                      <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
-                        {
-                          domainOptions?.find(
-                            (item) => item.value === userInfo?.domain[0]?.id
-                          )?.label
-                        }
-                      </span>
+                      {userInfo?.domain[0] && (
+                        <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
+                          {
+                            domainOptions?.find(
+                              (item) => item.value === userInfo?.domain[0]?.id
+                            )?.label
+                          }
+                        </span>
+                      )}
                     </div>
                   </div>
                   {/* <div className="flex flex-col gap-[6px]">
