@@ -10,7 +10,7 @@ import { getCompetion, getDomain, getUniversity } from "@/api/option";
 import { BeatLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
-import { setcompetition } from "@/reducers/competitionSlice";
+import { setCompetition } from "@/reducers/competitionSlice";
 import { setUniversity } from "@/reducers/universitySlice";
 import { setDomain } from "@/reducers/domainSlice";
 import { setSuggestion } from "@/reducers/suggestionSlice";
@@ -20,7 +20,7 @@ export default function Layout({ children }) {
   const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFirstRenderFilter, setIsFirstRenderFilter] = useState(true);
   const [isSidebarLoading, setIsSidebarLoading] = useState(true);
   const [filter, setFilter] = useState({
@@ -89,8 +89,6 @@ export default function Layout({ children }) {
     setIsSidebarLoading(true);
     getProfile()
       .then((res) => {
-        console.log('res', res);
-        
         dispatch(setUserInfo(res));
       })
       .catch((err) => {
@@ -101,7 +99,7 @@ export default function Layout({ children }) {
   const fetchCompetion = () => {
     getCompetion()
       .then((res) => {
-        dispatch(setcompetition(res));
+        dispatch(setCompetition(res));
       })
       .catch((err) => {
         console.log(err);
@@ -157,8 +155,8 @@ export default function Layout({ children }) {
           />
         )}
         {isLoading && pathname === "/news" ? (
-          <div className="w-screen h-[80vh] bg-black flex items-center justify-center">
-            <BeatLoader color="#fff" size={16} />
+          <div className="w-screen h-[100vh] bg-black flex items-center justify-center">
+            <BeatLoader color="#fff" size={10} />
           </div>
         ) : (
           children

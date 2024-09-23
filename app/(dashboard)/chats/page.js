@@ -14,9 +14,7 @@ import PinIcon from "@/public/icons/pin-icon.svg";
 import { useSelector } from "react-redux";
 
 const Chats = () => {
-  const userInfo = useSelector((state) => state.userInfo);
-  console.log(userInfo);
-  
+  const userInfo = useSelector((state) => state.userInfo);  
 
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
@@ -112,7 +110,7 @@ const Chats = () => {
         <div className="tab">
           {isFirstRender ? (
             <div className="w-100 h-[80vh] flex items-center justify-center">
-              <BeatLoader color="#fff" size={16} />
+              <BeatLoader color="#fff" size={10} />
             </div>
           ) : (
             <>

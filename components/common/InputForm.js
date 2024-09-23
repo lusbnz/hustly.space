@@ -8,7 +8,7 @@ const InputForm = ({
   name,
   required,
   isEditor,
-  isPassword
+  isPassword,
 }) => {
   return (
     <div className="input-form">

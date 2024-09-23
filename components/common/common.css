@@ -19,6 +19,14 @@
         box-sizing: border-box;
         background-color: transparent;
         color: #ffffff;
+
+        &:active{
+            outline: none;
+        }
+
+        &:focus{
+            outline: none;
+        }
     }
 
     input::placeholder {
@@ -37,6 +45,14 @@
         background-color: transparent;
         color: #ffffff;
         font-size:  clamp(10px, calc((14 / 1920) * 100vw), 26px);
+
+        &:active{
+            outline: none;
+        }
+
+        &:focus{
+            outline: none;
+        }
     }
 
     textarea::placeholder {

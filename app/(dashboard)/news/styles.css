@@ -75,6 +75,7 @@
 
     .tags{
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: calc((8 / 1920) * 100vw);
         margin-top: calc((20 / 1080) * 100vh);

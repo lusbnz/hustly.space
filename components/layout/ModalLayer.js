@@ -18,28 +18,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { register, watch, setValue, handleSubmit } = useForm({
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      first_name: userData.first_name,
-      age: userData.age,
-      color: userData.color,
-      city: userData.city,
-      district: userData.district,
-      university: userData.university,
-      team_member_count: userData.team_member_count,
-      bio: userData.bio,
-      competition: userData.competition?.[0]?.id,
-      year_competition: userData.competition?.[0]?.year_competition,
-      domain: userData.domain?.[0]?.id,
-      skill_set: userData.skill_set,
-      // bio_image: userData.bio_image,
+      first_name: userInfo?.first_name,
+      age: userInfo?.age,
+      color: userInfo?.color,
+      city: userInfo?.city,
+      district: userInfo?.district,
+      university: userInfo?.university,
+      team_member_count: userInfo?.team_member_count,
+      bio: userInfo?.bio,
+      competition: userInfo?.competition?.[0]?.id,
+      year_competition: userInfo?.competition?.[0]?.year_competition,
+      domain: userInfo?.domain?.[0]?.id,
+      skill_set: userInfo?.skill_set,
+      // bio_image: userInfo?.bio_image,
     },
   });
 
@@ -75,16 +82,30 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   };
 
   const handleUpdateSetting = (data) => {
+    const ageValue = Number(data.age);
+
+    if (isNaN(ageValue) || ageValue < 18) {
+      setError("age", {
+        type: "manual",
+        message: "Age must be a number and greater than or equal to 18",
+      });
+      return;
+    }
+
     data.domain = [data.domain];
-    data.competition = [{
-      id: data.competition,
-      year_competition: data.year_competition,
-    }];
+    data.competition = [
+      {
+        id: data.competition,
+        year_competition: data.year_competition,
+      },
+    ];
     delete data.year_competition;
-    data.bio_image = [data.bio_image[0]?.id];
+    if(data.bio_image?.length > 0){
+      data.bio_image = [data.bio_image[0]?.id];
+    }
     updateProfile(data)
       .then((res) => {
-        dispatch(setUserInfo(res))
+        dispatch(setUserInfo(res));
         toggleOpenModalSetting();
       })
       .catch((err) => {
@@ -161,7 +182,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black opacity-90 z-20"
+        className="fixed inset-0 bg-black opacity-95 z-20"
         onClick={toggleOpenModalSetting}
       />
       <div className="w-[100vw] h-100 bg-transparent opacity-100 absolute z-30 p-[22px]">
@@ -178,10 +199,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
           <div className="mb-[40px] max-h-[510px] overflow-y-auto">
             <div className="flex items-center justify-between my-[22px] gap-[12px]">
               <div className="flex items-center gap-[12px]">
-                {(selectedImage || userData?.avatar?.file) && !isEdit ? (
+                {(selectedImage || userInfo?.avatar?.file) && !isEdit ? (
                   <div className="m-av rounded-full overflow-hidden w-[90px] h-[90px]">
                     <Image
-                      src={selectedImage || userData?.avatar?.file}
+                      src={selectedImage || userInfo?.avatar?.file}
                       alt="avatar"
                       width={90}
                       height={90}
@@ -239,13 +260,18 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               name={"color"}
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("color")}
+              isColor={true}
             />
             <InputForm
               title={"Age"}
               placeholder={"Age"}
               register={register}
               name={"age"}
+              required={true}
             />
+            {errors.age && (
+              <div className="text-[#ff0000] text-[12px] mb-2">{errors.age.message || "Please fill your age"}</div>
+            )}
             <div className="form-double-item">
               <SelectForm
                 options={psOptions}
@@ -316,7 +342,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               name={"domain"}
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("domain")}
-
             />
             <SelectForm
               options={s}
@@ -338,7 +363,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             />
             <InputForm
               title={"Tldr"}
-              placeholder={"Tôi tên là quốc anh đến từ neu, tôi học finance và thích ăn bánh bao + chơi bóng rổ"}
+              placeholder={
+                "Tôi tên là quốc anh đến từ neu, tôi học finance và thích ăn bánh bao + chơi bóng rổ"
+              }
               register={register}
               name={"bio"}
               isEditor={true}

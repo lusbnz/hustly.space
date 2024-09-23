@@ -74,7 +74,7 @@ const AuthLogin = () => {
                 required={true}
               />
               {errors.username && (
-                <div className="text-[#ff0000]">
+                <div className="text-[#ff0000] text-[12px]">
                   Please fill your username or email
                 </div>
               )}
@@ -87,10 +87,10 @@ const AuthLogin = () => {
                 isPassword={true}
               />
               {errors.password && (
-                <div className="text-[#ff0000]">Please check your password</div>
+                <div className="text-[#ff0000] text-[12px]">Please check your password</div>
               )}
               {errors.server && (
-                <div className="text-[#ff0000]">{errors.server.message}</div>
+                <div className="text-[#ff0000] text-[12px]">{errors.server.message}</div>
               )}
               <div className="form-footer">
                 <ButtonComponent

@@ -35,13 +35,14 @@
         border: 1px solid #222222;
         color: #ffffff;
         background-color: #222222;
+        font-size: clamp(10px, calc((14 / 1920) * 100vw), 26px);
         &:focus{
             outline: 1px solid #222222;
         }
     }
 
     .search-input::placeholder {
-        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        font-size: clamp(10px, calc((14 / 1920) * 100vw), 26px);
     }
 }
 

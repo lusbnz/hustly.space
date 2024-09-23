@@ -8,5 +8,5 @@ const competitionSlice = createSlice({
   },
 });
 
-export const { setcompetition } = competitionSlice.actions;
+export const { setCompetition } = competitionSlice.actions;
 export default competitionSlice.reducer;

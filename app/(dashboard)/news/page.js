@@ -17,7 +17,7 @@ const News = () => {
   const [suggestionData, setSuggestionData] = useState([]);
   const suggestion = useSelector((state) => state.suggestion);
 
-  useEffect(() => {    
+  useEffect(() => {
     setSuggestionData(suggestion.data);
   }, [suggestion]);
 
@@ -61,42 +61,44 @@ const News = () => {
                   )}
                 </div>
                 <div className="flex flex-col info">
-                  <span className="name flex items-center gap-[4px]">
-                    {item.first_name} {item.last_name}
+                  <span className="name flex items-end gap-[4px]">
+                    <span className="lh-1 h-[12px] text-[14px] text-center">
+                      {item.first_name} {item.last_name}
+                    </span>
+
                     <div
-                      className={`w-[12px] h-[12px] rounded-full bg-[${
-                        item.color || "white"
-                      }]`}
+                      className={`w-[10px] h-[10px] rounded-full`}
+                      style={{ backgroundColor: item.color || "#ffffff" }}
                     ></div>
                   </span>
                   <div className="flex gap-[24px]">
-                    <span className="location flex items-center gap-[4px]">
+                    <div className="location flex items-center gap-[4px]">
                       <Image
                         src={LocationIcon}
                         alt="location-icon"
-                        width={14}
-                        height={14}
+                        width={12}
+                        height={12}
                       />
-                      {item.city || "Hanoi"}
-                    </span>
-                    <span className="location flex items-center gap-[4px]">
+                      <span>{item.city || "Hanoi"}</span>
+                    </div>
+                    <div className="location flex items-center gap-[4px]">
                       <Image
                         src={BirthdayIcon}
                         alt="birth-icon"
-                        width={14}
-                        height={14}
+                        width={12}
+                        height={12}
                       />
-                      {item.age || "18"}
-                    </span>
-                    <span className="location flex items-center gap-[4px]">
+                      <span>{item.age || "18"}</span>
+                    </div>
+                    <div className="location flex items-center gap-[4px]">
                       <Image
                         src={UserIcon}
                         alt="mem-icon"
-                        width={14}
-                        height={14}
+                        width={12}
+                        height={12}
                       />
-                      {item.team_member_count}
-                    </span>
+                      <span>{item.team_member_count}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -108,9 +110,7 @@ const News = () => {
                     let sd = item.id;
 
                     if (pd === null) {
-                      sd = domain?.find(
-                        (e) => e.id === item.id
-                      )?.name;
+                      sd = domain?.find((e) => e.id === item.id)?.name;
                     } else {
                       sd = domain
                         ?.find((e) => e.id === item.parent_domain)
@@ -119,7 +119,7 @@ const News = () => {
 
                     return (
                       <Badge
-                      key={item.id}
+                        key={item.id}
                         backgroundColor={"#DAF4E0"}
                         color={"#009723"}
                         name={sd}

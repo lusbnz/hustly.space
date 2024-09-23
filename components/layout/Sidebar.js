@@ -5,6 +5,10 @@ import "./layout.css";
 import Logo from "@/public/images/logo.svg";
 import Image from "next/image";
 import Search from "@/public/icons/search-icon.svg";
+import UserIcon from "@/public/icons/user-icon.svg";
+import UniversityIcon from "@/public/icons/university-icon.svg"
+import CupIcon from "@/public/icons/cup-icon.svg";
+import PlaceIcon from "@/public/icons/place-icon.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
@@ -25,7 +29,7 @@ const Sidebar = ({
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");
-  const[ isClear, setIsClear] = useState(false);
+  const [isClear, setIsClear] = useState(false);
 
   const handleOpenChat = (e) => {
     router.push(`/chats`);
@@ -71,7 +75,7 @@ const Sidebar = ({
       domain_id: "",
       skill_set: "",
     }));
-    setIsClear(true)
+    setIsClear(true);
   };
 
   const psOptions = p?.map((item) => {
@@ -101,11 +105,11 @@ const Sidebar = ({
 
   return (
     <>
-      <div className="h-100 bg-[#171717] rounded-[20px] sidebar-wrapper">
+      <div className="h-[95vh] bg-[#171717] rounded-[20px] sidebar-wrapper">
         {isSidebarLoading ? (
           <>
             <div className="w-100 h-[100vh] flex items-center justify-center text-white font-[500] text-[24px]">
-              <BeatLoader size={16} color="#fff"/>
+              <BeatLoader size={16} color="#fff" />
             </div>
           </>
         ) : (
@@ -147,6 +151,9 @@ const Sidebar = ({
                 name={"university__id"}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
+                icon={
+                  <Image src={UniversityIcon} alt="university" className="image" />
+                }
               />
               <SelectForm
                 label={"Competition"}
@@ -155,6 +162,9 @@ const Sidebar = ({
                 name={"competition__id"}
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
+                icon={
+                  <Image src={CupIcon} alt="competition" className="image" />
+                }
               />
               <SelectForm
                 label={"City"}
@@ -163,6 +173,9 @@ const Sidebar = ({
                 options={psOptions}
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
+                icon={
+                  <Image src={PlaceIcon} alt="city" className="image" />
+                }
               />
               <SelectForm
                 label={"Team Member"}
@@ -171,6 +184,9 @@ const Sidebar = ({
                 name={"team_member_count"}
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
+                icon={
+                  <Image src={UserIcon} alt="team_member" className="image" />
+                }
               />
               <SelectForm
                 label={"Domain"}
