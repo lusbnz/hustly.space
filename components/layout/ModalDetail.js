@@ -18,7 +18,7 @@ import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
 import { s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
-import { setRecipientInfo } from "@/reducers/userInfoSlice";
+import { setRecipientInfo } from "@/reducers/recipientSlice";
 
 const ModalDetail = ({ isOpen }) => {
   const dispatch = useDispatch()
