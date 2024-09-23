@@ -24,7 +24,7 @@ export default function Layout({ children }) {
   const [isFirstRenderFilter, setIsFirstRenderFilter] = useState(true);
   const [isSidebarLoading, setIsSidebarLoading] = useState(true);
   const [filter, setFilter] = useState({
-    university: "",
+    university__id: "",
     team_member_count: "",
     city: "",
     competition__id: "",
@@ -59,7 +59,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     if (!isFirstRender) {
       const data = {
-        university: filter.university,
+        university__id: filter.university__id,
         team_member_count: filter.team_member_count,
         city: filter.city,
         competition__id: filter.competition__id,

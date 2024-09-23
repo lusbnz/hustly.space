@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
 import { memberOptions, p, s } from "@/data/data";
 import { useSelector } from "react-redux";
+import { BeatLoader } from "react-spinners";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -63,7 +64,7 @@ const Sidebar = ({
 
   const handleClear = () => {
     setFilter(() => ({
-      university: "",
+      university__id: "",
       team_member_count: "",
       city: "",
       competition__id: "",
@@ -104,7 +105,7 @@ const Sidebar = ({
         {isSidebarLoading ? (
           <>
             <div className="w-100 h-[100vh] flex items-center justify-center text-white font-[500] text-[24px]">
-              Loading...
+              <BeatLoader size={16} color="#fff"/>
             </div>
           </>
         ) : (
@@ -143,7 +144,7 @@ const Sidebar = ({
                 label={"University"}
                 placeholder={"University"}
                 options={universityOptions}
-                name={"university"}
+                name={"university__id"}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
               />
