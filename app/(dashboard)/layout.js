@@ -89,6 +89,8 @@ export default function Layout({ children }) {
     setIsSidebarLoading(true);
     getProfile()
       .then((res) => {
+        console.log('res', res);
+        
         dispatch(setUserInfo(res));
       })
       .catch((err) => {

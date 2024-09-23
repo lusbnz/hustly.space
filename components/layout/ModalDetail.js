@@ -115,7 +115,7 @@ const ModalDetail = ({ isOpen }) => {
                       width={14}
                       height={14}
                     />
-                    {userInfo.city || "Hanoi"}
+                    {userInfo?.city || "Hanoi"}
                   </span>
                 </div>
               </div>
@@ -164,7 +164,7 @@ const ModalDetail = ({ isOpen }) => {
                     <span className="value">
                       {
                         university.find(
-                          (item) => item.id === userInfo.university
+                          (item) => item.id === userInfo?.university
                         )?.name
                       }
                     </span>

@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userInfoSlice = createSlice({
-  name: "userInfo",
+const recipientInfoSlice = createSlice({
+  name: "recipientInfo",
   initialState: null,
   reducers: {
-    setUserInfo: (state, action) => action.payload,
+    setRecipientInfo: (state, action) => action.payload,
   },
 });
 
-export const { setUserInfo } = userInfoSlice.actions;
-export default userInfoSlice.reducer;
+export const { setRecipientInfo } = recipientInfoSlice.actions;
+export default recipientInfoSlice.reducer;

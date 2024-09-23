@@ -38,7 +38,7 @@ const ChatDetail = ({
   });
 
   const fetchMessage = () => {
-    getMessage(userData.id, chatId)
+    getMessage(userInfo?.id, chatId)
       .then((res) => {
         setMessages(res.reverse());
         setIsLoading(false);
@@ -80,7 +80,7 @@ const ChatDetail = ({
   }, [isFetched]);
 
   const checkIsMe = (message) => {
-    return message.sender === userData.id;
+    return message.sender === userInfo?.id;
   };
 
   const handleSend = (content, image) => {
@@ -88,7 +88,7 @@ const ChatDetail = ({
       content: content,
       media: [image],
     };
-    sendMessage(userData.id, chatId, data)
+    sendMessage(userInfo?.id, chatId, data)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
@@ -99,11 +99,11 @@ const ChatDetail = ({
     const data = {
       is_pin: true,
     };
-    updateThread(userData.id, chatId, data);
+    updateThread(userInfo?.id, chatId, data);
   };
 
   const handleDelete = () => {
-    deleteThread(userData.id, chatId);
+    deleteThread(userInfo?.id, chatId);
     handleOpenDetail(null);
     setChatId(null);
   };
@@ -112,7 +112,7 @@ const ChatDetail = ({
     const data = {
       is_matched: true,
     };
-    updateThread(userData.id, chatId, data);
+    updateThread(userInfo?.id, chatId, data);
   };
 
   return (
@@ -196,7 +196,7 @@ const ChatDetail = ({
                   >
                     <span className="message-infomation">
                       {!checkIsMe(message)
-                        ? `${recipientData.first_name} ${recipientData.last_name} - ${moment(
+                        ? `${recipientData?.first_name} ${recipientData?.last_name} - ${moment(
                             message.timestamp
                           ).format("HH:mm")}`
                         : `You - ${moment(message.timestamp).format("HH:mm")}`}

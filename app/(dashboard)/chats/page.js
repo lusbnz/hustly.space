@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 
 const Chats = () => {
   const userInfo = useSelector((state) => state.userInfo);
+  console.log(userInfo);
+  
 
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
@@ -26,7 +28,7 @@ const Chats = () => {
   const [isChangeChat, setIsChangeChat] = useState(false);
 
   const fetchThread = () => {
-    getThread(userData.id)
+    getThread(userInfo?.id)
       .then((res) => {
         setListThread(res);
         setIsFetched(true);
@@ -224,7 +226,7 @@ const Chats = () => {
                         className="last-message"
                         style={
                           thread?.unread_count > 0 &&
-                          thread.last_message.sender !== userData.id
+                          thread.last_message.sender !== userInfo?.id
                             ? { color: "rgba(255, 255, 255, 1)" }
                             : { color: "rgba(255, 255, 255, 0.40)" }
                         }
@@ -250,7 +252,7 @@ const Chats = () => {
                       {moment(thread.updated_at).format("HH:mm")}
                     </div>
                     {thread?.unread_count > 0 &&
-                      thread.last_message.sender !== userData.id && (
+                      thread.last_message.sender !== userInfo?.id && (
                         <div className="notification">
                           {thread?.unread_count}
                         </div>

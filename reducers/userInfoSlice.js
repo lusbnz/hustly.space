@@ -4,9 +4,9 @@ const userInfoSlice = createSlice({
   name: "userInfo",
   initialState: null,
   reducers: {
-    setRecipientInfo: (state, action) => action.payload,
+    setUserInfo: (state, action) => action.payload,
   },
 });
 
-export const { setRecipientInfo } = userInfoSlice.actions;
+export const { setUserInfo } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
