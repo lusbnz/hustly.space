@@ -49,7 +49,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         ? userInfo?.domain?.[0]?.id
         : null,
       skill_set: userInfo?.skill_set,
-      // bio_image: userInfo?.bio_image,
+      bio_image: userInfo?.bio_image,
     },
   });
 

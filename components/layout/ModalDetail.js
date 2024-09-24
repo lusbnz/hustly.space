@@ -120,10 +120,6 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
   }
 
   function findLabelById(id, parentDomain) {
-    console.log("id", id);
-    console.log("parentDomain", parentDomain);
-    console.log("domainOptions", domainOptions);
-
     if (parentDomain === null) {
       const mainDomain = domainOptions.find((domain) => domain.value === id);
       return mainDomain ? mainDomain.label : "Not found";
