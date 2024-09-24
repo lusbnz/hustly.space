@@ -203,7 +203,8 @@ const Sidebar = ({
                   
                 />
                 </div>
-              </div> */}
+              </div> 
+              */}
 
               <SelectForm
                 label={"Competition"}
