@@ -18,8 +18,7 @@ import SelectForm from "../common/SelectForm";
 import { memberOptions, p, s } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
-// import InputRange from "react-input-range";
-// import "react-input-range/lib/css/index.css";
+import { Range } from "react-range";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -47,11 +46,11 @@ const Sidebar = ({
       setFilter({
         ...filter,
         age__gte: ageV.min,
-        age__lte: ageV.max,        
+        age__lte: ageV.max,
       });
     }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [ageV]);
 
   const handleOpenChat = (e) => {
@@ -190,21 +189,46 @@ const Sidebar = ({
                 }
               />
 
-              {/* <div className="my-[12px] range">
-                <label>
-                  Age
-                </label>
-                <div className="px-[12px] bg-[#222] py-[18px] rounded-[8px]">
-                <InputRange
-                  maxValue={40}
-                  minValue={18}
-                  value={ageV}
-                  onChange={handleChangeAge}
-                  
-                />
+              <div className="my-[12px] range">
+                <label>Age</label>
+                <div className="p-[12px] bg-[#222] rounded-[8px] relative flex items-center gap-[8px]">
+                  <Range
+                    step={1}
+                    min={18}
+                    max={40}
+                    values={[ageV.min, ageV.max]}
+                    onChange={(values) =>
+                      setAgeV({ min: values[0], max: values[1] })
+                    }
+                    renderTrack={({ props, children }) => (
+                      <div
+                        {...props}
+                        style={{
+                          height: "4px",
+                          width: "80%",
+                          background: "lightgrey",
+                        }}
+                      >
+                        {children}
+                      </div>
+                    )}
+                    renderThumb={({ props }) => (
+                      <div
+                        {...props}
+                        style={{
+                          height: "12px",
+                          width: "12px",
+                          backgroundColor: "#FFF",
+                          border: "1px solid black",
+                          borderRadius: "50%",
+                          position: "absolute",
+                        }}
+                      />
+                    )}
+                  />
+                  <div className="text-white text-[12px]">{ageV.min} - {ageV.max}</div>
                 </div>
-              </div> 
-              */}
+              </div>
 
               <SelectForm
                 label={"Competition"}
@@ -263,35 +287,35 @@ const Sidebar = ({
               </div>
             </div>
             <div className="sidebar-footer">
-              <div className="flex items-center gap-[12px]">  
-              {userInfo?.avatar ? (
-                <div className="avatar-image">
-                  <Image
-                    src={userInfo?.avatar?.file}
-                    alt="avatar"
-                    className="avatar-image"
-                    width={64}
-                    height={64}
-                    objectFit="cover"
-                  />
-                </div>
-              ) : (
-                <div className="avatar"></div>
-              )}
-              <div className="flex flex-col info">
-                <span className="title">
-                  {userInfo?.first_name?.length > 15
-                    ? userInfo?.first_name?.slice(0, 15) + "..."
-                    : userInfo?.first_name}{" "}
-                  {userInfo?.last_name}
-                </span>
-                <span className="setting" onClick={toggleOpenModalSetting}>
-                  <div className="settings-container">
-                    <Image src={Settings} alt="settings" className="image" />
+              <div className="flex items-center gap-[12px]">
+                {userInfo?.avatar ? (
+                  <div className="avatar-image">
+                    <Image
+                      src={userInfo?.avatar?.file}
+                      alt="avatar"
+                      className="avatar-image"
+                      width={64}
+                      height={64}
+                      objectFit="cover"
+                    />
                   </div>
-                  Profile Setting
-                </span>
-              </div>
+                ) : (
+                  <div className="avatar"></div>
+                )}
+                <div className="flex flex-col info">
+                  <span className="title">
+                    {userInfo?.first_name?.length > 15
+                      ? userInfo?.first_name?.slice(0, 15) + "..."
+                      : userInfo?.first_name}{" "}
+                    {userInfo?.last_name}
+                  </span>
+                  <span className="setting" onClick={toggleOpenModalSetting}>
+                    <div className="settings-container">
+                      <Image src={Settings} alt="settings" className="image" />
+                    </div>
+                    Profile Setting
+                  </span>
+                </div>
               </div>
               <div onClick={handleSignout} className="signout">
                 <Image src={SignoutIcon} alt="signout" className="image" />
