@@ -43,7 +43,6 @@ const ChatDetail = ({
     getMessage(userInfo?.id, chatId)
       .then((res) => {
         setMessages(res.reverse());
-        setIsLoading(false);
         setIsFetched(true);
       })
       .catch((err) => {

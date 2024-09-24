@@ -6,7 +6,7 @@ import Logo from "@/public/images/logo.svg";
 import Image from "next/image";
 import Search from "@/public/icons/search-icon.svg";
 import UserIcon from "@/public/icons/user-icon.svg";
-import UniversityIcon from "@/public/icons/university-icon.svg"
+import UniversityIcon from "@/public/icons/university-icon.svg";
 import CupIcon from "@/public/icons/cup-icon.svg";
 import DomainIcon from "@/public/icons/domain-icon.svg";
 import SkillIcon from "@/public/icons/skill-icon.svg";
@@ -17,11 +17,14 @@ import SelectForm from "../common/SelectForm";
 import { memberOptions, p, s } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
 
 const Sidebar = ({
   toggleOpenModalSetting,
   isSidebarLoading,
   search,
+  filter,
   setFilter,
 }) => {
   const router = useRouter();
@@ -32,6 +35,23 @@ const Sidebar = ({
   const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");
   const [isClear, setIsClear] = useState(false);
+  const [ageV, setAgeV] = useState({ min: 18, max: 25 });
+
+  const handleChangeAge = (rangeValue) => {
+    setAgeV(rangeValue);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFilter({
+        ...filter,
+        age__gte: ageV.min,
+        age__lte: ageV.max,        
+      });
+    }, 1000);
+
+    return () => clearTimeout(timer); 
+  }, [ageV]);
 
   const handleOpenChat = (e) => {
     router.push(`/chats`);
@@ -76,6 +96,8 @@ const Sidebar = ({
       competition__id: "",
       domain_id: "",
       skill_set: "",
+      age__gte: filter.age__gte,
+      age__lte: filter.age__lte,
     }));
     setIsClear(true);
   };
@@ -154,9 +176,29 @@ const Sidebar = ({
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
                 icon={
-                  <Image src={UniversityIcon} alt="university" className="image" />
+                  <Image
+                    src={UniversityIcon}
+                    alt="university"
+                    className="image"
+                  />
                 }
               />
+
+              <div className="my-[12px] range">
+                <label>
+                  Age
+                </label>
+                <div className="px-[12px] bg-[#222] py-[18px] rounded-[8px]">
+                <InputRange
+                  maxValue={40}
+                  minValue={18}
+                  value={ageV}
+                  onChange={handleChangeAge}
+                  
+                />
+                </div>
+              </div>
+
               <SelectForm
                 label={"Competition"}
                 placeholder={"Competition"}
@@ -175,9 +217,7 @@ const Sidebar = ({
                 options={psOptions}
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
-                icon={
-                  <Image src={PlaceIcon} alt="city" className="image" />
-                }
+                icon={<Image src={PlaceIcon} alt="city" className="image" />}
               />
               <SelectForm
                 label={"Team Member"}
@@ -197,9 +237,7 @@ const Sidebar = ({
                 name={"domain_id"}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
-                icon={
-                  <Image src={DomainIcon} alt="domain" className="image" />
-                }
+                icon={<Image src={DomainIcon} alt="domain" className="image" />}
               />
               <SelectForm
                 label={"Skill set"}
@@ -208,9 +246,7 @@ const Sidebar = ({
                 options={s}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
-                icon={
-                  <Image src={SkillIcon} alt="skill" className="image" />
-                }
+                icon={<Image src={SkillIcon} alt="skill" className="image" />}
               />
               <div
                 className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"

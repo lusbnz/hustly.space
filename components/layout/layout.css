@@ -137,3 +137,11 @@
     width: calc((90 / 1920) * 100vw);
     height: calc((90 / 1920) * 100vw);
 }
+
+.range{
+    label{
+        color: #484848;
+        font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
+        font-weight: 500;
+    }
+}

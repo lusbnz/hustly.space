@@ -30,6 +30,8 @@ export default function Layout({ children }) {
     competition__id: "",
     domain_id: "",
     skill_set: "",
+    age__gte: 20,
+    age__lte: 25,
   });
 
   const isHaveSidebar = pathname === "/news";
@@ -65,6 +67,8 @@ export default function Layout({ children }) {
         competition__id: filter.competition__id,
         domain_id: filter.domain_id,
         skill_set: filter.skill_set,
+        age__gte: filter.age__gte,
+        age__lte: filter.age__lte,
       };
 
       for (const key in data) {
@@ -151,6 +155,7 @@ export default function Layout({ children }) {
             toggleOpenModalSetting={toggleOpenModalSetting}
             isSidebarLoading={isSidebarLoading}
             search={search}
+            filter={filter}
             setFilter={setFilter}
           />
         )}

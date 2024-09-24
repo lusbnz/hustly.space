@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
@@ -12,10 +12,16 @@ import { useRouter } from "next/navigation";
 import { authLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/reducers/userInfoSlice";
 
 const AuthLogin = () => {
+  const dispatch = useDispatch()
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    dispatch(setUserInfo(null))
+  }, [])
   const {
     register,
     handleSubmit,

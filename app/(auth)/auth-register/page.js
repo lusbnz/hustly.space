@@ -16,7 +16,6 @@ import { BeatLoader } from "react-spinners";
 const AuthRegister = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     register,
     handleSubmit,

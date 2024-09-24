@@ -78,6 +78,10 @@ const Chats = () => {
     }
   }, [isFetched]);
 
+  const toggleSetLoadingDetail = (key) => {
+    setIsLoadingDetail(key)
+  }
+
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
     setIsActiveChat(null);
@@ -275,7 +279,7 @@ const Chats = () => {
               setIsLoading={setIsLoadingDetail}
             />
           </div>
-          {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
+          {isModalOpen && <ModalDetail isOpen={isModalOpen} isChat={true} setIsLoadingDetail={setIsLoadingDetail}/>}
         </>
       )}
     </div>
