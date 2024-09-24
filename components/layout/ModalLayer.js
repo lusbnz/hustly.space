@@ -19,7 +19,7 @@ import { setUserInfo } from "@/reducers/userInfoSlice";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.userInfo);  
+  const userInfo = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
@@ -44,7 +44,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       bio: userInfo?.bio,
       competition: userInfo?.competition?.[0]?.id,
       year_competition: userInfo?.competition?.[0]?.year_competition,
-      domain: userInfo?.domain?.[0]?.id,
+      domain: userInfo?.domain?.[0]?.parent_domain || userInfo?.domain?.[0]?.id,
+      sub_domain: !!userInfo?.domain?.[0]?.parent_domain
+        ? userInfo?.domain?.[0]?.id
+        : null,
       skill_set: userInfo?.skill_set,
       // bio_image: userInfo?.bio_image,
     },
@@ -73,7 +76,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         const data = new FormData();
         data.append("file", file);
         const res = await uploadFile(data);
-        setSelectedImage(URL.createObjectURL(file));
         setValue("bio_image", [res]);
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -92,7 +94,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       return;
     }
 
-    data.domain = [data.domain];
+    if (data.sub_domain) {
+      data.domain = [data.sub_domain];
+      delete data.sub_domain;
+    } else {
+      data.domain = [data.domain];
+    }
+
     data.competition = [
       {
         id: data.competition,
@@ -100,7 +108,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       },
     ];
     delete data.year_competition;
-    if(data.bio_image?.length > 0){
+    if (data.bio_image?.length > 0) {
       data.bio_image = [data.bio_image[0]?.id];
     }
     updateProfile(data)
@@ -270,7 +278,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               required={true}
             />
             {errors.age && (
-              <div className="text-[#ff0000] text-[12px] mb-2">{errors.age.message || "Please fill your age"}</div>
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {errors.age.message || "Please fill your age"}
+              </div>
             )}
             <div className="form-double-item">
               <SelectForm
@@ -338,11 +348,42 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               placeholder={"Domain"}
               noIcon={true}
               haveSub={true}
-              cstyle={{ marginBottom: "12px" }}
+              cstyle={{ marginBottom: `${!watch("domain") ? "12px" : "0px"}` }}
+              sub={watch("domain")}
               name={"domain"}
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("domain")}
             />
+            {watch("domain") && (
+              <div className="bg-[#222] flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]">
+                {domainOptions
+                  ?.find((item) => item.value === watch("domain"))
+                  ?.subOptions?.map((item) => {
+                    return (
+                      <span
+                        key={item.value}
+                        className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
+                        style={{
+                          backgroundColor:
+                            item.value === watch("sub_domain")
+                              ? "#fff"
+                              : "#343434",
+                          color:
+                            item.value === watch("sub_domain")
+                              ? "#000"
+                              : "#fff",
+                        }}
+                        onClick={() => {
+                          setValue("sub_domain", item.value);
+                        }}
+                      >
+                        {item.label}
+                      </span>
+                    );
+                  })}
+              </div>
+            )}
+
             <SelectForm
               options={s}
               label={"Skill set"}
@@ -354,13 +395,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("skill_set")}
             />
-            <InputForm
+            {/* <InputForm
               title={"Archivement"}
               placeholder={"Archivement"}
               register={register}
               name={"archivement"}
               isEditor={true}
-            />
+            /> */}
             <InputForm
               title={"Tldr"}
               placeholder={

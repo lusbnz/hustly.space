@@ -96,6 +96,13 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
     };
   });
 
+  const competitionOptions = competition?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+    };
+  });
+
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
@@ -104,6 +111,32 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
   });
 
   const uni = universityOptions.find((item) => item.id === userInfo?.city);
+  let com;
+
+  if (userInfo?.competition?.length > 0) {
+    com = competitionOptions.find(
+      (item) => item.value === userInfo?.competition[0]?.id
+    );
+  }
+
+  function findLabelById(id, parentDomain) {
+    console.log("id", id);
+    console.log("parentDomain", parentDomain);
+    console.log("domainOptions", domainOptions);
+
+    if (parentDomain === null) {
+      const mainDomain = domainOptions.find((domain) => domain.value === id);
+      return mainDomain ? mainDomain.label : "Not found";
+    }
+
+    const parent = domainOptions.find(
+      (domain) => domain.value === parentDomain
+    );
+    if (!parent || !parent.subOptions) return "Not found";
+
+    const subOption = parent.subOptions.find((sub) => sub.value === id);
+    return subOption ? subOption.label : "Not found";
+  }
 
   return (
     <>
@@ -214,9 +247,13 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
                     </div>
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">COMPETITION</span>
-                      <span className="value">
-                        {userInfo?.competition?.[0]?.year_competition}
-                      </span>
+                      {userInfo?.competition?.[0] && (
+                        <span className="value">
+                          {com.label}
+                          {" - "}
+                          {userInfo?.competition?.[0]?.year_competition}
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">TEAM MEMBER</span>
@@ -241,13 +278,12 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">DOMAIN</span>
                       <div>
-                        {userInfo?.domain[0] && (
+                        {userInfo?.domain?.length > 0 && (
                           <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
-                            {
-                              domainOptions?.find(
-                                (item) => item.value === userInfo?.domain[0]?.id
-                              )?.label
-                            }
+                            {findLabelById(
+                              userInfo.domain?.[0]?.id,
+                              userInfo.domain?.[0]?.parent_domain
+                            )}
                           </span>
                         )}
                       </div>

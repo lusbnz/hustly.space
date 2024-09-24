@@ -62,6 +62,7 @@
     display: flex;
     align-items: center;
     gap: calc((14 / 1920) * 100vw);
+    justify-content: space-between;
     .avatar {
         width: calc((64 / 1920) * 100vw);
         height: calc((64 / 1920) * 100vw);

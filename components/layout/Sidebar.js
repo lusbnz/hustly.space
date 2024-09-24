@@ -11,6 +11,7 @@ import CupIcon from "@/public/icons/cup-icon.svg";
 import DomainIcon from "@/public/icons/domain-icon.svg";
 import SkillIcon from "@/public/icons/skill-icon.svg";
 import PlaceIcon from "@/public/icons/place-icon.svg";
+import SignoutIcon from "@/public/icons/sign-out.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
@@ -127,13 +128,18 @@ const Sidebar = ({
     };
   });
 
+  const handleSignout = () => {
+    localStorage.removeItem("accessToken");
+    router.push("/auth-login");
+  };
+
   return (
     <>
       <div className="h-[95vh] bg-[#171717] rounded-[20px] sidebar-wrapper">
         {isSidebarLoading ? (
           <>
             <div className="w-100 h-[100vh] flex items-center justify-center text-white font-[500] text-[24px]">
-              <BeatLoader size={16} color="#fff" />
+              <BeatLoader size={10} color="#fff" />
             </div>
           </>
         ) : (
@@ -234,7 +240,7 @@ const Sidebar = ({
                 label={"Domain"}
                 placeholder={"Domain"}
                 options={domainOptions}
-                name={"domain_id"}
+                name={"domain__id"}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={DomainIcon} alt="domain" className="image" />}
@@ -256,6 +262,7 @@ const Sidebar = ({
               </div>
             </div>
             <div className="sidebar-footer">
+              <div className="flex items-center gap-[12px]">  
               {userInfo?.avatar ? (
                 <div className="avatar-image">
                   <Image
@@ -283,6 +290,10 @@ const Sidebar = ({
                   </div>
                   Profile Setting
                 </span>
+              </div>
+              </div>
+              <div onClick={handleSignout} className="signout">
+                <Image src={SignoutIcon} alt="signout" className="image" />
               </div>
             </div>
           </>

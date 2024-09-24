@@ -15,6 +15,7 @@ const SelectForm = ({
   noLabel,
   haveSub,
   cstyle,
+  sub,
   handleChangeFilter,
   name,
   defaultValue,
@@ -29,7 +30,7 @@ const SelectForm = ({
       <components.SingleValue {...props}>
         <div
           style={{
-            borderRadius: "20px",
+            borderRadius: sub ? "20px 20px 0 0" : "20px 20px 20px 20px",
             width: "100%",
             display: "flex",
             alignItems: "center",
@@ -77,7 +78,7 @@ const SelectForm = ({
     <components.Placeholder {...props}>
       <div
         style={{
-          borderRadius: "20px",
+          borderRadius: sub ? "20px 20px 0 0" : "20px 20px 20px 20px",
           width: "100%",
           display: "flex",
           alignItems: "center",
@@ -117,7 +118,7 @@ const SelectForm = ({
     control: (provided, state) => ({
       ...provided,
       borderColor: state.isFocused ? "#222222" : "#222222",
-      borderRadius: "8px",
+      borderRadius: sub ? "8px 8px 0 0" : "8px 8px 8px 8px",
       boxShadow: "none",
       backgroundColor: "#222222",
       "&:hover": {
