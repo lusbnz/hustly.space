@@ -69,7 +69,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
           ) : (
             <>
               <div className="card-header flex mb-4">
-              <div onClick={toggleOpenModal}>
+              <div onClick={toggleOpenModal} className="cursor-pointer">
                   <Image
                     src={BackIcon}
                     alt="back-icon"
