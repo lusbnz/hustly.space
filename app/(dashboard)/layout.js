@@ -2,7 +2,7 @@
 
 import Sidebar from "@/components/layout/Sidebar";
 import "./styles.css";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import ModalLayer from "@/components/layout/ModalLayer";
 import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
@@ -16,6 +16,7 @@ import { setDomain } from "@/reducers/domainSlice";
 import { setSuggestion } from "@/reducers/suggestionSlice";
 
 export default function Layout({ children }) {
+  const accessToken = localStorage.getItem("accessToken");
   const pathname = usePathname();
   const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -34,6 +35,7 @@ export default function Layout({ children }) {
     age__lte: 25,
     competition__year: ""
   });
+  const [isFirstSetting, setIsFirstSetting] = useState(false);
 
   const isHaveSidebar = pathname === "/news";
 
@@ -55,9 +57,11 @@ export default function Layout({ children }) {
       });
   };
 
-  // useEffect(() => {
-  //   fetchSuggestion();
-  // }, []);
+  useEffect(() => {
+    if(!accessToken && isHaveSidebar){
+      redirect("/auth-login");
+    }
+  }, []);
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -96,6 +100,7 @@ export default function Layout({ children }) {
     getProfile()
       .then((res) => {
         if(!res.is_update_setting){
+          setIsFirstSetting(true)
           setOpenModalSetting(true)
         }
         dispatch(setUserInfo(res));
@@ -172,7 +177,7 @@ export default function Layout({ children }) {
           children
         )}
         {openModalSetting && (
-          <ModalLayer toggleOpenModalSetting={toggleOpenModalSetting} />
+          <ModalLayer toggleOpenModalSetting={toggleOpenModalSetting} isFirstSetting={isFirstSetting}/>
         )}
       </div>
     </>
