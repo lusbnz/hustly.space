@@ -20,7 +20,7 @@ import { s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
 
-const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
+const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const dispatch = useDispatch();
   const userInfomation = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
@@ -67,21 +67,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat }) => {
   }, [isOpen]);
 
   const handleOpenChat = () => {
-    const data = {
-      to_user_id: isOpen,
-    };
-    createThread(userInfomation.id, data)
-      .then((res) => {
-        if (res.is_create) {
-          setThreadId(res.thread_id);
-          setOpenFirstChat(true);
-        } else {
-          router.push(`/chats?recipientId=${isOpen}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (check === null) {
+      setOpenFirstChat(true);
+    } else {
+      router.push(`/chats?recipientId=${isOpen}`);
+    }
   };
   const isHideMessage = pathname === "/chats";
 

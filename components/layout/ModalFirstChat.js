@@ -10,6 +10,7 @@ import TextEditor from "../common/TextEditor";
 import { BeatLoader } from "react-spinners";
 import { sendMessage } from "@/api/message";
 import BackIcon from "@/public/icons/back-icon.svg";
+import { createThread } from "@/api/thread";
 
 const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
   const user = useSelector((state) => state.userInfo);
@@ -33,13 +34,24 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
 
   const handleSend = (content, image) => {
     setIsLoading(true);
-    const data = {
+        const data = {
+      to_user_id: userInfo.id,
+    };
+    createThread(user.id, data)
+      .then((res) => {
+        toggleOpenModal()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const messageData = {
       content: content,
     };
     if (image) {
-      data.media = [image];
+      messageData.media = [image];
     }
-    sendMessage(user?.id, threadId, data)
+    sendMessage(user?.id, threadId, messageData)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
@@ -73,8 +85,8 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
                   <Image
                     src={BackIcon}
                     alt="back-icon"
-                    width={12}
-                    height={12}
+                    width={16}
+                    height={16}
                   />
                 </div>
                 <div className="avatar">

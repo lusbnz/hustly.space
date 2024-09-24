@@ -9,6 +9,7 @@ const InputForm = ({
   required,
   isEditor,
   isPassword,
+  tstyle
 }) => {
   return (
     <div className="input-form">
@@ -16,6 +17,7 @@ const InputForm = ({
       {isEditor ? (
         <textarea
           placeholder={placeholder}
+          style={tstyle}
           {...(register && register(name, { required }))}
         />
       ) : (

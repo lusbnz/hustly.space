@@ -19,3 +19,8 @@ export const deleteThread = async (profileId, threadId, data) => {
     const res = await API.delete(`/profile/${profileId}/thread/${threadId}`, data);
     return res.data;
 }
+
+export const checkThread = async (profileId, data) => {
+    const res = await API.post(`/profile/${profileId}/thread/check`, data);
+    return res.data;
+}

@@ -32,6 +32,7 @@ export default function Layout({ children }) {
     skill_set: "",
     age__gte: 18,
     age__lte: 25,
+    competition__year: ""
   });
 
   const isHaveSidebar = pathname === "/news";
@@ -69,6 +70,7 @@ export default function Layout({ children }) {
         skill_set: filter.skill_set,
         age__gte: filter.age__gte,
         age__lte: filter.age__lte,
+        competition__year: filter.competition__year
       };
 
       for (const key in data) {
@@ -93,6 +95,9 @@ export default function Layout({ children }) {
     setIsSidebarLoading(true);
     getProfile()
       .then((res) => {
+        if(!res.is_update_setting){
+          setOpenModalSetting(true)
+        }
         dispatch(setUserInfo(res));
       })
       .catch((err) => {

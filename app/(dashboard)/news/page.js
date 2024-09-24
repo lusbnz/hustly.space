@@ -9,6 +9,7 @@ import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { checkThread } from "@/api/thread";
 
 const News = () => {
   const userInfo = useSelector((state) => state.userInfo);
@@ -16,6 +17,7 @@ const News = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suggestionData, setSuggestionData] = useState([]);
   const suggestion = useSelector((state) => state.suggestion);
+  const [check, setCheck] = useState(null);
 
   useEffect(() => {
     setSuggestionData(suggestion.data);
@@ -25,6 +27,16 @@ const News = () => {
     if (isModalOpen === index) {
       setIsModalOpen(false);
     } else {
+      const data = {
+        to_user_id: index,
+      }
+      checkThread(userInfo.id, data)
+        .then((res) => {
+          setCheck(res.thread_id)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       setIsModalOpen(index);
     }
   };
@@ -136,7 +148,7 @@ const News = () => {
           ))}
         </div>
       </div>
-      {isModalOpen !== false && <ModalDetail isOpen={isModalOpen} />}
+      {isModalOpen !== false && <ModalDetail isOpen={isModalOpen} check={check} />}
     </>
   );
 };

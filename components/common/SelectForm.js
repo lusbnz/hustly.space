@@ -35,7 +35,7 @@ const SelectForm = ({
             display: "flex",
             alignItems: "center",
             gap: "calc((8 / 1920) * 100vw)",
-            paddingLeft: "calc((18 / 1920) * 100vw)",
+            paddingLeft: "calc((8 / 1920) * 100vw)",
             paddingRight: "calc((18 / 1920) * 100vw)",
             fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
             color: "#ffffff",
@@ -67,7 +67,7 @@ const SelectForm = ({
               )}
             </div>
           )}
-          {children?.length > 30 ? children?.slice(0, 30) + "..." : children}
+          {children?.length > 20 ? children?.slice(0, 20) + "..." : children}
         </div>
           {/* {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>} */}
       </components.SingleValue>
@@ -83,7 +83,7 @@ const SelectForm = ({
           display: "flex",
           alignItems: "center",
           gap: "calc((8 / 1920) * 100vw)",
-          paddingLeft: "calc((18 / 1920) * 100vw)",
+          paddingLeft: "calc((8 / 1920) * 100vw)",
           paddingRight: "calc((18 / 1920) * 100vw)",
           fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
           lineHeight: "clamp(10px, calc((16 / 1920) * 100vw), 26px)"
@@ -167,7 +167,7 @@ const SelectForm = ({
           <label htmlFor="custom-select" style={{ color: "#484848" }}>
             {label || "UNIVERSITY"}
           </label>
-          {selectedValue && (
+          {/* {selectedValue && (
             <Image
               src={Trash}
               alt="trash"
@@ -177,7 +177,7 @@ const SelectForm = ({
                 handleChangeFilter(name, null);
               }}
             />
-          )}
+          )} */}
         </div>
       )}
       <Select

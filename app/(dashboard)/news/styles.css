@@ -28,7 +28,7 @@
     border: 1px solid #363636;
     border-radius: 20px;
     width: calc((454 / 1920) * 100vw);
-    /* min-height: calc((288 / 1080) * 100vh);  */
+    min-height: calc((288 / 1080) * 100vh); 
     cursor: pointer;
     padding: calc((24 / 1920) * 100vw);
     &:hover{
@@ -66,6 +66,10 @@
 
 .card-body{
     margin-top: calc((18 / 1080) * 100vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60%;
     .description{
         color: rgba(255, 255, 255, 0.40);
         font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);

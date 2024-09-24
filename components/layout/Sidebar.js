@@ -8,6 +8,7 @@ import Search from "@/public/icons/search-icon.svg";
 import UserIcon from "@/public/icons/user-icon.svg";
 import UniversityIcon from "@/public/icons/university-icon.svg";
 import CupIcon from "@/public/icons/cup-icon.svg";
+import YearIcon from "@/public/icons/year-icon.svg";
 import DomainIcon from "@/public/icons/domain-icon.svg";
 import SkillIcon from "@/public/icons/skill-icon.svg";
 import PlaceIcon from "@/public/icons/place-icon.svg";
@@ -15,7 +16,7 @@ import SignoutIcon from "@/public/icons/sign-out.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
-import { memberOptions, p, s } from "@/data/data";
+import { memberOptions, p, s, yearOptions } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
@@ -81,6 +82,7 @@ const Sidebar = ({
   });
 
   const handleChangeFilter = (name, value) => {
+    setIsClear(false);
     setFilter((prev) => ({
       ...prev,
       [name]: value,
@@ -97,6 +99,7 @@ const Sidebar = ({
       skill_set: "",
       age__gte: filter.age__gte,
       age__lte: filter.age__lte,
+      competition__year: ""
     }));
     setIsClear(true);
   };
@@ -225,21 +228,37 @@ const Sidebar = ({
                       />
                     )}
                   />
-                  <div className="text-white text-[12px]">{ageV.min} - {ageV.max}</div>
+                  <div className="text-white text-[12px]">
+                    {ageV.min} - {ageV.max}
+                  </div>
                 </div>
               </div>
 
-              <SelectForm
-                label={"Competition"}
-                placeholder={"Competition"}
-                options={competitionOptions}
-                name={"competition__id"}
-                handleChangeFilter={handleChangeFilter}
-                isClear={isClear}
-                icon={
-                  <Image src={CupIcon} alt="competition" className="image" />
-                }
-              />
+              <div className="flex w-100 items-center gap-[6px] bg-[#171717]">
+                <SelectForm
+                  label={"Competition"}
+                  placeholder={"Competition"}
+                  options={competitionOptions}
+                  name={"competition__id"}
+                  handleChangeFilter={handleChangeFilter}
+                  isClear={isClear}
+                  icon={
+                    <Image src={CupIcon} alt="competition" className="image" />
+                  }
+                />
+
+                <SelectForm
+                  label={"Year"}
+                  placeholder={"Year"}
+                  options={yearOptions}
+                  name={"competition__year"}
+                  handleChangeFilter={handleChangeFilter}
+                  isClear={isClear}
+                  icon={
+                    <Image src={YearIcon} alt="competition_year" className="image" />
+                  }
+                />
+              </div>
               <SelectForm
                 label={"City"}
                 placeholder={"City"}

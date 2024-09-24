@@ -23,6 +23,18 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
+
+  const domainOptions = domain?.map((item) => {
+    return {
+      value: item.id,
+      label: item.name,
+      subOptions: item.sub_domains.map((item) => ({
+        value: item.id,
+        label: item.name,
+      })),
+    };
+  });
+
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const {
@@ -44,12 +56,17 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       bio: userInfo?.bio,
       competition: userInfo?.competition?.[0]?.id,
       year_competition: userInfo?.competition?.[0]?.year_competition,
-      domain: userInfo?.domain?.[0]?.parent_domain || userInfo?.domain?.[0]?.id,
+      domain:
+        userInfo?.domain?.[0]?.parent_domain ||
+        userInfo?.domain?.[0]?.id ||
+        domainOptions?.[0]?.id,
       sub_domain: !!userInfo?.domain?.[0]?.parent_domain
         ? userInfo?.domain?.[0]?.id
         : null,
       skill_set: userInfo?.skill_set,
       bio_image: userInfo?.bio_image,
+      archivement: userInfo?.archivement?.[0]?.description,
+      archivement_domain: userInfo?.archivement?.[0]?.domain?.id,
     },
   });
 
@@ -111,6 +128,17 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     if (data.bio_image?.length > 0) {
       data.bio_image = [data.bio_image[0]?.id];
     }
+
+    if (data.archivement) {
+      data.archivement = [
+        {
+          description: data.archivement,
+          domain: data.archivement_domain,
+        },
+      ];
+      delete data.archivement_domain;
+    }
+
     updateProfile(data)
       .then((res) => {
         dispatch(setUserInfo(res));
@@ -148,17 +176,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       value: item.code,
       label: item.name,
     }));
-
-  const domainOptions = domain?.map((item) => {
-    return {
-      value: item.id,
-      label: item.name,
-      subOptions: item.sub_domains.map((item) => ({
-        value: item.id,
-        label: item.name,
-      })),
-    };
-  });
 
   const colorOptions = [
     {
@@ -395,13 +412,45 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("skill_set")}
             />
-            {/* <InputForm
-              title={"Archivement"}
-              placeholder={"Archivement"}
-              register={register}
-              name={"archivement"}
-              isEditor={true}
-            /> */}
+            <div className="relative h-[250px]">
+              <InputForm
+                title={"Archivement"}
+                placeholder={"Archivement"}
+                register={register}
+                name={"archivement"}
+                isEditor={true}
+                tstyle={{ height: "220px" }}
+              />
+              {watch("domain") && (
+                <div className="absolute bottom-0 flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]">
+                  {domainOptions
+                    ?.find((item) => item.value === watch("domain"))
+                    ?.subOptions?.map((item) => {
+                      return (
+                        <span
+                          key={item.value}
+                          className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
+                          style={{
+                            backgroundColor:
+                              item.value === watch("archivement_domain")
+                                ? "#fff"
+                                : "#343434",
+                            color:
+                              item.value === watch("archivement_domain")
+                                ? "#000"
+                                : "#fff",
+                          }}
+                          onClick={() => {
+                            setValue("archivement_domain", item.value);
+                          }}
+                        >
+                          {item.label}
+                        </span>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
             <InputForm
               title={"Tldr"}
               placeholder={
