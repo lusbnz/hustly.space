@@ -57,11 +57,11 @@ export default function Layout({ children }) {
       });
   };
 
-  useEffect(() => {
-    if(!accessToken && isHaveSidebar){
-      redirect("/auth-login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if(!accessToken && isHaveSidebar){
+  //     redirect("/auth-login");
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!isFirstRender) {
