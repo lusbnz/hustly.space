@@ -230,7 +230,7 @@ const ChatDetail = ({
               </>
             ))}
           </div>
-          {tab === "unread" || (!isMatch && lastSender !== userInfo?.id) ? (
+          {!isMatch ? (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
               <ButtonComponent
                 type={"button"}

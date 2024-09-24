@@ -54,9 +54,9 @@ export default function Layout({ children }) {
       });
   };
 
-  useEffect(() => {
-    fetchSuggestion();
-  }, []);
+  // useEffect(() => {
+  //   fetchSuggestion();
+  // }, []);
 
   useEffect(() => {
     if (!isFirstRender) {

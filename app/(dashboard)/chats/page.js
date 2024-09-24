@@ -173,6 +173,9 @@ const Chats = () => {
             <div className="chat-detail">
               {listThread
                 ?.filter((thread) => {
+                  // if (isActiveTab === "all") {
+                  //   return thread.is_match === true;
+                  // }
                   if (isActiveTab === "pinned") {
                     return thread.is_pin === true;
                   }
@@ -201,7 +204,7 @@ const Chats = () => {
                           thread.thread_id,
                           thread.recipient.id,
                           thread.is_match,
-                          thread.last_message.sender
+                          thread?.last_message?.sender
                         )
                       }
                     >

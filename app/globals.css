@@ -22,7 +22,7 @@ button:hover{
 /* styles/fonts.css */
 @font-face {
     font-family: 'Articulat CF';
-    src: url('/fonts/ArticulatCF/ArticulatCF-Regular.otf') format('opentype');
+    src: url('/fonts/ArticulatCF/SVN-ArticulatCF-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
   }
@@ -30,7 +30,7 @@ button:hover{
   /* Nếu có các kiểu chữ khác, hãy thêm chúng */
   @font-face {
     font-family: 'Articulat CF';
-    src: url('/fonts/ArticulatCF/ArticulatCF-Bold.otf') format('opentype');
+    src: url('/fonts/ArticulatCF/SVN-ArticulatCF-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
   }
