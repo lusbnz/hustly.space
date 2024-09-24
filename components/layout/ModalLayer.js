@@ -68,6 +68,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       archivement: userInfo?.archivement?.[0]?.description,
       archivement_domain: userInfo?.archivement?.[0]?.domain?.id,
     },
+    mode: 'onSubmit',
   });
 
   const handleImageChange = async (e) => {

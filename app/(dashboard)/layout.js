@@ -16,7 +16,7 @@ import { setDomain } from "@/reducers/domainSlice";
 import { setSuggestion } from "@/reducers/suggestionSlice";
 
 export default function Layout({ children }) {
-  const accessToken = localStorage.getItem("accessToken");
+  // const accessToken = localStorage.getItem("accessToken");
   const pathname = usePathname();
   const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
