@@ -191,7 +191,7 @@ const Sidebar = ({
 
               <div className="my-[12px] range">
                 <label>Age</label>
-                <div className="p-[12px] bg-[#222] rounded-[8px] relative flex items-center gap-[8px]">
+                <div className="p-[12px] bg-[#222] rounded-[8px] relative flex flex-wrap items-center gap-[8px]">
                   <Range
                     step={1}
                     min={18}

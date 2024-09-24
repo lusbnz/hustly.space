@@ -103,7 +103,11 @@ const News = () => {
                 </div>
               </div>
               <div className="card-body">
-                <span className="description">{item.bio}</span>
+                <span className="description">
+                  {item.bio?.length > 100
+                    ? item.bio?.slice(0, 100) + "..."
+                    : item.bio}
+                </span>
                 <div className="tags">
                   {item.domain?.map((item) => {
                     const pd = item.parent_domain;

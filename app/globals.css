@@ -18,3 +18,24 @@ button:hover{
     scrollbar-width: none;
     scrollbar-color: #888 #f1f1f1;
 }
+
+/* styles/fonts.css */
+@font-face {
+    font-family: 'Articulat CF';
+    src: url('/fonts/ArticulatCF/ArticulatCF-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Nếu có các kiểu chữ khác, hãy thêm chúng */
+  @font-face {
+    font-family: 'Articulat CF';
+    src: url('/fonts/ArticulatCF/ArticulatCF-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  /* Ví dụ sử dụng font */
+body {
+    font-family: 'Articulat CF', sans-serif;
+  }
