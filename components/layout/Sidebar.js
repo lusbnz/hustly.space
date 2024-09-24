@@ -18,8 +18,8 @@ import SelectForm from "../common/SelectForm";
 import { memberOptions, p, s } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
+// import InputRange from "react-input-range";
+// import "react-input-range/lib/css/index.css";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -190,7 +190,7 @@ const Sidebar = ({
                 }
               />
 
-              <div className="my-[12px] range">
+              {/* <div className="my-[12px] range">
                 <label>
                   Age
                 </label>
@@ -203,7 +203,7 @@ const Sidebar = ({
                   
                 />
                 </div>
-              </div>
+              </div> */}
 
               <SelectForm
                 label={"Competition"}
