@@ -12,11 +12,10 @@ import { sendMessage } from "@/api/message";
 import BackIcon from "@/public/icons/back-icon.svg";
 import { createThread } from "@/api/thread";
 
-const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
+const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const user = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
@@ -33,13 +32,14 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
   const uni = universityOptions.find((item) => item.id === userInfo?.city);
 
   const handleSend = (content, image) => {
+    let threadId;
     setIsLoading(true);
         const data = {
       to_user_id: userInfo.id,
     };
     createThread(user.id, data)
       .then((res) => {
-        toggleOpenModal()
+        threadId = res.thread_id;
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +51,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
     if (image) {
       messageData.media = [image];
     }
-    sendMessage(user?.id, threadId, messageData)
+    sendMessage(user.id, threadId, messageData)
       .then((res) => {})
       .catch((err) => {
         console.log(err);

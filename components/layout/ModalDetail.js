@@ -304,7 +304,6 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
       {openFirstChat && (
         <ModalFirstChat
           isOpen={openFirstChat}
-          threadId={threadId}
           userInfo={userInfo}
           toggleOpenModal={toggleFirstChat}
         />
