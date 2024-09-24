@@ -95,7 +95,7 @@ const Sidebar = ({
       team_member_count: "",
       city: "",
       competition__id: "",
-      domain_id: "",
+      domain__id: "",
       skill_set: "",
       age__gte: filter.age__gte,
       age__lte: filter.age__lte,
