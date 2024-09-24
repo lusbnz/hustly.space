@@ -25,6 +25,8 @@ const Chats = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [isChangeChat, setIsChangeChat] = useState(false);
   const [isLoadingDetail, setIsLoadingDetail] = useState(true);
+  const [isMatch, setIsMatch] = useState(false);
+  const [lastSender, setLastSender] = useState(null);
 
   const fetchThread = () => {
     getThread(userInfo?.id)
@@ -79,8 +81,8 @@ const Chats = () => {
   }, [isFetched]);
 
   const toggleSetLoadingDetail = (key) => {
-    setIsLoadingDetail(key)
-  }
+    setIsLoadingDetail(key);
+  };
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
@@ -93,11 +95,17 @@ const Chats = () => {
     }
   };
 
-  const handleOpenChatDetail = (thread_id, recipient_id) => {
-    setIsLoadingDetail(true)
+  const handleOpenChatDetail = (thread_id, recipient_id, is_match, last_sender) => {
+    setIsLoadingDetail(true);
     setIsActiveChat(thread_id);
-    setIsModalOpen(recipient_id);
     setIsChangeChat(thread_id);
+    setLastSender(last_sender);
+    setIsMatch(is_match);
+    if (thread_id === null) {
+      setIsModalOpen(false);
+    } else {
+      setIsModalOpen(recipient_id);
+    }
 
     router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
   };
@@ -191,7 +199,9 @@ const Chats = () => {
                       onClick={() =>
                         handleOpenChatDetail(
                           thread.thread_id,
-                          thread.recipient.id
+                          thread.recipient.id,
+                          thread.is_match,
+                          thread.last_message.sender
                         )
                       }
                     >
@@ -277,9 +287,18 @@ const Chats = () => {
               isChangeChat={isChangeChat}
               isLoading={isLoadingDetail}
               setIsLoading={setIsLoadingDetail}
+              isMatch={isMatch}
+              setIsActiveTab={setIsActiveTab}
+              lastSender={lastSender}
             />
           </div>
-          {isModalOpen && <ModalDetail isOpen={isModalOpen} isChat={true} setIsLoadingDetail={setIsLoadingDetail}/>}
+          {isModalOpen && (
+            <ModalDetail
+              isOpen={isModalOpen}
+              isChat={true}
+              setIsLoadingDetail={setIsLoadingDetail}
+            />
+          )}
         </>
       )}
     </div>

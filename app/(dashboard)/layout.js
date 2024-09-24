@@ -30,7 +30,7 @@ export default function Layout({ children }) {
     competition__id: "",
     domain__id: "",
     skill_set: "",
-    age__gte: 20,
+    age__gte: 18,
     age__lte: 25,
   });
 

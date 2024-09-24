@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import TextEditor from "../common/TextEditor";
 import { BeatLoader } from "react-spinners";
 import { sendMessage } from "@/api/message";
+import BackIcon from "@/public/icons/back-icon.svg";
 
 const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
   const user = useSelector((state) => state.userInfo);
@@ -35,8 +36,8 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
     const data = {
       content: content,
     };
-    if(image){
-        data.media = [image]
+    if (image) {
+      data.media = [image];
     }
     sendMessage(user?.id, threadId, data)
       .then((res) => {})
@@ -68,7 +69,14 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
           ) : (
             <>
               <div className="card-header flex mb-4">
-              <span onClick={toggleOpenModal}>back</span>
+                <span onClick={toggleOpenModal}>
+                  <Image
+                    src={BackIcon}
+                    alt="back-icon"
+                    width={12}
+                    height={12}
+                  />
+                </span>
 
                 <div className="avatar">
                   {userInfo?.avatar?.file && (

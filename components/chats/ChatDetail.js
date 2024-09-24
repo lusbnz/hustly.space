@@ -21,8 +21,11 @@ const ChatDetail = ({
   tab,
   setChatId,
   isChangeChat,
-  isLoading, 
-  setIsLoading
+  isLoading,
+  setIsLoading,
+  isMatch,
+  setIsActiveTab,
+  lastSender
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
   const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -111,9 +114,10 @@ const ChatDetail = ({
 
   const handleAccept = () => {
     const data = {
-      is_matched: true,
+      is_match: true,
     };
     updateThread(userInfo?.id, chatId, data);
+    setIsActiveTab("all")
   };
 
   return (
@@ -143,7 +147,9 @@ const ChatDetail = ({
                 )}
               </div>
               <div className="chat-infomation">
-                <span className="chat-name">{recipientInfo?.first_name} {recipientInfo?.last_name}</span>
+                <span className="chat-name">
+                  {recipientInfo?.first_name} {recipientInfo?.last_name}
+                </span>
                 <span className="chat-location">
                   {
                     psOptions?.find(
@@ -197,9 +203,9 @@ const ChatDetail = ({
                   >
                     <span className="message-infomation">
                       {!checkIsMe(message)
-                        ? `${recipientInfo?.first_name} ${recipientInfo?.last_name} - ${moment(
-                            message.timestamp
-                          ).format("HH:mm")}`
+                        ? `${recipientInfo?.first_name} ${
+                            recipientInfo?.last_name
+                          } - ${moment(message.timestamp).format("HH:mm")}`
                         : `You - ${moment(message.timestamp).format("HH:mm")}`}
                     </span>
                     <div
@@ -224,7 +230,7 @@ const ChatDetail = ({
               </>
             ))}
           </div>
-          {tab === "unread" ? (
+          {tab === "unread" || (!isMatch && lastSender !== userInfo?.id) ? (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
               <ButtonComponent
                 type={"button"}
