@@ -40,25 +40,25 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
     createThread(user.id, data)
       .then((res) => {
         threadId = res.thread_id;
+        const messageData = {
+          content: content,
+        };
+        if (image) {
+          messageData.media = [image];
+        }
+        
+        sendMessage(user.id, threadId, messageData)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(true);
+          toggleOpenModal();
+        });
       })
       .catch((err) => {
         console.log(err);
-      });
-
-    const messageData = {
-      content: content,
-    };
-    if (image) {
-      messageData.media = [image];
-    }
-    sendMessage(user.id, threadId, messageData)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(true);
-        toggleOpenModal();
       });
   };
 
