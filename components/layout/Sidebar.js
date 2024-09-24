@@ -69,7 +69,6 @@ const Sidebar = ({
     if (e.key === "Enter") {
       if (searchValue !== "") {
         search(searchValue);
-        setSearchValue("");
       }
     }
   };
