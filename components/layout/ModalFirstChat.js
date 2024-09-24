@@ -69,15 +69,14 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal, threadId }) => {
           ) : (
             <>
               <div className="card-header flex mb-4">
-                <span onClick={toggleOpenModal}>
+              <div onClick={toggleOpenModal}>
                   <Image
                     src={BackIcon}
                     alt="back-icon"
                     width={12}
                     height={12}
                   />
-                </span>
-
+                </div>
                 <div className="avatar">
                   {userInfo?.avatar?.file && (
                     <Image
