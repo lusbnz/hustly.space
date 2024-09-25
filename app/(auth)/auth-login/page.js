@@ -68,7 +68,7 @@ const AuthLogin = () => {
         <div className="form-container">
           <div className="form-header">
             <h1 className="mb-[16px]">Login account</h1>
-            <h3>Welcome to Hustly.space, Lets create your account</h3>
+            <h3>Welcome to hustly.space, champ</h3>
           </div>
           <div className="form-wrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,9 +107,9 @@ const AuthLogin = () => {
                 />
 
                 <span>
-                  Already have an account?
+                  Dont have an account?{" "}
                   <Link className="action" href={"/auth-register"}>
-                    Create my account
+                    Sign up
                   </Link>
                 </span>
               </div>

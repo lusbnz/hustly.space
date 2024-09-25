@@ -68,7 +68,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       archivement: userInfo?.archivement?.[0]?.description,
       archivement_domain: userInfo?.archivement?.[0]?.domain?.id,
     },
-    mode: 'onSubmit',
   });
 
   const handleImageChange = async (e) => {
@@ -185,12 +184,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         "(ferno): Pioneering spirit, fierce competition, unwavering determination, and the power to inspire others toward success.",
     },
     {
-      value: "#00ff00",
+      value: "#0000ff",
       label:
         "(ocea): Detail-oriented, speak little but do much, the silent hero of the team, ensuring every detail is completed flawlessly.",
     },
     {
-      value: "#0000ff",
+      value: "#00ff00",
       label:
         "(jade): The glue of the team, they excel at listening, relieving tension, and understanding each member, helping everyone move forward in unity.",
     },
@@ -287,7 +286,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("color")}
               isColor={true}
+              required={true}
             />
+            {errors.color && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
             <InputForm
               title={"Age"}
               placeholder={"Age"}
@@ -297,7 +302,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             />
             {errors.age && (
               <div className="text-[#ff0000] text-[12px] mb-2">
-                {errors.age.message || "Please fill your age"}
+                {"This field is required"}
               </div>
             )}
             <div className="form-double-item">
@@ -309,6 +314,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"city"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("city")}
+                required={true}
               />
               <SelectForm
                 options={dsOptions}
@@ -318,8 +324,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"district"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("district")}
+                required={true}
               />
             </div>
+            {(errors.city || errors.district) && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
             <div className="form-double-item">
               <SelectForm
                 options={universityOptions}
@@ -329,6 +341,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"university"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("university")}
+                required={true}
               />
               <SelectForm
                 options={memberOptions}
@@ -338,8 +351,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"team_member_count"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("team_member_count")}
+                required={true}
               />
             </div>
+            {(errors.university || errors.team_member_count) && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
             <div className="form-double-item">
               <SelectForm
                 options={competitionOptions}
@@ -349,6 +368,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"competition"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("competition")}
+                required={true}
               />
               <SelectForm
                 options={yearOptions}
@@ -358,22 +378,38 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"year_competition"}
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("year_competition")}
+                required={true}
               />
             </div>
+            {(errors.competition || errors.year_competition) && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
             <SelectForm
               options={domainOptions}
               label={"Domain"}
               placeholder={"Domain"}
               noIcon={true}
               haveSub={true}
-              cstyle={{ marginBottom: `${!watch("domain") ? "12px" : "0px"}` }}
+              cstyle={{
+                marginBottom: `${!watch("domain") ? "12px" : "0px"}`,
+              }}
               sub={watch("domain")}
               name={"domain"}
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("domain")}
+              required={true}
             />
             {watch("domain") && (
-              <div className="bg-[#222] flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]">
+              <div
+                className="bg-[#171717] flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]"
+                style={{
+                  borderBottom: "1px solid #2e2e2e",
+                  borderLeft: "1px solid #2e2e2e",
+                  borderRight: "1px solid #2e2e2e",
+                }}
+              >
                 {domainOptions
                   ?.find((item) => item.value === watch("domain"))
                   ?.subOptions?.map((item) => {
@@ -402,6 +438,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
+            {errors.domain && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
+
             <SelectForm
               options={s}
               label={"Skill set"}
@@ -412,7 +454,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               name={"skill_set"}
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("skill_set")}
+              required={true}
             />
+            {errors.skill_set && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
+
             <div className="relative h-[250px]">
               <InputForm
                 title={"Archivement"}
@@ -421,6 +470,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 name={"archivement"}
                 isEditor={true}
                 tstyle={{ height: "220px" }}
+                required={true}
               />
               {watch("domain") && (
                 <div className="absolute bottom-0 flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]">
@@ -452,6 +502,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 </div>
               )}
             </div>
+            {errors.archivement && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
+
             <InputForm
               title={"Tldr"}
               placeholder={
@@ -460,7 +516,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               register={register}
               name={"bio"}
               isEditor={true}
+              required={true}
             />
+            {errors.bio && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
+
             <div className="more">
               <label>Bio Image</label>
               <div className="flex items-center gap-[6px]">
@@ -495,6 +558,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 </div>
               </div>
             </div>
+            {errors.bio_image && (
+              <div className="text-[#ff0000] text-[12px] mb-2">
+                {"This field is required"}
+              </div>
+            )}
           </div>
           <div className="absolute bottom-4 w-[484px] bg-[#171717]">
             <div className="flex items-center gap-[6px] w-100 ">

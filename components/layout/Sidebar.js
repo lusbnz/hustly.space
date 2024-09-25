@@ -99,7 +99,7 @@ const Sidebar = ({
       skill_set: "",
       age__gte: filter.age__gte,
       age__lte: filter.age__lte,
-      competition__year: ""
+      competition__year: "",
     }));
     setIsClear(true);
   };
@@ -193,7 +193,9 @@ const Sidebar = ({
 
               <div className="my-[12px] range">
                 <label>Age</label>
-                <div className="p-[12px] bg-[#222] rounded-[8px] relative flex flex-wrap items-center gap-[8px]">
+                <div className="p-[12px] bg-[#171717] rounded-[8px] relative flex flex-wrap items-center gap-[8px]"
+                  style={{border: "1px solid #2e2e2e"}}
+                >
                   <Range
                     step={1}
                     min={18}
@@ -202,18 +204,34 @@ const Sidebar = ({
                     onChange={(values) =>
                       setAgeV({ min: values[0], max: values[1] })
                     }
-                    renderTrack={({ props, children }) => (
-                      <div
-                        {...props}
-                        style={{
-                          height: "4px",
-                          width: "80%",
-                          background: "lightgrey",
-                        }}
-                      >
-                        {children}
-                      </div>
-                    )}
+                    renderTrack={({ props, children }) => {
+                      const trackStyle = {
+                        height: "4px",
+                        width: "80%",
+                        background: "#222", 
+                        borderRadius: "2px",
+                        position: "relative",
+                      };
+                  
+                      const left = ((ageV.min - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị min
+                      const right = 100 - ((ageV.max - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị max
+                  
+                      return (
+                        <div {...props} style={trackStyle}>
+                          <div
+                            style={{
+                              position: "absolute",
+                              height: "4px",
+                              left: `${left}%`,
+                              right: `${right}%`,
+                              background: "#ccc", // Màu của phần đã chọn
+                              borderRadius: "2px",
+                            }}
+                          />
+                          {children}
+                        </div>
+                      );
+                    }}
                     renderThumb={({ props }) => (
                       <div
                         {...props}
@@ -255,7 +273,11 @@ const Sidebar = ({
                   handleChangeFilter={handleChangeFilter}
                   isClear={isClear}
                   icon={
-                    <Image src={YearIcon} alt="competition_year" className="image" />
+                    <Image
+                      src={YearIcon}
+                      alt="competition_year"
+                      className="image"
+                    />
                   }
                 />
               </div>

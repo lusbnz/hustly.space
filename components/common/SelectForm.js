@@ -22,6 +22,7 @@ const SelectForm = ({
   isClear,
   isColor,
   icon,
+  required,
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -69,7 +70,7 @@ const SelectForm = ({
           )}
           {children?.length > 20 ? children?.slice(0, 20) + "..." : children}
         </div>
-          {/* {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>} */}
+        {/* {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>} */}
       </components.SingleValue>
     );
   };
@@ -86,7 +87,7 @@ const SelectForm = ({
           paddingLeft: "calc((8 / 1920) * 100vw)",
           paddingRight: "calc((18 / 1920) * 100vw)",
           fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
-          lineHeight: "clamp(10px, calc((16 / 1920) * 100vw), 26px)"
+          lineHeight: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
         }}
       >
         {noIcon ? (
@@ -110,6 +111,38 @@ const SelectForm = ({
     </components.Placeholder>
   );
 
+  const CustomOption = (props) => {
+    return (
+      <components.Option {...props}>
+        <div
+          style={{
+            display: "inline-flex", // Đặt hình và text cùng dòng
+            alignItems: "center", // Căn giữa theo trục dọc
+            gap: "calc((8 / 1920) * 100vw)", // Khoảng cách giữa hình và text
+          }}
+        >
+          {name === "color" && (
+            <div
+              style={{
+                width: "calc((18 / 1920) * 100vw)",
+                height: "calc((18 / 1920) * 100vw)",
+                borderRadius: "100%",
+                backgroundColor: `${props.data.value}`,
+              }}
+            ></div>
+          )}
+          <span
+            style={{
+              whiteSpace: "nowrap", // Đảm bảo text không bị xuống dòng
+            }}
+          >
+            {props.data.label}
+          </span>
+        </div>
+      </components.Option>
+    );
+  };
+
   const customStyles = {
     container: (provided) => ({
       ...provided,
@@ -117,12 +150,13 @@ const SelectForm = ({
     }),
     control: (provided, state) => ({
       ...provided,
-      borderColor: state.isFocused ? "#222222" : "#222222",
+      borderColor: state.isFocused ? "#2e2e2e" : "#2e2e2e",
+      borderBottom: sub ? "0px" : "1px solid #2e2e2e",
       borderRadius: sub ? "8px 8px 0 0" : "8px 8px 8px 8px",
       boxShadow: "none",
-      backgroundColor: "#222222",
+      backgroundColor: "#171717",
       "&:hover": {
-        borderColor: state.isFocused ? "#222222" : "#222222",
+        borderColor: state.isFocused ? "#2e2e2e" : "#2e2e2e",
       },
       height: "calc((52 / 1080) * 100vh)",
     }),
@@ -146,9 +180,10 @@ const SelectForm = ({
         : state.isFocused
         ? "#222222"
         : "#333333",
-      color: "#ffffff",
+      color: "#fff",
       fontSize: "14px",
       cursor: "pointer",
+      paddingLeft: "calc((18 / 1920) * 100vw)",
     }),
   };
 
@@ -187,7 +222,9 @@ const SelectForm = ({
         components={{
           SingleValue: CustomSingleValue,
           Placeholder: CustomPlaceholder,
+          Option: CustomOption,
         }}
+        required={required}
         styles={customStyles}
         value={
           isClear

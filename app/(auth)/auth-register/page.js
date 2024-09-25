@@ -69,7 +69,7 @@ const AuthRegister = () => {
         <div className="form-container">
           <div className="form-header">
             <h1 className="mb-[16px]">Get started</h1>
-            <h3>Welcome to Hustly.space, Lets create your account</h3>
+            <h3>Welcome to hustly.space, where you become a champion</h3>
           </div>
           <div className="form-wrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -132,7 +132,7 @@ const AuthRegister = () => {
                   }
                 />
                 <span>
-                  Already have an account?
+                  Already have an account?{" "}
                   <Link className="action" href={"/auth-login"}>
                     Login
                   </Link>

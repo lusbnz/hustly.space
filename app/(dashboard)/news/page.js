@@ -45,7 +45,7 @@ const News = () => {
     <>
       <div className="news-wrapper">
         <div className="flex flex-col">
-          <span className="greeting">Hello {userInfo?.first_name}! tim dong chi</span>
+          <span className="greeting">Hello {userInfo?.first_name}! tim dong chi?</span>
           <span className="description">Have you found a partner yet?</span>
         </div>
         <div className="card-wrapper grid grid-cols-1 md:grid-cols-2 pb-12 mb-12">
