@@ -16,6 +16,7 @@ import { memberOptions, p, yearOptions, d, s } from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
+import { BeatLoader } from "react-spinners";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
+
+  const [isLoadingBioImage, setIsLoadingBioImage] = useState(false);
 
   const domainOptions = domain?.map((item) => {
     return {
@@ -87,6 +90,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   };
 
   const handleUploadBio = async (e) => {
+    setIsLoadingBioImage(true);
     const file = e.target.files[0];
     if (file) {
       try {
@@ -96,6 +100,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         setValue("bio_image", [res]);
       } catch (error) {
         console.error("Error uploading file:", error);
+      } finally {
+        setIsLoadingBioImage(false);
       }
     }
   };
@@ -455,6 +461,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("skill_set")}
               required={true}
+              isMulti={true}
             />
             {errors.skill_set && (
               <div className="text-[#ff0000] text-[12px] mb-2">
@@ -526,37 +533,43 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
 
             <div className="more">
               <label>Bio Image</label>
-              <div className="flex items-center gap-[6px]">
-                {watch("bio_image")?.length > 0 && (
-                  <Image
-                    src={watch("bio_image")?.[0].file}
-                    alt="camera-icon"
-                    width={150}
-                    height={150}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
+              {isLoadingBioImage ? (
                 <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    onChange={handleUploadBio}
-                  />
-                  <Image
-                    src={AddIcon}
-                    alt="camera-icon"
-                    width={16}
-                    height={16}
-                    className="cursor-pointer"
-                  />
+                  <BeatLoader color="#fff" size={10}/>
                 </div>
-              </div>
+              ) : (
+                <div className="flex items-center gap-[6px]">
+                  {watch("bio_image")?.length > 0 && (
+                    <Image
+                      src={watch("bio_image")?.[0].file}
+                      alt="camera-icon"
+                      width={150}
+                      height={150}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  )}
+                  <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      onChange={handleUploadBio}
+                    />
+                    <Image
+                      src={AddIcon}
+                      alt="camera-icon"
+                      width={16}
+                      height={16}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
             {errors.bio_image && (
               <div className="text-[#ff0000] text-[12px] mb-2">

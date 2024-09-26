@@ -23,6 +23,7 @@ const SelectForm = ({
   isColor,
   icon,
   required,
+  isMulti,
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -146,7 +147,8 @@ const SelectForm = ({
   const customStyles = {
     container: (provided) => ({
       ...provided,
-      height: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
+      minHeight: "calc((52 / 1080) * 100vh)",
     }),
     control: (provided, state) => ({
       ...provided,
@@ -158,13 +160,15 @@ const SelectForm = ({
       "&:hover": {
         borderColor: state.isFocused ? "#2e2e2e" : "#2e2e2e",
       },
-      height: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
+      minHeight: "calc((52 / 1080) * 100vh)",
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
       margin: 0,
       padding: 0,
-      height: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
+      minHeight: "calc((52 / 1080) * 100vh)",
     }),
     indicatorSeparator: () => ({
       display: "none",
@@ -193,6 +197,14 @@ const SelectForm = ({
     { value: "strawberry", label: "Strawberry" },
   ];
 
+  const handleChange = (selectedOption) => {
+    const value = isMulti
+      ? selectedOption.map((option) => option.value)
+      : selectedOption?.value || "";
+
+    handleChangeFilter(name, value);
+  };
+
   return (
     <div className="select-form" style={cstyle}>
       {noLabel ? (
@@ -202,22 +214,12 @@ const SelectForm = ({
           <label htmlFor="custom-select" style={{ color: "#484848" }}>
             {label || "UNIVERSITY"}
           </label>
-          {/* {selectedValue && (
-            <Image
-              src={Trash}
-              alt="trash"
-              className="w-[12px] h-[12px] cursor-pointer"
-              onClick={() => {
-                setSelectedValue(null);
-                handleChangeFilter(name, null);
-              }}
-            />
-          )} */}
         </div>
       )}
       <Select
         id={name}
         placeholder={placeholder || "Choose University"}
+        isMulti={isMulti}
         options={options || fakeOptions}
         components={{
           SingleValue: CustomSingleValue,
@@ -234,12 +236,7 @@ const SelectForm = ({
                 (option) => String(option.value) === String(defaultValue)
               )
         }
-        onChange={(e) => {
-          if (e.value) {
-            setSelectedValue(e);
-            handleChangeFilter(name, e.value);
-          }
-        }}
+        onChange={handleChange}
       />
     </div>
   );

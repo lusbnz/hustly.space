@@ -318,6 +318,7 @@ const Sidebar = ({
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={SkillIcon} alt="skill" className="image" />}
+                isMulti={true}
               />
               <div
                 className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"

@@ -251,13 +251,16 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       <span className="key">SKILL SET</span>
                       <div>
                         {userInfo?.skill_set && (
-                          <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
-                            {
-                              s?.find(
-                                (item) => item.value === userInfo?.skill_set
-                              )?.label
-                            }
-                          </span>
+                          <div className="skills flex flex-wrap gap-[6px]">
+                            {userInfo.skill_set.map((skill) => (
+                              <span
+                                key={skill}
+                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                              >
+                                {s?.find((item) => item.value === skill)?.label}
+                              </span>
+                            ))}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -287,8 +290,8 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                           height={100}
                           style={{
                             objectFit: "cover",
-                            width: "100%",
-                            height: "100px",
+                            width: "calc((375 / 1920) * 100vw)",
+                            height: "100%",
                           }}
                         />
                       )}

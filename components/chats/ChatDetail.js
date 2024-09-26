@@ -25,7 +25,8 @@ const ChatDetail = ({
   setIsLoading,
   isMatch,
   setIsActiveTab,
-  lastSender
+  lastSender,
+  setIsModalOpen,
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
   const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -76,8 +77,8 @@ const ChatDetail = ({
   useEffect(() => {
     if (isFetched) {
       const intervalId = setInterval(() => {
-        fetchMessage();
         setIsFetched(false);
+        fetchMessage();
       }, 100);
       return () => clearInterval(intervalId);
     }
@@ -110,14 +111,24 @@ const ChatDetail = ({
     deleteThread(userInfo?.id, chatId);
     handleOpenDetail(null);
     setChatId(null);
+    setIsModalOpen(false);
   };
 
   const handleAccept = () => {
     const data = {
       is_match: true,
     };
-    updateThread(userInfo?.id, chatId, data);
-    setIsActiveTab("all")
+    updateThread(userInfo?.id, chatId, data)
+      .then((res) => {
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsActiveTab("all");
+        setChatId(null);
+        setIsModalOpen(false);
+      })
   };
 
   return (

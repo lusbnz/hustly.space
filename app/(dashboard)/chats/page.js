@@ -293,6 +293,7 @@ const Chats = () => {
               isMatch={isMatch}
               setIsActiveTab={setIsActiveTab}
               lastSender={lastSender}
+              setIsModalOpen={setIsModalOpen}
             />
           </div>
           {isModalOpen && (
