@@ -607,7 +607,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 {achievements?.map((achievement, index) => (
                   <div className="relative" key={index}>
                     <InputForm
-                      title={`Achievement (${index + 1})`}
+                      title={`Achievement`}
                       placeholder={"Achievement"}
                       register={register}
                       name={`archivement[${index}].description`}
