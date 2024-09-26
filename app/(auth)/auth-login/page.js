@@ -8,20 +8,26 @@ import "../styles.css";
 import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { authLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
+import { getAuthToken } from "@/libs/clients";
 
 const AuthLogin = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    dispatch(setUserInfo(null))
-  }, [])
+    dispatch(setUserInfo(null));
+    const accessToken = getAuthToken();
+
+    if (!!accessToken) {
+      redirect("/news");
+    }
+  }, []);
   const {
     register,
     handleSubmit,
@@ -93,10 +99,14 @@ const AuthLogin = () => {
                 isPassword={true}
               />
               {errors.password && (
-                <div className="text-[#ff0000] text-[12px]">Please check your password</div>
+                <div className="text-[#ff0000] text-[12px]">
+                  Please check your password
+                </div>
               )}
               {errors.server && (
-                <div className="text-[#ff0000] text-[12px]">{errors.server.message}</div>
+                <div className="text-[#ff0000] text-[12px]">
+                  {errors.server.message}
+                </div>
               )}
               <div className="form-footer">
                 <ButtonComponent

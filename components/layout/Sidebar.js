@@ -130,7 +130,7 @@ const Sidebar = ({
   });
 
   const handleSignout = () => {
-    localStorage.removeItem("accessToken");
+    window.localStorage.removeItem("accessToken");
     router.push("/auth-login");
   };
 

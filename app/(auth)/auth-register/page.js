@@ -1,17 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/public/images/logo.svg";
 import Banner from "@/public/images/banner.png";
 import "../styles.css";
 import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { authRegister } from "@/api/auth";
 import { BeatLoader } from "react-spinners";
+import { getAuthToken } from "@/libs/clients";
 
 const AuthRegister = () => {
   const router = useRouter();
@@ -22,6 +23,14 @@ const AuthRegister = () => {
     setError,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    const accessToken = getAuthToken();
+
+    if (!!accessToken) {
+      redirect("/news");
+    }
+  }, []);
 
   const onSubmit = (data) => {
     setIsLoading(true);

@@ -14,9 +14,9 @@ import { setCompetition } from "@/reducers/competitionSlice";
 import { setUniversity } from "@/reducers/universitySlice";
 import { setDomain } from "@/reducers/domainSlice";
 import { setSuggestion } from "@/reducers/suggestionSlice";
+import { getAuthToken } from "@/libs/clients";
 
 export default function Layout({ children }) {
-  // const accessToken = localStorage.getItem("accessToken");
   const pathname = usePathname();
   const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -33,7 +33,7 @@ export default function Layout({ children }) {
     skill_set: "",
     age__gte: 18,
     age__lte: 25,
-    competition__year: ""
+    competition__year: "",
   });
   const [isFirstSetting, setIsFirstSetting] = useState(false);
 
@@ -57,11 +57,13 @@ export default function Layout({ children }) {
       });
   };
 
-  // useEffect(() => {
-  //   if(!accessToken && isHaveSidebar){
-  //     redirect("/auth-login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const accessToken = getAuthToken()
+
+    if (!accessToken && isHaveSidebar) {
+      redirect("/auth-login");
+    }
+  }, []);
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -74,7 +76,7 @@ export default function Layout({ children }) {
         skill_set: filter.skill_set,
         age__gte: filter.age__gte,
         age__lte: filter.age__lte,
-        competition__year: filter.competition__year
+        competition__year: filter.competition__year,
       };
 
       for (const key in data) {
@@ -99,9 +101,9 @@ export default function Layout({ children }) {
     setIsSidebarLoading(true);
     getProfile()
       .then((res) => {
-        if(!res.is_update_setting){
-          setIsFirstSetting(true)
-          setOpenModalSetting(true)
+        if (!res.is_update_setting) {
+          setIsFirstSetting(true);
+          setOpenModalSetting(true);
         }
         dispatch(setUserInfo(res));
       })
@@ -177,7 +179,10 @@ export default function Layout({ children }) {
           children
         )}
         {openModalSetting && (
-          <ModalLayer toggleOpenModalSetting={toggleOpenModalSetting} isFirstSetting={isFirstSetting}/>
+          <ModalLayer
+            toggleOpenModalSetting={toggleOpenModalSetting}
+            isFirstSetting={isFirstSetting}
+          />
         )}
       </div>
     </>

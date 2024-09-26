@@ -3,7 +3,7 @@
 import axios from "axios";
 import { redirect } from "next/navigation";
 
-function getAuthToken() {
+export function getAuthToken() {
   return window.localStorage.getItem("accessToken") ?? "";
 }
 
