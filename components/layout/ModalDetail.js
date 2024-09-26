@@ -200,13 +200,40 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                   <div className="contact-wrapper">
                     <span>CONTACT</span>
                     <div className="flex social items-center">
-                      <div className="social-icon">
+                      <div
+                        className="social-icon"
+                        onClick={() => {
+                          if (!!userInfo?.social_link?.instagram) {
+                            window.open(
+                              userInfo?.social_link?.instagram,
+                              "_blank"
+                            );
+                          }
+                        }}
+                      >
                         <Image src={InstagramIcon} alt="image" />
                       </div>
-                      <div className="social-icon">
+                      <div
+                        className="social-icon"
+                        onClick={() => {
+                          if (!!userInfo?.social_link?.mail) {
+                            window.open(userInfo?.social_link?.mail, "_blank");
+                          }
+                        }}
+                      >
                         <Image src={FacebookIcon} alt="image" />
                       </div>
-                      <div className="social-icon">
+                      <div
+                        className="social-icon"
+                        onClick={() => {
+                          if (!!userInfo?.social_link?.linkedin) {
+                            window.open(
+                              userInfo?.social_link?.linkedin,
+                              "_blank"
+                            );
+                          }
+                        }}
+                      >
                         <Image src={LinkedInIcon} alt="image" />
                       </div>
                     </div>
@@ -295,7 +322,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                 {archivement.description}
                               </span>
                             ))}
-                            </div>
+                          </div>
                         )}
                       </div>
                     </div>

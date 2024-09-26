@@ -32,10 +32,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const [isLoadingBioImage, setIsLoadingBioImage] = useState(false);
   const [numberDomain, setNumberDomain] = useState(0);
   const [numberArchivement, setNumberArchivement] = useState(1);
+  const [openSocial, setOpenSocial] = useState(null);
 
   useEffect(() => {
     if (userInfo?.domain) {
-      setNumberDomain(userInfo?.domain?.length);
+      setNumberDomain(
+        userInfo?.domain?.length > 0 ? userInfo?.domain?.length : 1
+      );
     }
     if (userInfo?.archivement) {
       setNumberArchivement(userInfo?.archivement?.length);
@@ -91,12 +94,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         : null,
       skill_set: userInfo?.skill_set,
       bio_image: userInfo?.bio_image,
-      archivement: userInfo?.archivement || [],
-      social_link: userInfo?.social_link,
+      archivement: userInfo?.archivement || [{ description: "" }],
+      link_1: userInfo?.social_link?.instagram || null,
+      link_2: userInfo?.social_link?.email || null,
+      link_3: userInfo?.social_link?.linkedin || null,
     },
   });
 
-  const achievements = watch("archivement") || [];
+  const achievements = watch("archivement") || [{ description: "" }];
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -172,18 +177,28 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     }
 
     if (data.archivement) {
-      if (typeof data.archivement === 'string') {
+      if (typeof data.archivement === "string") {
         data.archivement = [
           {
             description: data.archivement,
           },
         ];
       } else if (Array.isArray(data.archivement)) {
-        data.archivement = data.archivement.map(achievement => ({
+        data.archivement = data.archivement.map((achievement) => ({
           description: achievement.description || achievement,
         }));
       }
     }
+
+    data.social_link = {
+      instagram: data.link_1 || null,
+      email: data.link_2 || null,
+      linkedin: data.link_3 || null,
+    };
+
+    delete data.link_1;
+    delete data.link_2;
+    delete data.link_3;
 
     updateProfile(data)
       .then((res) => {
@@ -576,19 +591,34 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
-            {achievements.map((achievement, index) => (
-              <div className="relative" key={index}>
+            {achievements?.length === 0 ? (
+              <div className="relative">
                 <InputForm
-                  title={`Achievement (${index + 1}/${numberArchivement})`}
-                  placeholder={"Achievement"}
+                  title={"Archivement"}
+                  placeholder={"Archivement"}
                   register={register}
-                  name={`archivement[${index}].description`}
+                  name={`archivement[0].description`}
                   isEditor={true}
                   required={true}
-                  defaultValue={achievement?.description}
                 />
               </div>
-            ))}
+            ) : (
+              <>
+                {achievements?.map((achievement, index) => (
+                  <div className="relative" key={index}>
+                    <InputForm
+                      title={`Achievement (${index + 1})`}
+                      placeholder={"Achievement"}
+                      register={register}
+                      name={`archivement[${index}].description`}
+                      isEditor={true}
+                      required={true}
+                      defaultValue={achievement?.description}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
 
             <div
               className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
@@ -626,17 +656,56 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             <div className="contact">
               <span>Social</span>
               <div className="flex social items-center">
-                <div className="social-icon">
+                <div
+                  className="social-icon"
+                  onClick={() => {
+                    if (openSocial === "1") {
+                      setOpenSocial("");
+                    } else {
+                      setOpenSocial("1");
+                    }
+                  }}
+                >
                   <Image src={InstagramIcon} alt="image" />
                 </div>
-                <div className="social-icon">
+                <div
+                  className="social-icon"
+                  onClick={() => {
+                    if (openSocial === "2") {
+                      setOpenSocial("");
+                    } else {
+                      setOpenSocial("2");
+                    }
+                  }}
+                >
                   <Image src={FacebookIcon} alt="image" />
                 </div>
-                <div className="social-icon">
+                <div
+                  className="social-icon"
+                  onClick={() => {
+                    if (openSocial === "3") {
+                      setOpenSocial("");
+                    } else {
+                      setOpenSocial("3");
+                    }
+                  }}
+                >
                   <Image src={LinkedInIcon} alt="image" />
                 </div>
               </div>
             </div>
+
+            {openSocial && (
+              <input
+                className="p-1 rounded-[4px] pl-2 bg-[#171717] outline-none text-[12px] w-100 min-w-[200px]"
+                style={{ border: "1px solid #2e2e2e" }}
+                defaultValue={watch(`link_${openSocial}`)}
+                placeholder="https://"
+                onChange={(e) => {
+                  setValue(`link_${openSocial}`, e.target.value);
+                }}
+              ></input>
+            )}
 
             <div className="more">
               <label>Bio Image</label>

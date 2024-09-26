@@ -143,20 +143,23 @@ export default function Layout({ children }) {
   };
 
   useEffect(() => {
-    if (isFirstRender) {
-      fetchProfile();
-      setIsFirstRender(false);
-      setIsSidebarLoading(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      if (isHaveSidebar && isFirstRenderFilter) {
+        await Promise.all([
+          fetchCompetion(),
+          fetchUniversity(),
+          fetchDomain(),
+        ]);
+        if(isFirstRender){
+          fetchProfile();
+          setIsFirstRender(false);
+          setIsSidebarLoading(false);
+        }
+        setIsFirstRenderFilter(false);
+      }
+    };
 
-  useEffect(() => {
-    if (isHaveSidebar && isFirstRenderFilter) {
-      fetchCompetion();
-      fetchUniversity();
-      fetchDomain();
-      setIsFirstRenderFilter(false);
-    }
+    fetchData()
   }, [isHaveSidebar]);
 
   return (

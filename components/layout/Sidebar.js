@@ -208,7 +208,7 @@ const Sidebar = ({
                     renderTrack={({ props, children }) => {
                       const trackStyle = {
                         height: "4px",
-                        width: "80%",
+                        width: "75%",
                         background: "#222", 
                         borderRadius: "2px",
                         position: "relative",

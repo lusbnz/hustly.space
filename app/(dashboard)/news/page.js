@@ -91,7 +91,7 @@ const News = () => {
                   </div>
                   <div className="flex flex-col info">
                     <span className="name flex items-end gap-[4px]">
-                      <span className="lh-1 h-[12px] text-[18px] text-center">
+                      <span className="lh-1 h-[12px] text-[14px] text-center">
                         {item.first_name} {item.last_name}
                       </span>
 
