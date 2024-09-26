@@ -14,6 +14,7 @@ import TextEditor from "../common/TextEditor";
 import { p } from "@/data/data";
 import { deleteThread, updateThread } from "@/api/thread";
 import { useSelector } from "react-redux";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const ChatDetail = ({
   chatId,
@@ -39,7 +40,7 @@ const ChatDetail = ({
   const psOptions = p?.map((item) => {
     return {
       value: item.code,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 

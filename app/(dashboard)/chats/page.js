@@ -186,7 +186,7 @@ const Chats = () => {
                 })
                 ?.sort((a, b) => {
                   if (!a.is_pin && !a.is_match && !b.is_pin && !b.is_match) {
-                    return new Date(b.updated_at) - new Date(a.updated_at);
+                    return moment(b.updated_at).unix() - moment(a.updated_at).unix();
                   }
                   return 0;
                 })

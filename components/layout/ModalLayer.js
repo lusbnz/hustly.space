@@ -7,16 +7,20 @@ import InputForm from "../common/InputForm";
 import BackIcon from "@/public/icons/back-icon.svg";
 import CameraIcon from "@/public/icons/camera-icon.svg";
 import EditIcon from "@/public/icons/edit-icon.svg";
+import InstagramIcon from "@/public/icons/instagram-icon.svg";
+import FacebookIcon from "@/public/icons/facebook-icon.svg";
+import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
 import Image from "next/image";
 import { uploadFile } from "@/api/file";
 import { updateProfile } from "@/api/profile";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
 import { memberOptions, p, yearOptions, d, s } from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { BeatLoader } from "react-spinners";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const dispatch = useDispatch();
@@ -26,14 +30,26 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const domain = useSelector((state) => state.domain);
 
   const [isLoadingBioImage, setIsLoadingBioImage] = useState(false);
+  const [numberDomain, setNumberDomain] = useState(0);
+  const [numberArchivement, setNumberArchivement] = useState(1);
+
+  useEffect(() => {
+    if (userInfo?.domain) {
+      setNumberDomain(userInfo?.domain?.length);
+    }
+    if (userInfo?.archivement) {
+      setNumberArchivement(userInfo?.archivement?.length);
+    }
+  }, [userInfo]);
 
   const domainOptions = domain?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
+
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: removeVietnameseTones(item.name),
       })),
     };
   });
@@ -59,19 +75,28 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       bio: userInfo?.bio,
       competition: userInfo?.competition?.[0]?.id,
       year_competition: userInfo?.competition?.[0]?.year_competition,
-      domain:
+      domain_1:
         userInfo?.domain?.[0]?.parent_domain ||
         userInfo?.domain?.[0]?.id ||
         domainOptions?.[0]?.id,
-      sub_domain: !!userInfo?.domain?.[0]?.parent_domain
+      sub_domain_1: !!userInfo?.domain?.[0]?.parent_domain
         ? userInfo?.domain?.[0]?.id
+        : null,
+      domain_2:
+        userInfo?.domain?.[1]?.parent_domain ||
+        userInfo?.domain?.[1]?.id ||
+        domainOptions?.[0]?.id,
+      sub_domain_2: !!userInfo?.domain?.[1]?.parent_domain
+        ? userInfo?.domain?.[1]?.id
         : null,
       skill_set: userInfo?.skill_set,
       bio_image: userInfo?.bio_image,
-      archivement: userInfo?.archivement?.[0]?.description,
-      archivement_domain: userInfo?.archivement?.[0]?.domain?.id,
+      archivement: userInfo?.archivement || [],
+      social_link: userInfo?.social_link,
     },
   });
+
+  const achievements = watch("archivement") || [];
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -117,11 +142,22 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       return;
     }
 
-    if (data.sub_domain) {
-      data.domain = [data.sub_domain];
-      delete data.sub_domain;
+    if (data.sub_domain_1) {
+      data.domain = [data.sub_domain_1];
+      delete data.sub_domain_1;
+      delete data.domain_1;
     } else {
-      data.domain = [data.domain];
+      data.domain = [data.domain_1];
+      delete data.domain_1;
+    }
+
+    if (data.sub_domain_2) {
+      data.domain.push(data.sub_domain_2);
+      delete data.sub_domain_2;
+      delete data.domain_2;
+    } else if (data.domain_2) {
+      data.domain.push(data.domain_2);
+      delete data.domain_2;
     }
 
     data.competition = [
@@ -136,13 +172,17 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     }
 
     if (data.archivement) {
-      data.archivement = [
-        {
-          description: data.archivement,
-          domain: data.archivement_domain,
-        },
-      ];
-      delete data.archivement_domain;
+      if (typeof data.archivement === 'string') {
+        data.archivement = [
+          {
+            description: data.archivement,
+          },
+        ];
+      } else if (Array.isArray(data.archivement)) {
+        data.archivement = data.archivement.map(achievement => ({
+          description: achievement.description || achievement,
+        }));
+      }
     }
 
     updateProfile(data)
@@ -158,21 +198,21 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
   const psOptions = p?.map((item) => {
     return {
       value: item.code,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
@@ -180,7 +220,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     ?.filter((item) => String(item.province_code) === String(watch("city")))
     .map((item) => ({
       value: item.code,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     }));
 
   const colorOptions = [
@@ -242,7 +282,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                         height: "100%",
                         width: "100%",
                         objectPosition: "center",
-                        objectFit: "fill",
+                        objectFit: "cover",
                       }}
                     />
                   </div>
@@ -392,22 +432,23 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 {"This field is required"}
               </div>
             )}
+
             <SelectForm
               options={domainOptions}
-              label={"Domain"}
+              label={`Domain (1/2)`}
               placeholder={"Domain"}
               noIcon={true}
               haveSub={true}
               cstyle={{
-                marginBottom: `${!watch("domain") ? "12px" : "0px"}`,
+                marginBottom: `${!watch("domain_1") ? "12px" : "0px"}`,
               }}
-              sub={watch("domain")}
-              name={"domain"}
+              sub={watch("domain_1")}
+              name={"domain_1"}
               handleChangeFilter={handleChangeFilter}
-              defaultValue={watch("domain")}
+              defaultValue={watch("domain_1")}
               required={true}
             />
-            {watch("domain") && (
+            {watch("domain_1") && (
               <div
                 className="bg-[#171717] flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]"
                 style={{
@@ -417,7 +458,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 }}
               >
                 {domainOptions
-                  ?.find((item) => item.value === watch("domain"))
+                  ?.find((item) => item.value === watch("domain_1"))
                   ?.subOptions?.map((item) => {
                     return (
                       <span
@@ -425,16 +466,16 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                         className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
                         style={{
                           backgroundColor:
-                            item.value === watch("sub_domain")
+                            item.value === watch("sub_domain_1")
                               ? "#fff"
                               : "#343434",
                           color:
-                            item.value === watch("sub_domain")
+                            item.value === watch("sub_domain_1")
                               ? "#000"
                               : "#fff",
                         }}
                         onClick={() => {
-                          setValue("sub_domain", item.value);
+                          setValue("sub_domain_1", item.value);
                         }}
                       >
                         {item.label}
@@ -444,7 +485,73 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
-            {errors.domain && (
+            {numberDomain === 1 && (
+              <div
+                className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
+                onClick={() => setNumberDomain(2)}
+              >
+                <Image src={AddIcon} width={12} height={12} alt="plus" />
+                <span>More domain</span>
+              </div>
+            )}
+
+            {numberDomain === 2 && (
+              <>
+                <SelectForm
+                  options={domainOptions}
+                  label={`Domain (2/2)`}
+                  placeholder={"Domain"}
+                  noIcon={true}
+                  haveSub={true}
+                  cstyle={{
+                    marginBottom: `${!watch("domain_2") ? "12px" : "0px"}`,
+                  }}
+                  sub={watch("domain_2")}
+                  name={"domain_2"}
+                  handleChangeFilter={handleChangeFilter}
+                  defaultValue={watch("domain_2")}
+                  required={true}
+                />
+                {watch("domain_2") && (
+                  <div
+                    className="bg-[#171717] flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]"
+                    style={{
+                      borderBottom: "1px solid #2e2e2e",
+                      borderLeft: "1px solid #2e2e2e",
+                      borderRight: "1px solid #2e2e2e",
+                    }}
+                  >
+                    {domainOptions
+                      ?.find((item) => item.value === watch("domain_2"))
+                      ?.subOptions?.map((item) => {
+                        return (
+                          <span
+                            key={item.value}
+                            className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
+                            style={{
+                              backgroundColor:
+                                item.value === watch("sub_domain_2")
+                                  ? "#fff"
+                                  : "#343434",
+                              color:
+                                item.value === watch("sub_domain_2")
+                                  ? "#000"
+                                  : "#fff",
+                            }}
+                            onClick={() => {
+                              setValue("sub_domain_2", item.value);
+                            }}
+                          >
+                            {item.label}
+                          </span>
+                        );
+                      })}
+                  </div>
+                )}
+              </>
+            )}
+
+            {errors.domain_1 && (
               <div className="text-[#ff0000] text-[12px] mb-2">
                 {"This field is required"}
               </div>
@@ -469,46 +576,31 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
-            <div className="relative h-[250px]">
-              <InputForm
-                title={"Archivement"}
-                placeholder={"Archivement"}
-                register={register}
-                name={"archivement"}
-                isEditor={true}
-                tstyle={{ height: "220px" }}
-                required={true}
-              />
-              {watch("domain") && (
-                <div className="absolute bottom-0 flex flex-wrap w-100 gap-[6px] px-[12px] py-[8px] mb-[12px] rounded-b-[8px]">
-                  {domainOptions
-                    ?.find((item) => item.value === watch("domain"))
-                    ?.subOptions?.map((item) => {
-                      return (
-                        <span
-                          key={item.value}
-                          className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
-                          style={{
-                            backgroundColor:
-                              item.value === watch("archivement_domain")
-                                ? "#fff"
-                                : "#343434",
-                            color:
-                              item.value === watch("archivement_domain")
-                                ? "#000"
-                                : "#fff",
-                          }}
-                          onClick={() => {
-                            setValue("archivement_domain", item.value);
-                          }}
-                        >
-                          {item.label}
-                        </span>
-                      );
-                    })}
-                </div>
-              )}
+            {achievements.map((achievement, index) => (
+              <div className="relative" key={index}>
+                <InputForm
+                  title={`Achievement (${index + 1}/${numberArchivement})`}
+                  placeholder={"Achievement"}
+                  register={register}
+                  name={`archivement[${index}].description`}
+                  isEditor={true}
+                  required={true}
+                  defaultValue={achievement?.description}
+                />
+              </div>
+            ))}
+
+            <div
+              className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
+              onClick={() => {
+                setValue(`archivement[${numberArchivement}]`, "");
+                setNumberArchivement((prev) => prev + 1);
+              }}
+            >
+              <Image src={AddIcon} width={12} height={12} alt="plus" />
+              <span>More Achievement</span>
             </div>
+
             {errors.archivement && (
               <div className="text-[#ff0000] text-[12px] mb-2">
                 {"This field is required"}
@@ -518,7 +610,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             <InputForm
               title={"Tldr"}
               placeholder={
-                "Tôi tên là quốc anh đến từ neu, tôi học finance và thích ăn bánh bao + chơi bóng rổ"
+                "I am Quoc Anh from neu, I study finance and like to eat bánh bao + play basketball"
               }
               register={register}
               name={"bio"}
@@ -531,11 +623,26 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
+            <div className="contact">
+              <span>Social</span>
+              <div className="flex social items-center">
+                <div className="social-icon">
+                  <Image src={InstagramIcon} alt="image" />
+                </div>
+                <div className="social-icon">
+                  <Image src={FacebookIcon} alt="image" />
+                </div>
+                <div className="social-icon">
+                  <Image src={LinkedInIcon} alt="image" />
+                </div>
+              </div>
+            </div>
+
             <div className="more">
               <label>Bio Image</label>
               {isLoadingBioImage ? (
                 <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
-                  <BeatLoader color="#fff" size={10}/>
+                  <BeatLoader color="#fff" size={10} />
                 </div>
               ) : (
                 <div className="flex items-center gap-[6px]">

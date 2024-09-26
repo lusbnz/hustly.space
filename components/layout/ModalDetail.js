@@ -19,6 +19,7 @@ import { BeatLoader } from "react-spinners";
 import { s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const dispatch = useDispatch();
@@ -78,10 +79,10 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const domainOptions = domain?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: removeVietnameseTones(item.name),
       })),
     };
   });
@@ -89,14 +90,14 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
@@ -268,20 +269,37 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       <span className="key">DOMAIN</span>
                       <div>
                         {userInfo?.domain?.length > 0 && (
-                          <span className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]">
-                            {findLabelById(
-                              userInfo.domain?.[0]?.id,
-                              userInfo.domain?.[0]?.parent_domain
-                            )}
+                          <span className="flex flex-wrap gap-[6px]">
+                            {userInfo?.domain?.map((domain) => (
+                              <span
+                                key={domain.id}
+                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                              >
+                                {findLabelById(domain.id, domain.parent_domain)}
+                              </span>
+                            ))}
                           </span>
                         )}
                       </div>
                     </div>
-                    {/* <div className="flex flex-col gap-[6px]">
-                    <span className="key">ARCHIVEMENT</span>
-                    <span className="value">Presentation Skills</span>
-                  </div> */}
                     <div className="flex flex-col gap-[6px]">
+                      <span className="key">ACHIEVEMENT</span>
+                      <div>
+                        {userInfo?.archivement?.length > 0 && (
+                          <div className="flex flex-wrap gap-[6px]">
+                            {userInfo?.archivement?.map((archivement) => (
+                              <span
+                                key={archivement.id}
+                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                              >
+                                {archivement.description}
+                              </span>
+                            ))}
+                            </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-[6px] mb-10">
                       {userInfo?.bio_image?.[0]?.file && (
                         <Image
                           src={userInfo?.bio_image?.[0]?.file}

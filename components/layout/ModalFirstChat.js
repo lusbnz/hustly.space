@@ -11,6 +11,7 @@ import { BeatLoader } from "react-spinners";
 import { sendMessage } from "@/api/message";
 import BackIcon from "@/public/icons/back-icon.svg";
 import { createThread } from "@/api/thread";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const user = useSelector((state) => state.userInfo);
@@ -25,7 +26,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 

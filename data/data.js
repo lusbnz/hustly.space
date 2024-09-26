@@ -1,15 +1,21 @@
 export const memberOptions = [
-  { value: "1", label: "Chỉ mình tôi" },
-  { value: "2", label: "2 thành viên" },
-  { value: "3", label: "3 thành viên" },
-  { value: "4", label: "4 thành viên" },
-  { value: "5", label: "5 thành viên" },
+  { value: "1", label: "Only one" },
+  { value: "2", label: "2 member" },
+  { value: "3", label: "3 member" },
+  { value: "4", label: "4 member" },
+  { value: "5", label: "5 member" },
 ];
 
 export const yearOptions = [
   { value: "2025", label: "2025" },
   { value: "2024", label: "2024" },
 ];
+
+export const genderChoices = [
+    ("MALE", "Male"),
+    ("FEMALE", "Female"),
+    ("OTHER", "Other"),
+]
 
 export const p = [
     {

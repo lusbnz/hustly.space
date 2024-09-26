@@ -9,7 +9,8 @@ const InputForm = ({
   required,
   isEditor,
   isPassword,
-  tstyle
+  tstyle,
+  defaultValue
 }) => {
   return (
     <div className="input-form">
@@ -25,6 +26,7 @@ const InputForm = ({
           placeholder={placeholder}
           type={isPassword ? "password" : "text"}
           {...(register && register(name, { required }))}
+          defaultValue={defaultValue}
         />
       )}
     </div>

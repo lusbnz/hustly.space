@@ -9,7 +9,8 @@ import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { checkThread } from "@/api/thread";
+import { checkThread, createThread } from "@/api/thread";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const News = () => {
   const userInfo = useSelector((state) => state.userInfo);
@@ -30,14 +31,15 @@ const News = () => {
     } else {
       const data = {
         to_user_id: index,
+        is_check: true,
       };
-      checkThread(userInfo.id, data)
-        .then((res) => {
-          setCheck(res.thread_id);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      createThread(userInfo.id, data)
+      .then((res) => {
+       setCheck(res.thread_id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
       setIsModalOpen(index);
     }
   };
@@ -45,7 +47,7 @@ const News = () => {
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 

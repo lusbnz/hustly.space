@@ -20,6 +20,7 @@ import { memberOptions, p, s, yearOptions } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
+import { removeVietnameseTones } from "@/utils/utils";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -77,7 +78,7 @@ const Sidebar = ({
   const universityOptions = university?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
@@ -107,24 +108,24 @@ const Sidebar = ({
   const psOptions = p?.map((item) => {
     return {
       value: item.code,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
     };
   });
 
   const domainOptions = domain?.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: removeVietnameseTones(item.name),
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
-        label: item.name,
+        label: removeVietnameseTones(item.name),
       })),
     };
   });
@@ -350,11 +351,11 @@ const Sidebar = ({
                       : userInfo?.first_name}{" "}
                     {userInfo?.last_name}
                   </span>
-                  <span className="setting" onClick={toggleOpenModalSetting}>
+                  <span className="setting items-center flex" onClick={toggleOpenModalSetting}>
                     <div className="settings-container">
                       <Image src={Settings} alt="settings" className="image" />
                     </div>
-                    Profile Setting
+                    <span className="ml-1">Profile Setting</span>
                   </span>
                 </div>
               </div>

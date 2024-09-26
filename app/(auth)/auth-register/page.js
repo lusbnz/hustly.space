@@ -33,6 +33,15 @@ const AuthRegister = () => {
   }, []);
 
   const onSubmit = (data) => {
+    if (!validatePassword(data.password)) {
+      setError("password", {
+        type: "manual",
+        message:
+          "Password must contain at least one uppercase letter, one number, and be at least 8 characters long.",
+      });
+      return;
+    }
+
     setIsLoading(true);
     authRegister(data)
       .then((res) => {
@@ -62,6 +71,15 @@ const AuthRegister = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const validatePassword = (password) => {
+    const hasUpperCase = /[A-Z]/.test(password); // Kiểm tra có chữ hoa
+    const hasLowerCase = /[a-z]/.test(password); // Kiểm tra có chữ thường
+    const hasNumber = /\d/.test(password); // Kiểm tra có số
+    const hasMinLength = password.length >= 8; // Kiểm tra độ dài >= 8 ký tự
+
+    return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
 
   return (
@@ -125,7 +143,7 @@ const AuthRegister = () => {
               />
               {errors.password && (
                 <div className="text-[#ff0000] mb-2 ">
-                  Password need text and number
+                  {errors.password.message}
                 </div>
               )}
               {errors.server && (
