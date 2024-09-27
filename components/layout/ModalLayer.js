@@ -274,12 +274,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       <div className="w-[100vw] h-[90vh] bg-transparent opacity-100 absolute z-30 p-[22px]">
         <div className="w-[532px] h-[90vh] max-h-[100vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
           <div className="border-b-[1px] pb-[28px] mb-[22px] border-b-[#212121] flex items-center">
-            <div
-              className="mr-2 cursor-pointer"
-              onClick={toggleOpenModalSetting}
-            >
-              <Image src={BackIcon} alt="back-icon" width={24} height={24} />
-            </div>
+            {userInfo?.is_update_setting && (
+              <div
+                className="mr-2 cursor-pointer"
+                onClick={toggleOpenModalSetting}
+              >
+                <Image src={BackIcon} alt="back-icon" width={24} height={24} />
+              </div>
+            )}
             <span className="m-title">Profile Setting</span>
           </div>
           <div className="mb-[40px] max-h-[70vh] overflow-y-auto pb-12">
@@ -755,14 +757,16 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
           </div>
           <div className="absolute bottom-4 w-[484px] bg-[#171717]">
             <div className="flex items-center gap-[6px] w-100 ">
-              <ButtonComponent
-                type={"button"}
-                title={"Cancel"}
-                border
-                backgroundColor={"transparent"}
-                color={"#ffffff"}
-                onClick={toggleOpenModalSetting}
-              />
+              {userInfo?.is_update_setting && (
+                <ButtonComponent
+                  type={"button"}
+                  title={"Cancel"}
+                  border
+                  backgroundColor={"transparent"}
+                  color={"#ffffff"}
+                  onClick={toggleOpenModalSetting}
+                />
+              )}
               <ButtonComponent
                 type={"submit"}
                 title={"Save"}

@@ -46,7 +46,16 @@ const AuthRegister = () => {
     authRegister(data)
       .then((res) => {
         if (res) {
-          router.push("/auth-login");
+          if(res.email[0] === "Email đã tồn tại."){
+            setError("server", {
+              type: "manual",
+              message: "Email already exists.",
+            });
+            return;
+          }
+          else{
+            
+          }
         } else {
           const errorMessage =
             "An unexpected error occurred. Please try again.";
