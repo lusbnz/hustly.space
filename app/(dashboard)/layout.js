@@ -77,6 +77,7 @@ export default function Layout({ children }) {
         age__gte: filter.age__gte,
         age__lte: filter.age__lte,
         competition__year: filter.competition__year,
+        gender: filter.gender,
       };
 
       for (const key in data) {

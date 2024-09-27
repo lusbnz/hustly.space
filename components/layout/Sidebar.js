@@ -16,7 +16,7 @@ import SignoutIcon from "@/public/icons/sign-out.svg";
 import Settings from "@/public/icons/settings-icon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
-import { memberOptions, p, s, yearOptions } from "@/data/data";
+import { genderChoices, memberOptions, p, s, yearOptions } from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
@@ -101,6 +101,7 @@ const Sidebar = ({
       age__gte: filter.age__gte,
       age__lte: filter.age__lte,
       competition__year: "",
+      gender: ""
     }));
     setIsClear(true);
   };
@@ -252,6 +253,16 @@ const Sidebar = ({
                   </div>
                 </div>
               </div>
+
+              <SelectForm
+                label={"Gender"}
+                placeholder={"Gender"}
+                name={"gender"}
+                options={genderChoices}
+                handleChangeFilter={handleChangeFilter}
+                isClear={isClear}
+                icon={<Image src={UserIcon} alt="gender" className="image" />}
+              />
 
               <div className="flex w-100 items-center gap-[6px] bg-[#171717]">
                 <SelectForm

@@ -12,9 +12,9 @@ export const yearOptions = [
 ];
 
 export const genderChoices = [
-    ("MALE", "Male"),
-    ("FEMALE", "Female"),
-    ("OTHER", "Other"),
+    {value: "MALE", label: "Male"},
+    {value: "FEMALE", label: "Female"},
+    {value: "OTHER", label: "Other"},
 ]
 
 export const p = [

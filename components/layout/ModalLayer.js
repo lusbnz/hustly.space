@@ -15,7 +15,14 @@ import { uploadFile } from "@/api/file";
 import { updateProfile } from "@/api/profile";
 import { set, useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
-import { memberOptions, p, yearOptions, d, s } from "@/data/data";
+import {
+  memberOptions,
+  p,
+  yearOptions,
+  d,
+  s,
+  genderChoices,
+} from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
@@ -98,6 +105,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       link_1: userInfo?.social_link?.instagram || null,
       link_2: userInfo?.social_link?.email || null,
       link_3: userInfo?.social_link?.linkedin || null,
+      gender: userInfo?.gender,
     },
   });
 
@@ -356,18 +364,31 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 {"This field is required"}
               </div>
             )}
-            <InputForm
-              title={"Age"}
-              placeholder={"Age"}
-              register={register}
-              name={"age"}
-              required={true}
-            />
-            {errors.age && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
-                {"This field is required"}
-              </div>
-            )}
+            <div className="form-double-item">
+              <InputForm
+                title={"Age"}
+                placeholder={"Age"}
+                register={register}
+                name={"age"}
+                required={true}
+              />
+              <SelectForm
+                options={genderChoices}
+                label={"Gender"}
+                placeholder={"Gender"}
+                noIcon={true}
+                name={"gender"}
+                handleChangeFilter={handleChangeFilter}
+                defaultValue={watch("gender")}
+                required={true}
+              />
+            </div>
+            {errors.age ||
+              (errors.gender && (
+                <div className="text-[#ff0000] text-[12px] mb-2">
+                  {"This field is required"}
+                </div>
+              ))}
             <div className="form-double-item">
               <SelectForm
                 options={psOptions}
