@@ -176,6 +176,7 @@ const SelectForm = ({
     menu: (provided) => ({
       ...provided,
       backgroundColor: "#333333",
+      width: "300px",
     }),
     option: (provided, state) => ({
       ...provided,

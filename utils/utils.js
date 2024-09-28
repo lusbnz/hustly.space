@@ -1,8 +1,6 @@
 export const removeVietnameseTones = (str) => {
-  const accents =
-    "àáảãạảãăắẳằẵặâầấậẩẫäæçèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹ";
-  const noAccents =
-    "aaaaaaaaaaaaaaaaaaaaaceeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuuyyy";
+  const accents =  "àáảãạảãăắẳằẵặâầấậẩẫäæçèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹÂÁĐỨỘÀẢÃẠẢÃĂẮẲẰẴẶÂẦẤẬẨẪÄÆÇÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ";
+  const noAccents ="aaaaaaaaaaaaaaaaaaaaaceeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyAADUOAAAAAAAAAAAAAAAAAAAACEEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOOOUUUUUUUUUUUYYYYY";
 
   return str
     .split("")

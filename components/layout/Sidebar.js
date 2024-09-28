@@ -176,7 +176,7 @@ const Sidebar = ({
                 onKeyDown={handleSubmitSearch}
               />
             </div>
-            <div className="sidebar-content">
+            <div className="sidebar-content pb-[100px] z-[2]">
               <SelectForm
                 label={"University"}
                 placeholder={"University"}
@@ -339,7 +339,7 @@ const Sidebar = ({
                 Clear all
               </div>
             </div>
-            <div className="sidebar-footer">
+            <div className="sidebar-footer z-[1]">
               <div className="flex items-center gap-[12px]">
                 {userInfo?.avatar ? (
                   <div className="avatar-image">
