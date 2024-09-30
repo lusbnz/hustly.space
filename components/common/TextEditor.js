@@ -5,6 +5,8 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 import UploadIcon from "@/public/icons/image-icon.svg";
 import SendIcon from "@/public/icons/send-icon.svg";
+import EmojiPicker from "emoji-picker-react";
+import { set } from "react-hook-form";
 
 const TextEditor = ({ handleSend }) => {
   const [editorData, setEditorData] = useState("");
@@ -12,6 +14,7 @@ const TextEditor = ({ handleSend }) => {
   const fileInputRef = useRef(null);
   const [tempImage, setTempImage] = useState(null);
   const [imageId, setImageId] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const onSend = () => {
     handleSend(editorData, imageId);
@@ -51,6 +54,36 @@ const TextEditor = ({ handleSend }) => {
     }
   };
 
+  const handleEmojiSelect = (emoji) => {
+    const emojiHtml = emoji.emoji;
+  
+    if (editorRef.current) {
+      const editor = editorRef.current;
+      editor.focus();
+  
+      // Tạo một node chứa emoji và chèn vào cuối nội dung
+      const emojiNode = document.createElement("span");
+      emojiNode.innerHTML = emojiHtml; // Sử dụng innerHTML để chèn emoji đúng cách
+  
+      // Chèn emoji vào cuối nội dung
+      editor.appendChild(emojiNode);
+  
+      // Di chuyển con trỏ đến cuối editor
+      const range = document.createRange();
+      range.setStartAfter(emojiNode);
+      range.collapse(true);
+  
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+  
+      // Cập nhật dữ liệu editor
+      setEditorData(editor.innerHTML);
+    }
+  
+    setShowEmojiPicker(false);
+  };  
+  
   return (
     <div className="relative">
       {tempImage && (
@@ -76,6 +109,7 @@ const TextEditor = ({ handleSend }) => {
           onKeyDown={handleKeyDown}
         />
         <div className="flex items-center justify-between gap-[6px] w-100 mt-[10px] px-[20px]">
+          <div className="flex items-center gap-[12px]">
           <input
             type="file"
             ref={fileInputRef}
@@ -85,12 +119,24 @@ const TextEditor = ({ handleSend }) => {
           />
           <div
             className="text-white cursor-pointer"
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          >
+            😀
+          </div>
+          {showEmojiPicker && (
+            <div className="absolute bottom-[80px] left-[20px] z-10">
+              <EmojiPicker onEmojiClick={handleEmojiSelect} />
+            </div>
+          )}
+          <div
+            className="text-white cursor-pointer"
             onClick={() => fileInputRef.current.click()}
           >
             <Image src={UploadIcon} alt="upload" width={20} height={20} />
           </div>
+          </div>
           <div className="text-white cursor-pointer" onClick={onSend}>
-            <Image src={SendIcon} alt="send" width={20} height={20} />  
+            <Image src={SendIcon} alt="send" width={20} height={20} />
           </div>
         </div>
       </div>
