@@ -250,12 +250,22 @@ const SelectForm = ({
         styles={customStyles}
         closeMenuOnSelect={isMulti ? false : true}
         isOptionDisabled={() => name === "skill_set" && selectedValue?.length >= 5}
+        // value={
+        //   isClear
+        //     ? null
+        //     : isMulti
+        //     ? options?.filter(option => defaultValue?.includes(option.value)) || []
+        //     : options?.find(option => String(option.value) === String(defaultValue)) || null
+        // }
         value={
           isClear
             ? null
-            : isMulti
-            ? options?.filter(option => defaultValue?.includes(option.value)) || []
-            : options?.find(option => String(option.value) === String(defaultValue)) || null
+            : isMulti 
+            ? options?.filter((option) => defaultValue?.includes(option.value)) || []
+            : options &&
+              options?.find(
+                (option) => String(option.value) === String(defaultValue)
+              )
         }
         onChange={handleChange}
       />
