@@ -53,9 +53,7 @@ const AuthRegister = () => {
             });
             return;
           }
-          else{
-            redirect("/auth-login");
-          }
+          redirect("/auth-login");
         } else {
           const errorMessage =
             "An unexpected error occurred. Please try again.";

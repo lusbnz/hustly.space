@@ -120,8 +120,7 @@ const ChatDetail = ({
       is_match: true,
     };
     updateThread(userInfo?.id, chatId, data)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       })
@@ -129,7 +128,7 @@ const ChatDetail = ({
         setIsActiveTab("all");
         setChatId(null);
         setIsModalOpen(false);
-      })
+      });
   };
 
   return (
@@ -242,7 +241,9 @@ const ChatDetail = ({
               </>
             ))}
           </div>
-          {!isMatch ? (
+          {messages?.length === 1 && messages[0]?.sender === userInfo.id ? (
+            <></>
+          ) : !isMatch ? (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
               <ButtonComponent
                 type={"button"}

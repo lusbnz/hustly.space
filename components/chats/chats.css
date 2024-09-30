@@ -95,11 +95,16 @@
                 background-color: #FFFFFF;
                 color: #000000;
                 border-radius: 15px;
+                width: fit-content;
             }
             .message-content.own{
                 background-color: #000000;
                 color: #FFFFFF;
             }
+        }
+
+        .message-content.own{
+            align-items: end;
         }
     }
 }
