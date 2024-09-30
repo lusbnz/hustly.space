@@ -46,7 +46,7 @@
     }
 
     .info{
-        gap: calc((12 / 1080) * 100vh);
+        gap: calc((18 / 1080) * 100vh);
     }
 
     .name{

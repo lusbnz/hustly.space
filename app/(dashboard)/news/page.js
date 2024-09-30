@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Badge from "@/components/common/Badge";
 import ModalDetail from "@/components/layout/ModalDetail";
-import UserIcon from "@/public/icons/user-icon.svg";
+import UserIcon from "@/public/icons/user2-icon.svg";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import Image from "next/image";
@@ -89,9 +89,9 @@ const News = () => {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col info">
+                  <div className="flex flex-col info justify-center">
                     <span className="name flex items-end gap-[4px]">
-                      <span className="lh-1 h-[12px] text-[14px] text-center">
+                      <span className="lh-1 h-[12px] text-[18px] text-center">
                         {item.first_name} {item.last_name}
                       </span>
 

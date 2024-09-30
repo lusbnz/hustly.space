@@ -202,13 +202,15 @@ const SelectForm = ({
   ];
 
   const handleChange = (selectedOption) => {
-    // if (selectedOption?.length < 5) {
-      const value = isMulti
-        ? selectedOption.map((option) => option.value)
-        : selectedOption?.value || "";
+    if (isMulti && name === "skill_set" && selectedOption.length > 5) {
+      return;
+    }
 
-      handleChangeFilter(name, value);
-    // }
+    const value = isMulti
+      ? selectedOption.map((option) => option.value)
+      : selectedOption?.value || "";
+
+    handleChangeFilter(name, value);
   };
 
   return (
