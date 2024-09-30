@@ -56,7 +56,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     return {
       value: item.id,
       label: removeVietnameseTones(item.name),
-
+      color: item.color,
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
         label: removeVietnameseTones(item.name),
@@ -367,7 +367,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             </div>
 
             <div>
-              <label>Who are you in your team?</label>
+              <label className="text-[14px]">Who are you in your team?</label>
               <div className="grid grid-cols-1 md:grid-cols-2 w-100 items-start justify-start gap-[12px] pt-[12px] pb-[24px]">
                 {colorOptions?.map((item) => (
                   <div

@@ -150,11 +150,13 @@ const News = () => {
                           ?.sub_domains?.find((e) => e.id === item.id)?.name;
                       }
 
+                      console.log('xv', item);
+
                       return (
                         <Badge
                           key={item.id}
-                          backgroundColor={"#DAF4E0"}
-                          color={"#009723"}
+                          backgroundColor={`${item.color}1A`}
+                          color={item.color}
                           name={sd}
                         />
                       );

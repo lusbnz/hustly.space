@@ -129,6 +129,7 @@ const Sidebar = ({
     return {
       value: item.id,
       label: removeVietnameseTones(item.name),
+      color: item.color,
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
         label: removeVietnameseTones(item.name),

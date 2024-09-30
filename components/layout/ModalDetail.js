@@ -80,18 +80,19 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
     return {
       value: item.id,
       label: removeVietnameseTones(item.name),
+      color: item.color,
       subOptions: item.sub_domains.map((item) => ({
         value: item.id,
         label: removeVietnameseTones(item.name),
+        color: item.color,
       })),
     };
   });
 
   domainOptions.unshift({
     value: null,
-    label: 'All',
+    label: "All",
   });
-
 
   const competitionOptions = competition?.map((item) => {
     return {
@@ -102,7 +103,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
 
   competitionOptions.unshift({
     value: null,
-    label: 'All',
+    label: "All",
   });
 
   const universityOptions = university?.map((item) => {
@@ -306,16 +307,62 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">DOMAIN</span>
                       <div>
+                        
                         {userInfo?.domain?.length > 0 && (
                           <span className="flex flex-wrap gap-[6px]">
-                            {userInfo?.domain?.map((domain) => (
-                              <span
-                                key={domain.id}
-                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                              >
-                                {findLabelById(domain.id, domain.parent_domain)}
-                              </span>
-                            ))}
+                            {userInfo.domain.map((domain) => {
+                              const domainLabel = findLabelById(
+                                domain.id,
+                                null
+                              );
+                              const domainColor =
+                                domainOptions.find((d) => d.value === domain.id)
+                                  ?.color || "#a7a7a7"; // Lấy color từ domainOptions
+                              
+                              return (
+                                <span
+                                  key={domain.id}
+                                  className={`value py-[6px] px-[8px] rounded-[4px] text-[14px] font-[500]`}
+                                  style={{
+                                    color: domainColor,
+                                    backgroundColor: `${domainColor}1A`,
+                                  }}
+                                >
+                                  {/* Hiển thị label cho domain chính */}
+                                  {domainLabel}
+                                </span>
+                              );
+                            })}
+
+                            {userInfo.domain.map((domain) =>
+                              domain.sub_domains &&
+                              domain.sub_domains.length > 0
+                                ? domain.sub_domains.map((subId) => {
+                                    const subLabel = findLabelById(
+                                      subId,
+                                      domain.id
+                                    );
+                                    const subColor =
+                                      domainOptions.find(
+                                        (d) => d.value === domain.id
+                                      )?.subOptions?.find(e => e.value === subId)?.color || "#a7a7a7";
+
+                                    return (
+                                      <span
+                                        key={subId}
+                                        className={`value py-[6px] px-[8px] rounded-[4px] text-[14px] font-[500]`}
+                                        style={{
+                                          color: subColor,
+                                          backgroundColor: `${subColor}1A`,
+                                        }}
+                                      >
+                                        {subLabel}{" "}
+                                        {/* Hiển thị label cho từng sub_domain */}
+                                      </span>
+                                    );
+                                  })
+                                : null
+                            )}
                           </span>
                         )}
                       </div>
@@ -325,14 +372,20 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       <div>
                         {userInfo?.archivement?.length > 0 && (
                           <div className="flex flex-wrap gap-[6px]">
-                            {userInfo?.archivement?.map((archivement) => (
-                              <span
-                                key={archivement.id}
-                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                              >
-                                {archivement.description}
-                              </span>
-                            ))}
+                            {userInfo?.archivement?.map((archivement) => {
+                              if (!!archivement.description) {
+                                return (
+                                  <span
+                                    key={archivement.id}
+                                    className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                                  >
+                                    {archivement.description}
+                                  </span>
+                                );
+                              } else {
+                                return null;
+                              }
+                            })}
                           </div>
                         )}
                       </div>

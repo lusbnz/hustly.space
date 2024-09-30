@@ -54,7 +54,7 @@ const AuthRegister = () => {
             return;
           }
           else{
-            
+            redirect("/auth-login");
           }
         } else {
           const errorMessage =
