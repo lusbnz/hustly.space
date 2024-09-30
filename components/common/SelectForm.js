@@ -253,10 +253,9 @@ const SelectForm = ({
         value={
           isClear
             ? null
-            : options &&
-              options?.find(
-                (option) => String(option.value) === String(defaultValue)
-              )
+            : isMulti
+            ? options?.filter(option => defaultValue?.includes(option.value)) || []
+            : options?.find(option => String(option.value) === String(defaultValue)) || null
         }
         onChange={handleChange}
       />
