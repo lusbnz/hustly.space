@@ -25,7 +25,7 @@ const SelectForm = ({
   required,
   isMulti,
   clearBtn,
-  handleDeleteDomain
+  handleDeleteDomain,
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -202,11 +202,13 @@ const SelectForm = ({
   ];
 
   const handleChange = (selectedOption) => {
-    const value = isMulti
-      ? selectedOption.map((option) => option.value)
-      : selectedOption?.value || "";
+    // if (selectedOption?.length < 5) {
+      const value = isMulti
+        ? selectedOption.map((option) => option.value)
+        : selectedOption?.value || "";
 
-    handleChangeFilter(name, value);
+      handleChangeFilter(name, value);
+    // }
   };
 
   return (
@@ -219,7 +221,15 @@ const SelectForm = ({
             {label || "UNIVERSITY"}
           </label>
           {clearBtn && (
-            <Image src={Trash} sizes="12" width={12} height={12} alt="trash" className="cursor-pointer" onClick={handleDeleteDomain} />
+            <Image
+              src={Trash}
+              sizes="12"
+              width={12}
+              height={12}
+              alt="trash"
+              className="cursor-pointer"
+              onClick={handleDeleteDomain}
+            />
           )}
         </div>
       )}
@@ -235,6 +245,7 @@ const SelectForm = ({
         }}
         required={required}
         styles={customStyles}
+        closeMenuOnSelect={isMulti ? false : true}
         value={
           isClear
             ? null

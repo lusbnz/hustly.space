@@ -71,7 +71,7 @@ const TextEditor = ({ handleSend }) => {
           className="h-[100px] bg-transparent outline-none text-[#ffffff] p-[12px] overflow-y-auto"
           style={{ width: "-webkit-fill-available" }}
           contentEditable
-          placeholder="Type your message here..."
+          placeholder="Your message..."
           onInput={() => setEditorData(editorRef.current.innerHTML)}
           onKeyDown={handleKeyDown}
         />

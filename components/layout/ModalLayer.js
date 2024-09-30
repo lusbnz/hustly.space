@@ -551,18 +551,18 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     return (
                       <span
                         key={item.value}
-                        className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
+                        className="sub-option hover:opacity-80"
                         style={{
                           backgroundColor:
                             Array.isArray(watch("sub_domain_1")) &&
                             watch("sub_domain_1").includes(item.value)
                               ? "#fff"
-                              : "#343434",
+                              : "#171717",
                           color:
                             Array.isArray(watch("sub_domain_1")) &&
                             watch("sub_domain_1").includes(item.value)
                               ? "#000"
-                              : "#fff",
+                              : "#595959",
                         }}
                         onClick={() => {
                           const update = watch("sub_domain_1") || [];
@@ -627,18 +627,18 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                         return (
                           <span
                             key={item.value}
-                            className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
+                            className="sub-option hover:opacity-80"
                             style={{
                               backgroundColor:
                                 Array.isArray(watch("sub_domain_2")) &&
                                 watch("sub_domain_2").includes(item.value)
                                   ? "#fff"
-                                  : "#343434",
+                                  : "#171717",
                               color:
                                 Array.isArray(watch("sub_domain_2")) &&
                                 watch("sub_domain_2").includes(item.value)
                                   ? "#000"
-                                  : "#fff",
+                                  : "#595959",
                             }}
                             onClick={() => {
                               const update = watch("sub_domain_2") || [];

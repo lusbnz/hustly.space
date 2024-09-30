@@ -149,9 +149,6 @@ const News = () => {
                           ?.find((e) => e.id === item.parent_domain)
                           ?.sub_domains?.find((e) => e.id === item.id)?.name;
                       }
-
-                      console.log('xv', item);
-
                       return (
                         <Badge
                           key={item.id}

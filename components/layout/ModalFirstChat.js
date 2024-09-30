@@ -35,7 +35,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const handleSend = (content, image) => {
     let threadId;
     setIsLoading(true);
-        const data = {
+    const data = {
       to_user_id: userInfo.id,
     };
     createThread(user.id, data)
@@ -47,16 +47,16 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
         if (image) {
           messageData.media = [image];
         }
-        
+
         sendMessage(user.id, threadId, messageData)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(true);
-          toggleOpenModal();
-        });
+          .then((res) => {})
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            setIsLoading(true);
+            toggleOpenModal();
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -74,7 +74,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
         }}
       />
       <div className="w-[100vw] h-[90vh] bg-transparent opacity-100 absolute z-30 p-[22px] flex items-center justify-center">
-        <div className="w-[600px] h-[260px] max-h-[100vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
+        <div className="w-[600px] fisrt-chat max-h-[100vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
           {isLoading ? (
             <div className="flex items-center justify-center w-100 h-[2px]">
               <BeatLoader color="#FFFFFF" size={10} />
@@ -82,7 +82,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
           ) : (
             <>
               <div className="card-header flex mb-4">
-              <div onClick={toggleOpenModal} className="cursor-pointer">
+                <div onClick={toggleOpenModal} className="cursor-pointer mr-2 mt-3">
                   <Image
                     src={BackIcon}
                     alt="back-icon"

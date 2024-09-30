@@ -147,3 +147,15 @@
     }
 }
 
+.sub-option{
+    border-radius: 4px;
+    border: 1px solid #353535;
+    padding: calc((6 / 1920) * 100vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
+    font-weight: 500;
+    line-height: clamp(10px, calc((15 / 1920) * 100vw), 25px);
+    cursor: pointer;
+}
