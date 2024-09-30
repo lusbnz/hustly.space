@@ -120,6 +120,11 @@ const Sidebar = ({
     };
   });
 
+  competitionOptions.unshift({
+    value: null,
+    label: 'All',
+  });
+
   const domainOptions = domain?.map((item) => {
     return {
       value: item.id,
@@ -129,6 +134,11 @@ const Sidebar = ({
         label: removeVietnameseTones(item.name),
       })),
     };
+  });
+
+  domainOptions.unshift({
+    value: null,
+    label: 'All',
   });
 
   const handleSignout = () => {

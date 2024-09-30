@@ -87,11 +87,22 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
     };
   });
 
+  domainOptions.unshift({
+    value: null,
+    label: 'All',
+  });
+
+
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
       label: removeVietnameseTones(item.name),
     };
+  });
+
+  competitionOptions.unshift({
+    value: null,
+    label: 'All',
   });
 
   const universityOptions = university?.map((item) => {

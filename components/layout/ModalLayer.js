@@ -64,6 +64,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
+  domainOptions.unshift({
+    value: null,
+    label: "All",
+  });
+
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const {
@@ -85,23 +90,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       bio: userInfo?.bio,
       competition: userInfo?.competition?.[0]?.id,
       year_competition: userInfo?.competition?.[0]?.year_competition,
-      domain_1:
-        userInfo?.domain?.[0]?.parent_domain ||
-        userInfo?.domain?.[0]?.id ||
-        domainOptions?.[0]?.id,
-      sub_domain_1: !!userInfo?.domain?.[0]?.parent_domain
-        ? userInfo?.domain?.[0]?.id
-        : null,
-      domain_2:
-        userInfo?.domain?.[1]?.parent_domain ||
-        userInfo?.domain?.[1]?.id ||
-        domainOptions?.[0]?.id,
-      sub_domain_2: !!userInfo?.domain?.[1]?.parent_domain
-        ? userInfo?.domain?.[1]?.id
-        : null,
+      domain_1: userInfo?.domain?.[0]?.id || null,
+      sub_domain_1: userInfo?.domain?.[0]?.sub_domains || null,
+      domain_2: userInfo?.domain?.[1]?.id || null,
+      sub_domain_2: userInfo?.domain?.[1]?.sub_domains || null,
       skill_set: userInfo?.skill_set,
       bio_image: userInfo?.bio_image,
-      archivement: userInfo?.archivement || [{ description: "" }],
+      archivement: userInfo?.archivement,
       link_1: userInfo?.social_link?.instagram || null,
       link_2: userInfo?.social_link?.email || null,
       link_3: userInfo?.social_link?.linkedin || null,
@@ -109,7 +104,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     },
   });
 
-  const achievements = watch("archivement") || [{ description: "" }];
+  const achievements = watch("archivement");
+  
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -155,23 +151,37 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       return;
     }
 
-    if (data.sub_domain_1) {
-      data.domain = [data.sub_domain_1];
+    data.domains = [];
+    if (data?.sub_domain_1?.length > 0) {
+      data.domains = data.sub_domain_1.map((id) => ({ id, order: 1 }));
       delete data.sub_domain_1;
       delete data.domain_1;
-    } else {
-      data.domain = [data.domain_1];
-      delete data.domain_1;
     }
+    
+    if (data?.sub_domain_2?.length > 0) {
+      data.domains = [
+        ...data.domains,
+        ...data.sub_domain_2.map((id) => ({ id, order: 2 })),
+      ];
 
-    if (data.sub_domain_2) {
-      data.domain.push(data.sub_domain_2);
       delete data.sub_domain_2;
       delete data.domain_2;
-    } else if (data.domain_2) {
-      data.domain.push(data.domain_2);
+    }
+    
+    if (data?.domain_1) {
+      data.domains.push({ id: data.domain_1, order: 1 });
+      delete data.domain_1;
+    }
+    
+    if (data?.domain_2) {
+      data.domains.push({ id: data.domain_2, order: 2 });
       delete data.domain_2;
     }
+
+    delete data.domain_1;
+    delete data.domain_2;
+    delete data.sub_domain_1;
+    delete data.sub_domain_2;
 
     data.competition = [
       {
@@ -191,10 +201,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             description: data.archivement,
           },
         ];
-      } else if (Array.isArray(data.archivement)) {
-        data.archivement = data.archivement.map((achievement) => ({
-          description: achievement.description || achievement,
-        }));
       }
     }
 
@@ -225,6 +231,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
+  competitionOptions.unshift({
+    value: null,
+    label: "All",
+  });
+
   const universityOptions = university?.map((item) => {
     return {
       value: String(item.id),
@@ -249,28 +260,36 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const colorOptions = [
     {
       value: "#ff0000",
-      label:
-        "(ferno): Pioneering spirit, fierce competition, unwavering determination, and the power to inspire others toward success.",
+      title: "ferno",
+      label: "the one with a burning passion to keep going forward",
     },
     {
       value: "#0000ff",
+      title: "ocea",
       label:
-        "(ocea): Detail-oriented, speak little but do much, the silent hero of the team, ensuring every detail is completed flawlessly.",
+        "doesnt talk much, but is extremely competent and productive in what they do",
     },
     {
       value: "#00ff00",
+      title: "jade",
       label:
-        "(jade): The glue of the team, they excel at listening, relieving tension, and understanding each member, helping everyone move forward in unity.",
+        "the heart of the team, who radiates postsitive energy toward everyone",
     },
     {
       value: "#ffff00",
-      label:
-        "(aura): Creative individuals, full of unique ideas, are always the ones who propose groundbreaking solutions to solve the team's challenges.",
+      title: "aura",
+      label: "the most creative one, always try to come up with new stuff",
     },
   ];
 
   const handleChangeFilter = (name, value) => {
     setValue(name, value);
+  };
+
+  const handleDeleteDomain = () => {
+    setValue("domain_2", null);
+    setValue("sub_domain_2", null);
+    setNumberDomain(1);
   };
 
   return (
@@ -346,7 +365,38 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 onClick={() => setIsEdit(!isEdit)}
               />
             </div>
-            <SelectForm
+
+            <div>
+              <label>Who are you in your team?</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 w-100 items-start justify-start gap-[12px] pt-[12px] pb-[24px]">
+                {colorOptions?.map((item) => (
+                  <div
+                    key={item.value}
+                    className="flex items-start justify-start gap-[6px] border-[1px] border-[#212121] rounded-[10px] p-[12px] h-[100px] hover:border-[#434343] cursor-pointer"
+                    onClick={() => {
+                      setValue("color", item.value);
+                    }}
+                    style={
+                      watch("color") === item.value
+                        ? { border: "1px solid #434343" }
+                        : {}
+                    }
+                  >
+                    <div
+                      className={`h-[12px] w-[12px] rounded-full mt-[3px]`}
+                      style={{ backgroundColor: item.value }}
+                    ></div>
+                    <div className="flex flex-col w-[90%] items-start justify-start">
+                      <span className="text-[12px]">{item.title}</span>
+                      <span className="text-[12px] font-[500] text-[#434343]">
+                        {item.label}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* <SelectForm
               options={colorOptions}
               label={"Color"}
               placeholder={"Color"}
@@ -358,7 +408,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               defaultValue={watch("color")}
               isColor={true}
               required={true}
-            />
+            /> */}
             {errors.color && (
               <div className="text-[#ff0000] text-[12px] mb-2">
                 {"This field is required"}
@@ -504,16 +554,26 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                         className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
                         style={{
                           backgroundColor:
-                            item.value === watch("sub_domain_1")
+                            Array.isArray(watch("sub_domain_1")) &&
+                            watch("sub_domain_1").includes(item.value)
                               ? "#fff"
                               : "#343434",
                           color:
-                            item.value === watch("sub_domain_1")
+                            Array.isArray(watch("sub_domain_1")) &&
+                            watch("sub_domain_1").includes(item.value)
                               ? "#000"
                               : "#fff",
                         }}
                         onClick={() => {
-                          setValue("sub_domain_1", item.value);
+                          const update = watch("sub_domain_1") || [];
+                          if (update?.includes(item.value)) {
+                            setValue(
+                              "sub_domain_1",
+                              update.filter((value) => value !== item.value)
+                            );
+                          } else {
+                            setValue("sub_domain_1", [...update, item.value]);
+                          }
                         }}
                       >
                         {item.label}
@@ -549,6 +609,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   handleChangeFilter={handleChangeFilter}
                   defaultValue={watch("domain_2")}
                   required={true}
+                  clearBtn={true}
+                  handleDeleteDomain={handleDeleteDomain}
                 />
                 {watch("domain_2") && (
                   <div
@@ -568,16 +630,29 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                             className="text-[12px] text-[#fff] p-[6px] cursor-pointer bg-[#343434] rounded-[8px] hover:opacity-80"
                             style={{
                               backgroundColor:
-                                item.value === watch("sub_domain_2")
+                                Array.isArray(watch("sub_domain_2")) &&
+                                watch("sub_domain_2").includes(item.value)
                                   ? "#fff"
                                   : "#343434",
                               color:
-                                item.value === watch("sub_domain_2")
+                                Array.isArray(watch("sub_domain_2")) &&
+                                watch("sub_domain_2").includes(item.value)
                                   ? "#000"
                                   : "#fff",
                             }}
                             onClick={() => {
-                              setValue("sub_domain_2", item.value);
+                              const update = watch("sub_domain_2") || [];
+                              if (update?.includes(item.value)) {
+                                setValue(
+                                  "sub_domain_2",
+                                  update.filter((value) => value !== item.value)
+                                );
+                              } else {
+                                setValue("sub_domain_2", [
+                                  ...update,
+                                  item.value,
+                                ]);
+                              }
                             }}
                           >
                             {item.label}
@@ -622,7 +697,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   register={register}
                   name={`archivement[0].description`}
                   isEditor={true}
-                  required={true}
+                  // required={true}
                 />
               </div>
             ) : (
@@ -633,9 +708,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                       title={`Achievement`}
                       placeholder={"Achievement"}
                       register={register}
-                      name={`archivement[${index}].description`}
+                      name={`archivement[0].description`}
                       isEditor={true}
-                      required={true}
+                      // required={true}
                       defaultValue={achievement?.description}
                     />
                   </div>
@@ -643,7 +718,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </>
             )}
 
-            <div
+            {/* <div
               className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
               onClick={() => {
                 setValue(`archivement[${numberArchivement}]`, "");
@@ -652,13 +727,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             >
               <Image src={AddIcon} width={12} height={12} alt="plus" />
               <span>More Achievement</span>
-            </div>
+            </div> */}
 
-            {errors.archivement && (
+            {/* {errors.archivement && (
               <div className="text-[#ff0000] text-[12px] mb-2">
                 {"This field is required"}
               </div>
-            )}
+            )} */}
 
             <InputForm
               title={"Tldr"}

@@ -73,7 +73,7 @@ export default function Layout({ children }) {
         city: filter.city,
         competition__id: filter.competition__id,
         domain__id: filter.domain__id,
-        skill_set: filter.skill_set,
+        skill_set: Array.isArray(filter.skill_set) ? filter.skill_set.join(",") : "",
         age__gte: filter.age__gte,
         age__lte: filter.age__lte,
         competition__year: filter.competition__year,

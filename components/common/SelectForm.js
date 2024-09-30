@@ -24,6 +24,8 @@ const SelectForm = ({
   icon,
   required,
   isMulti,
+  clearBtn,
+  handleDeleteDomain
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -40,6 +42,7 @@ const SelectForm = ({
             paddingLeft: "calc((8 / 1920) * 100vw)",
             paddingRight: "calc((18 / 1920) * 100vw)",
             fontSize: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
+            lineHeight: "clamp(10px, calc((16 / 1920) * 100vw), 26px)",
             color: "#ffffff",
           }}
         >
@@ -176,7 +179,7 @@ const SelectForm = ({
     menu: (provided) => ({
       ...provided,
       backgroundColor: "#333333",
-      width: "300px",
+      minWidth: "max-content",
     }),
     option: (provided, state) => ({
       ...provided,
@@ -215,6 +218,9 @@ const SelectForm = ({
           <label htmlFor="custom-select" style={{ color: "#484848" }}>
             {label || "UNIVERSITY"}
           </label>
+          {clearBtn && (
+            <Image src={Trash} sizes="12" width={12} height={12} alt="trash" className="cursor-pointer" onClick={handleDeleteDomain} />
+          )}
         </div>
       )}
       <Select

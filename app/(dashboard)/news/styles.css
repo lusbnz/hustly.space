@@ -60,7 +60,7 @@
         color: #9B9B9B;
         font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
         font-weight: 500;
-        line-height: 1;
+        line-height: clamp(10px, calc((16 / 1920) * 100vw), 26px);
     }
 }
 

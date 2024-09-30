@@ -119,7 +119,7 @@ const News = () => {
                         />
                         <span>{item.age || "18"}</span>
                       </div>
-                      <div className="location flex items-center gap-[4px]">
+                      <div className="location h-[16px] flex items-center gap-[4px]">
                         <Image
                           src={UserIcon}
                           alt="mem-icon"
