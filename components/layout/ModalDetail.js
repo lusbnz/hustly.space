@@ -322,7 +322,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                               return (
                                 <span
                                   key={domain.id}
-                                  className={`value py-[6px] px-[8px] rounded-[4px] text-[14px] font-[500]`}
+                                  className={`value d-badge`}
                                   style={{
                                     color: domainColor,
                                     backgroundColor: `${domainColor}1A`,
@@ -350,7 +350,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                     return (
                                       <span
                                         key={subId}
-                                        className={`value py-[6px] px-[8px] rounded-[4px] text-[14px] font-[500]`}
+                                        className={`value d-badge`}
                                         style={{
                                           color: subColor,
                                           backgroundColor: `${subColor}1A`,
@@ -390,6 +390,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                         )}
                       </div>
                     </div>
+                    <div className="w-100 border-t border-t-[#fff] mt-[6px]"></div>
                     <div className="flex flex-col gap-[6px] mb-10">
                       {userInfo?.bio_image?.[0]?.file && (
                         <Image

@@ -134,9 +134,20 @@
     cursor: pointer;
 }
 
+.m-name{
+    font-size: clamp(10px, calc((22 / 1920) * 100vw), 28px);
+    font-weight: 500;
+}
+
 .m-av{
     width: calc((90 / 1920) * 100vw);
     height: calc((90 / 1920) * 100vw);
+}
+
+.m-label{
+    font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
+    font-weight: 500;
+    color: #484848;
 }
 
 .range{

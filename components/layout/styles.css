@@ -1,6 +1,8 @@
 .contact{
     margin-top: calc((22 / 1080) * 100vh);
     margin-bottom: calc((10 / 1080) * 100vh);
+    display: flex;
+    flex-direction: column;
     span{
         color: #484848;
         font-size: clamp(8px, calc((15 / 1920) * 100vw), 25px);
@@ -55,9 +57,21 @@
 
 .more{
     label{
-        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+        font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
         font-weight: 500;
         line-height: 1;  
         color: #434343;
     }
+}
+
+.d-badge{
+    padding: calc((6 / 1920) * 100vw);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a7a7a7;
+    background-color: #323232;
+    font-size: calc((14 / 1920) * 100vw);
+    font-weight: 500;
 }

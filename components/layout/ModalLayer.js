@@ -347,10 +347,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   </div>
                 )}
                 {!isEdit ? (
-                  <span className="w-[181px]">{watch("first_name")}</span>
+                  <span className="w-[181px] m-name">{watch("first_name")}</span>
                 ) : (
                   <input
-                    className="outline-0 bg-transparent"
+                    className="outline-0 bg-transparent border-b-[1px] border-b-[#fff]"
                     {...register("first_name")}
                     required={true}
                   />
@@ -367,7 +367,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             </div>
 
             <div>
-              <label className="text-[14px]">Who are you in your team?</label>
+              <label className="m-label">Who are you in your team?</label>
               <div className="grid grid-cols-1 md:grid-cols-2 w-100 items-start justify-start gap-[12px] pt-[12px] pb-[24px]">
                 {colorOptions?.map((item) => (
                   <div
@@ -805,7 +805,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               ></input>
             )}
 
-            <div className="more">
+            <div className="more mt-[12px]">
               <label>Bio Image</label>
               {isLoadingBioImage ? (
                 <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">

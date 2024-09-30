@@ -101,7 +101,7 @@ const Sidebar = ({
       age__gte: filter.age__gte,
       age__lte: filter.age__lte,
       competition__year: "",
-      gender: ""
+      gender: "",
     }));
     setIsClear(true);
   };
@@ -122,7 +122,7 @@ const Sidebar = ({
 
   competitionOptions.unshift({
     value: null,
-    label: 'All',
+    label: "All",
   });
 
   const domainOptions = domain?.map((item) => {
@@ -139,7 +139,7 @@ const Sidebar = ({
 
   domainOptions.unshift({
     value: null,
-    label: 'All',
+    label: "All",
   });
 
   const handleSignout = () => {
@@ -206,9 +206,13 @@ const Sidebar = ({
 
               <div className="my-[12px] range">
                 <label>Age</label>
-                <div className="p-[12px] bg-[#171717] rounded-[8px] relative flex flex-wrap items-center gap-[8px]"
-                  style={{border: "1px solid #2e2e2e"}}
+                <div
+                  className="p-[12px] bg-[#171717] rounded-[8px] relative flex overflow-hidden items-center gap-[8px]"
+                  style={{ border: "1px solid #2e2e2e" }}
                 >
+                  <div className="h-[16px] w-[16px] ml-2 mr-1">
+                    <Image src={UserIcon} alt="age" className="image" />
+                  </div>
                   <Range
                     step={1}
                     min={18}
@@ -220,15 +224,15 @@ const Sidebar = ({
                     renderTrack={({ props, children }) => {
                       const trackStyle = {
                         height: "4px",
-                        width: "75%",
-                        background: "#222", 
+                        width: "calc((200 / 1920) * 100vw)",
+                        background: "#222",
                         borderRadius: "2px",
                         position: "relative",
                       };
-                  
+
                       const left = ((ageV.min - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị min
                       const right = 100 - ((ageV.max - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị max
-                  
+
                       return (
                         <div {...props} style={trackStyle}>
                           <div
@@ -259,7 +263,7 @@ const Sidebar = ({
                       />
                     )}
                   />
-                  <div className="text-white text-[12px]">
+                  <div className="text-white text-[12px] hidden lg:flex">
                     {ageV.min} - {ageV.max}
                   </div>
                 </div>
@@ -373,7 +377,10 @@ const Sidebar = ({
                       : userInfo?.first_name}{" "}
                     {userInfo?.last_name}
                   </span>
-                  <span className="setting items-center flex" onClick={toggleOpenModalSetting}>
+                  <span
+                    className="setting items-center flex"
+                    onClick={toggleOpenModalSetting}
+                  >
                     <div className="settings-container">
                       <Image src={Settings} alt="settings" className="image" />
                     </div>

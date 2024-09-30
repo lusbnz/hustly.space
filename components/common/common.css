@@ -5,7 +5,7 @@
     margin-bottom: calc((18 / 1080) * 100vh);
     width: 100%;
     label{
-        font-size: clamp(10px, calc((18 / 1920) * 100vw), 28px);
+        font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
         font-weight: 500;
         line-height: 1;  
         color: #434343;
@@ -82,7 +82,7 @@
 }
 
 .badge{
-    padding: calc((8 / 1080) * 100vh) calc((8 / 1920) * 100vw);
+    padding: calc((8 / 1920) * 100vw);
     display: flex;
     align-items: center;
     justify-content: center;
