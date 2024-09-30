@@ -202,6 +202,7 @@ const SelectForm = ({
   ];
 
   const handleChange = (selectedOption) => {
+    setSelectedValue(selectedOption);
     if (isMulti && name === "skill_set" && selectedOption.length > 5) {
       return;
     }
@@ -248,6 +249,7 @@ const SelectForm = ({
         required={required}
         styles={customStyles}
         closeMenuOnSelect={isMulti ? false : true}
+        isOptionDisabled={() => name === "skill_set" && selectedValue?.length >= 5}
         value={
           isClear
             ? null
