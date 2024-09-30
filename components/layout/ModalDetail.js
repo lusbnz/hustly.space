@@ -402,6 +402,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                             objectFit: "cover",
                             width: "calc((375 / 1920) * 100vw)",
                             height: "100%",
+                            borderRadius: "8px"
                           }}
                         />
                       )}
