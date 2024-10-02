@@ -56,8 +56,7 @@ const AuthLogin = () => {
       .catch((err) => {
         console.log(err);
         const errorMessage =
-          err.response?.data?.detail ||
-          "An unexpected error occurred. Please try again.";
+          err || "An unexpected error occurred. Please try again.";
 
         setError("server", {
           type: "manual",
@@ -128,7 +127,8 @@ const AuthLogin = () => {
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"submit"}
+                  type={"button"}
+                  onClick={handleSubmit(onSubmit)}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign in"
                   }

@@ -46,7 +46,7 @@ const AuthRegister = () => {
     authRegister(data)
       .then((res) => {
         if (res) {
-          if(res.email[0] === "Email đã tồn tại."){
+          if (res.email[0] === "Email đã tồn tại.") {
             setError("server", {
               type: "manual",
               message: "Email already exists.",
@@ -67,8 +67,7 @@ const AuthRegister = () => {
       .catch((err) => {
         console.log(err);
         const errorMessage =
-          err.response?.data?.detail ||
-          "An unexpected error occurred. Please try again.";
+          err || "An unexpected error occurred. Please try again.";
 
         setError("server", {
           type: "manual",
@@ -160,7 +159,8 @@ const AuthRegister = () => {
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"submit"}
+                  type={"button"}
+                  onClick={handleSubmit(onSubmit)}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign up"
                   }
