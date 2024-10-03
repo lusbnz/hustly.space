@@ -56,7 +56,8 @@ const AuthLogin = () => {
       .catch((err) => {
         console.log(err);
         const errorMessage =
-          err || "An unexpected error occurred. Please try again.";
+          err.response?.data?.detail ||
+          "An unexpected error occurred. Please try again.";
 
         setError("server", {
           type: "manual",
