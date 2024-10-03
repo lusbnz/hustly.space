@@ -123,6 +123,10 @@ const SelectForm = ({
             display: "inline-flex", // Đặt hình và text cùng dòng
             alignItems: "center", // Căn giữa theo trục dọc
             gap: "calc((8 / 1920) * 100vw)", // Khoảng cách giữa hình và text
+            whiteSpace: "normal", // Cho phép xuống dòng
+            overflow: "visible", // Cho phép hiển thị nội dung không bị ẩn
+            textOverflow: "ellipsis",
+            width: "100%"
           }}
         >
           {name === "color" && (
@@ -135,13 +139,7 @@ const SelectForm = ({
               }}
             ></div>
           )}
-          <span
-            style={{
-              whiteSpace: "nowrap", // Đảm bảo text không bị xuống dòng
-            }}
-          >
-            {props.data.label}
-          </span>
+          <span>{props.data.label}</span>
         </div>
       </components.Option>
     );
@@ -180,6 +178,8 @@ const SelectForm = ({
       ...provided,
       backgroundColor: "#333333",
       minWidth: "max-content",
+      overflowX: "auto",
+      zIndex: 1000,
     }),
     option: (provided, state) => ({
       ...provided,
@@ -189,9 +189,10 @@ const SelectForm = ({
         ? "#222222"
         : "#333333",
       color: "#fff",
-      fontSize: "14px",
+      fontSize: "12px",
       cursor: "pointer",
       paddingLeft: "calc((18 / 1920) * 100vw)",
+      zIndex: 1000,
     }),
   };
 
@@ -249,19 +250,16 @@ const SelectForm = ({
         required={required}
         styles={customStyles}
         closeMenuOnSelect={isMulti ? false : true}
-        isOptionDisabled={() => name === "skill_set" && selectedValue?.length >= 5}
-        // value={
-        //   isClear
-        //     ? null
-        //     : isMulti
-        //     ? options?.filter(option => defaultValue?.includes(option.value)) || []
-        //     : options?.find(option => String(option.value) === String(defaultValue)) || null
-        // }
+        isOptionDisabled={() =>
+          name === "skill_set" && selectedValue?.length >= 5
+        }
         value={
           isClear
             ? null
-            : isMulti 
-            ? options?.filter((option) => defaultValue?.includes(option.value)) || []
+            : isMulti
+            ? options?.filter((option) =>
+                defaultValue?.includes(option.value)
+              ) || []
             : options &&
               options?.find(
                 (option) => String(option.value) === String(defaultValue)

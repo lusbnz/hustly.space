@@ -263,7 +263,7 @@ const Sidebar = ({
                       />
                     )}
                   />
-                  <div className="text-white text-[12px] hidden lg:flex">
+                  <div className="text-white text-[10px] hidden lg:flex">
                     {ageV.min} - {ageV.max}
                   </div>
                 </div>
