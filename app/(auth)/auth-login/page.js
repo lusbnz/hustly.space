@@ -24,9 +24,9 @@ const AuthLogin = () => {
     dispatch(setUserInfo(null));
     const accessToken = getAuthToken();
 
-    // if (!!accessToken) {
-    //   router.push("/news");
-    // }
+    if (!!accessToken) {
+      router.push("/news");
+    }
   }, []);
   const {
     register,

@@ -27,9 +27,9 @@ const AuthRegister = () => {
   useEffect(() => {
     const accessToken = getAuthToken();
 
-    // if (!!accessToken) {
-    //   router.push("/news");
-    // }
+    if (!!accessToken) {
+      router.push("/news");
+    }
   }, []);
 
   const onSubmit = (data) => {

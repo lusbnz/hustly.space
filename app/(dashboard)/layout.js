@@ -111,6 +111,7 @@ export default function Layout({ children }) {
       })
       .catch((err) => {
         console.log(err);
+        window.localStorage.removeItem("accessToken");
         router.push("/auth-login");
       });
   };
