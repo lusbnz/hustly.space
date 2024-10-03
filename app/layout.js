@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import { Provider } from "react-redux";
 import "./globals.css";
 import store from "@/store/store";
-import logo from '@/public/icons/logo-icon.svg';
+import Head from "next/head";
 
 export default function RootLayout({ children }) {
   return (
