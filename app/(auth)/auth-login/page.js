@@ -8,7 +8,7 @@ import "../styles.css";
 import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { authLogin } from "@/api/auth";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
@@ -25,7 +25,7 @@ const AuthLogin = () => {
     const accessToken = getAuthToken();
 
     if (!!accessToken) {
-      redirect("/news");
+      router.push("/news");
     }
   }, []);
   const {

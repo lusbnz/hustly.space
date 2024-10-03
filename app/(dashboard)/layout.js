@@ -2,7 +2,7 @@
 
 import Sidebar from "@/components/layout/Sidebar";
 import "./styles.css";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ModalLayer from "@/components/layout/ModalLayer";
 import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
@@ -17,6 +17,7 @@ import { setSuggestion } from "@/reducers/suggestionSlice";
 import { getAuthToken } from "@/libs/clients";
 
 export default function Layout({ children }) {
+  const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
   const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -57,11 +58,12 @@ export default function Layout({ children }) {
       });
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     const accessToken = getAuthToken()
+    console.log('accessToken', accessToken);
 
     if (!accessToken && isHaveSidebar) {
-      redirect("/auth-login");
+      router.push("/auth-login");
     }
   }, []);
 
@@ -110,6 +112,7 @@ export default function Layout({ children }) {
       })
       .catch((err) => {
         console.log(err);
+        router.push("/auth-login");
       });
   };
 
