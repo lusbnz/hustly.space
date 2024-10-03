@@ -60,7 +60,6 @@ export default function Layout({ children }) {
 
   useEffect(() => {    
     const accessToken = getAuthToken()
-    console.log('accessToken', accessToken);
 
     if (!accessToken && isHaveSidebar) {
       router.push("/auth-login");

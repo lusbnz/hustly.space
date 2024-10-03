@@ -27,9 +27,9 @@ const AuthRegister = () => {
   useEffect(() => {
     const accessToken = getAuthToken();
 
-    if (!!accessToken) {
-      router.push("/news");
-    }
+    // if (!!accessToken) {
+    //   router.push("/news");
+    // }
   }, []);
 
   const onSubmit = (data) => {
@@ -153,7 +153,8 @@ const AuthRegister = () => {
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"submit"}
+                  type={"button"}
+                  onClick={handleSubmit(onSubmit)}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign up"
                   }

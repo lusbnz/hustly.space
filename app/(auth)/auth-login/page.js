@@ -24,9 +24,9 @@ const AuthLogin = () => {
     dispatch(setUserInfo(null));
     const accessToken = getAuthToken();
 
-    if (!!accessToken) {
-      router.push("/news");
-    }
+    // if (!!accessToken) {
+    //   router.push("/news");
+    // }
   }, []);
   const {
     register,
@@ -128,7 +128,8 @@ const AuthLogin = () => {
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"submit"}
+                  type={"button"}
+                  onClick={handleSubmit(onSubmit)}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign in"
                   }
