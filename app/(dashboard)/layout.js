@@ -63,7 +63,7 @@ export default function Layout({ children }) {
     if (!accessToken && isHaveSidebar) {
       redirect("/auth-login");
     }
-  }, []);
+  }, [accessToken]);
 
   useEffect(() => {
     if (!isFirstRender) {
