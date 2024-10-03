@@ -127,8 +127,7 @@ const AuthLogin = () => {
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"button"}
-                  onClick={handleSubmit(onSubmit)}
+                  type={"submit"}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign in"
                   }
