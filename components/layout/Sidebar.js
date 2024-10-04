@@ -224,7 +224,7 @@ const Sidebar = ({
                     renderTrack={({ props, children }) => {
                       const trackStyle = {
                         height: "4px",
-                        width: "calc((200 / 1920) * 100vw)",
+                        width: "calc((180 / 1920) * 100vw)",
                         background: "#222",
                         borderRadius: "2px",
                         position: "relative",
@@ -263,7 +263,11 @@ const Sidebar = ({
                       />
                     )}
                   />
-                  <div className="text-white text-[10px] hidden lg:flex">
+                  <div className="text-white hidden lg:flex"
+                  style={{
+                    fontSize: 'clamp(8px, 10px, 12px)',
+                  }}
+                  >
                     {ageV.min} - {ageV.max}
                   </div>
                 </div>
@@ -346,6 +350,7 @@ const Sidebar = ({
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={SkillIcon} alt="skill" className="image" />}
                 isMulti={true}
+                defaultValue={filter.skill_set}
               />
               <div
                 className="mt-[12px] text-[14px] lh-1 bg-[#222] rounded-[4px] p-[4px] text-white w-[90px] cursor-pointer flex items-center justify-center"

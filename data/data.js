@@ -1,10 +1,10 @@
 export const memberOptions = [
   { value: null, label: "All" },
-  { value: "1", label: "Only you" },
-  { value: "2", label: "2 member" },
-  { value: "3", label: "3 member" },
-  { value: "4", label: "4 member" },
-  { value: "5", label: "5 member" },
+  { value: "1", label: "Only one" },
+  { value: "2", label: "2 members" },
+  { value: "3", label: "3 members" },
+  { value: "4", label: "4 members" },
+  { value: "5", label: "5 members" },
 ];
 
 export const yearOptions = [

@@ -126,7 +126,7 @@ const SelectForm = ({
             whiteSpace: "normal", // Cho phép xuống dòng
             overflow: "visible", // Cho phép hiển thị nội dung không bị ẩn
             textOverflow: "ellipsis",
-            width: "100%"
+            width: "100%",
           }}
         >
           {name === "color" && (
@@ -194,6 +194,11 @@ const SelectForm = ({
       paddingLeft: "calc((18 / 1920) * 100vw)",
       zIndex: 1000,
     }),
+    multiValue: (provided) => ({
+      ...provided,
+      fontSize: "calc((16 / 1920) * 100vw)", // Giảm kích thước font
+      padding: "calc((2 / 1920) * 100vw) calc((4 / 1920) * 100vw)", // Giảm padding bên trong mỗi giá trị
+    }),
   };
 
   const fakeOptions = [
@@ -222,7 +227,12 @@ const SelectForm = ({
       ) : (
         <div className="flex w-100 justify-between items-center">
           <label htmlFor="custom-select" style={{ color: "#484848" }}>
-            {label || "UNIVERSITY"}
+            {label || "UNIVERSITY"}{" "}
+            {name === "skill_set" && (
+              <span style={{ fontSize: "12px" }}>
+                {` (${selectedValue?.length || 0}/5)`}
+              </span>
+            )}
           </label>
           {clearBtn && (
             <Image

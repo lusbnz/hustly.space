@@ -34,12 +34,12 @@ const News = () => {
         is_check: true,
       };
       createThread(userInfo.id, data)
-      .then((res) => {
-       setCheck(res.thread_id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          setCheck(res.thread_id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       setIsModalOpen(index);
     }
   };
@@ -62,9 +62,7 @@ const News = () => {
         </div>
         <div className="card-wrapper grid grid-cols-1 md:grid-cols-2 pb-12 mb-12">
           {suggestionData?.map((item) => {
-            const uni = universityOptions.find(
-              (e) => e.id === item?.city
-            );
+            const uni = universityOptions.find((e) => e.id === item?.city);
 
             return (
               <div
@@ -138,26 +136,19 @@ const News = () => {
                       : item.bio}
                   </span>
                   <div className="tags">
-                    {item.domain?.map((item) => {
-                      const pd = item.parent_domain;
-                      let sd = item.id;
-
-                      if (pd === null) {
-                        sd = domain?.find((e) => e.id === item.id)?.name;
-                      } else {
-                        sd = domain
-                          ?.find((e) => e.id === item.parent_domain)
-                          ?.sub_domains?.find((e) => e.id === item.id)?.name;
-                      }
-                      return (
-                        <Badge
-                          key={item.id}
-                          backgroundColor={`${item.color}1A`}
-                          color={item.color}
-                          name={sd}
-                        />
-                      );
-                    })}
+                    {item.domain
+                      ?.filter((item) => item.parent_domain === null) // Lọc chỉ các mục có pd === null
+                      .map((item) => {
+                        const sd = domain?.find((e) => e.id === item.id)?.name;
+                        return (
+                          <Badge
+                            key={item.id}
+                            backgroundColor={`${item.color}1A`}
+                            color={item.color}
+                            name={sd}
+                          />
+                        );
+                      })}
                   </div>
                 </div>
               </div>

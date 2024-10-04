@@ -267,7 +267,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       value: "#0000ff",
       title: "ocea",
       label:
-        "doesnt talk much, but is extremely competent and productive in what they do",
+        "doesn't talk much, but is extremely competent and productive in what they do",
     },
     {
       value: "#00ff00",
@@ -738,7 +738,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             <InputForm
               title={"Tldr"}
               placeholder={
-                "I am Quoc Anh from neu, I study finance and like to eat bánh bao + play basketball"
+                "I am Quoc Anh from neu, I study finance and like to eat banh bao + play basketball"
               }
               register={register}
               name={"bio"}

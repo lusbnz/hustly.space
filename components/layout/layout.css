@@ -53,7 +53,7 @@
     gap: calc((24 / 1080) * 100vh);
     max-height: calc((1000 / 1080) * 100vh);
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     z-index: 10;
 }
 
