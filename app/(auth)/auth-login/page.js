@@ -81,8 +81,8 @@ const AuthLogin = () => {
     <>
       <Head>
         <title>hustly.space</title>
-        <link rel="icon" href="@/public/icons/logo-icon.svg" />
-        <link rel="apple-touch-icon" href="@/public/icons/logo-icon.svg" />
+        <link rel="icon" href="/icons/logo-icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icons/logo-icon.svg" />
       </Head>
       <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
         <div className="left-container flex-1 flex flex-col">
