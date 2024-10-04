@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { authRegister } from "@/api/auth";
 import { BeatLoader } from "react-spinners";
 import { getAuthToken } from "@/libs/clients";
+import Head from "next/head";
 
 const AuthRegister = () => {
   const router = useRouter();
@@ -120,6 +121,12 @@ const AuthRegister = () => {
   };
 
   return (
+    <>
+    <Head>
+        <title>hustly.space</title>
+        <link rel="icon" href="@/public/icons/logo-icon.svg" />
+        <link rel="apple-touch-icon" href="@/public/icons/logo-icon.svg" />
+      </Head>
     <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
       <div className="left-container flex-1 flex flex-col">
         <div className="logo-container">
@@ -231,6 +238,7 @@ const AuthRegister = () => {
         <Image src={Banner} alt="banner" className="banner-auth" />
       </div>
     </div>
+    </>
   );
 };
 

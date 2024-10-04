@@ -14,6 +14,7 @@ import { BeatLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { getAuthToken } from "@/libs/clients";
+import Head from "next/head";
 
 const AuthLogin = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,8 @@ const AuthLogin = () => {
     if (!validatePassword(password)) {
       setErrors((prev) => ({
         ...prev,
-        password: "Password must contain at least one uppercase letter, one number, and be at least 8 characters long.",
+        password:
+          "Password must contain at least one uppercase letter, one number, and be at least 8 characters long.",
       }));
       return;
     }
@@ -76,84 +78,97 @@ const AuthLogin = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
-      <div className="left-container flex-1 flex flex-col">
-        <div className="logo-container">
-          <Image
-            src={Logo}
-            alt="logo"
-            className="image"
-            style={{ objectFit: "contain" }}
-          />
-        </div>
-        <div className="form-container">
-          <div className="form-header">
-            <h1 className="mb-[16px]">Login account</h1>
-            <h3>Welcome to hustly.space, champ</h3>
+    <>
+      <Head>
+        <title>hustly.space</title>
+        <link rel="icon" href="@/public/icons/logo-icon.svg" />
+        <link rel="apple-touch-icon" href="@/public/icons/logo-icon.svg" />
+      </Head>
+      <div className="w-[100vw] h-[100vh] flex bg-[#000000]">
+        <div className="left-container flex-1 flex flex-col">
+          <div className="logo-container">
+            <Image
+              src={Logo}
+              alt="logo"
+              className="image"
+              style={{ objectFit: "contain" }}
+            />
           </div>
-          <div className="form-wrapper">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                onSubmit();
-              }}
-            >
-              <InputForm
-                title={"Email"}
-                placeholder={"Enter your email..."}
-                name="username"
-                required={true}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  setErrors((prev) => ({ ...prev, username: "" }));
+          <div className="form-container">
+            <div className="form-header">
+              <h1 className="mb-[16px]">Login account</h1>
+              <h3>Welcome to hustly.space, champ</h3>
+            </div>
+            <div className="form-wrapper">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSubmit();
                 }}
-              />
-              {errors.username && (
-                <div className="text-[#ff0000] text-[12px]">
-                  {errors.username}
-                </div>
-              )}
-              <InputForm
-                title={"Password"}
-                placeholder={"Enter your password..."}
-                name="password"
-                required={true}
-                isPassword={true}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrors((prev) => ({ ...prev, password: "" }));
-                }}
-              />
-              {errors.password && (
-                <div className="text-[#ff0000] text-[12px]">
-                  {errors.password}
-                </div>
-              )}
-              {errors.server && (
-                <div className="text-[#ff0000] text-[12px]">
-                  {errors.server}
-                </div>
-              )}
-              <div className="form-footer">
-                <ButtonComponent
-                  type={"submit"}
-                  title={isLoading ? <BeatLoader color="#000" size={6} /> : "Sign in"}
+              >
+                <InputForm
+                  title={"Email"}
+                  placeholder={"Enter your email..."}
+                  name="username"
+                  required={true}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setErrors((prev) => ({ ...prev, username: "" }));
+                  }}
                 />
-                <span>
-                  Dont have an account?{" "}
-                  <Link className="action" href={"/auth-register"}>
-                    Sign up
-                  </Link>
-                </span>
-              </div>
-            </form>
+                {errors.username && (
+                  <div className="text-[#ff0000] text-[12px]">
+                    {errors.username}
+                  </div>
+                )}
+                <InputForm
+                  title={"Password"}
+                  placeholder={"Enter your password..."}
+                  name="password"
+                  required={true}
+                  isPassword={true}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrors((prev) => ({ ...prev, password: "" }));
+                  }}
+                />
+                {errors.password && (
+                  <div className="text-[#ff0000] text-[12px]">
+                    {errors.password}
+                  </div>
+                )}
+                {errors.server && (
+                  <div className="text-[#ff0000] text-[12px]">
+                    {errors.server}
+                  </div>
+                )}
+                <div className="form-footer">
+                  <ButtonComponent
+                    type={"submit"}
+                    title={
+                      isLoading ? (
+                        <BeatLoader color="#000" size={6} />
+                      ) : (
+                        "Sign in"
+                      )
+                    }
+                  />
+                  <span>
+                    Dont have an account?{" "}
+                    <Link className="action" href={"/auth-register"}>
+                      Sign up
+                    </Link>
+                  </span>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
+        <div className="flex-1 p-[22px]">
+          <Image src={Banner} alt="banner" className="banner-auth" />
+        </div>
       </div>
-      <div className="flex-1 p-[22px]">
-        <Image src={Banner} alt="banner" className="banner-auth" />
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -15,6 +15,8 @@ export default function Home() {
     <>
       <Head>
         <title>hustly.space</title>
+        <link rel="icon" href="@/public/icons/logo-icon.svg" />
+        <link rel="apple-touch-icon" href="@/public/icons/logo-icon.svg" />
       </Head>
     </>
   );

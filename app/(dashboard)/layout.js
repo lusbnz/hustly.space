@@ -15,6 +15,7 @@ import { setUniversity } from "@/reducers/universitySlice";
 import { setDomain } from "@/reducers/domainSlice";
 import { setSuggestion } from "@/reducers/suggestionSlice";
 import { getAuthToken } from "@/libs/clients";
+import Head from "next/head";
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -58,8 +59,8 @@ export default function Layout({ children }) {
       });
   };
 
-  useEffect(() => {    
-    const accessToken = getAuthToken()
+  useEffect(() => {
+    const accessToken = getAuthToken();
 
     if (!accessToken && isHaveSidebar) {
       router.push("/auth-login");
@@ -74,7 +75,9 @@ export default function Layout({ children }) {
         city: filter.city,
         competition__id: filter.competition__id,
         domain__id: filter.domain__id,
-        skill_set: Array.isArray(filter.skill_set) ? filter.skill_set.join(",") : "",
+        skill_set: Array.isArray(filter.skill_set)
+          ? filter.skill_set.join(",")
+          : "",
         age__gte: filter.age__gte,
         age__lte: filter.age__lte,
         competition__year: filter.competition__year,
@@ -150,12 +153,8 @@ export default function Layout({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       if (isHaveSidebar && isFirstRenderFilter) {
-        await Promise.all([
-          fetchCompetion(),
-          fetchUniversity(),
-          fetchDomain(),
-        ]);
-        if(isFirstRender){
+        await Promise.all([fetchCompetion(), fetchUniversity(), fetchDomain()]);
+        if (isFirstRender) {
           fetchProfile();
           setIsFirstRender(false);
           setIsSidebarLoading(false);
@@ -164,11 +163,16 @@ export default function Layout({ children }) {
       }
     };
 
-    fetchData()
+    fetchData();
   }, [isHaveSidebar]);
 
   return (
     <>
+      <Head>
+        <title>hustly.space</title>
+        <link rel="icon" href="@/public/icons/logo-icon.svg" />
+        <link rel="apple-touch-icon" href="@/public/icons/logo-icon.svg" />
+      </Head>
       <div className="wrapper">
         {isHaveSidebar && (
           <Sidebar

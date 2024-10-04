@@ -1,0 +1,16 @@
+{
+    "name": "Hustly.Space",
+    "short_name": "hs",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "",
+        "sizes": "192x192",
+        "type": ""
+      }
+    ]
+  }
+  
