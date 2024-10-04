@@ -98,6 +98,7 @@ export default function Layout({ children }) {
 
     fetchSuggestion(data);
   };
+  // x
 
   const fetchProfile = () => {
     setIsSidebarLoading(true);
