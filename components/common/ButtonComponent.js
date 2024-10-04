@@ -13,7 +13,7 @@ const ButtonComponent = ({
   
   return (
     <button
-      className={`btn`}
+      className={`btn cursor-pointer`}
       style={{
         backgroundColor: backgroundColor || "#ffffff",
         color: color || "#000000",

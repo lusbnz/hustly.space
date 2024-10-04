@@ -17,12 +17,16 @@ import { getAuthToken } from "@/libs/clients";
 const AuthRegister = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    server: "",
+  });
 
   useEffect(() => {
     const accessToken = getAuthToken();
@@ -32,13 +36,46 @@ const AuthRegister = () => {
     }
   }, []);
 
-  const onSubmit = (data) => {
-    if (!validatePassword(data.password)) {
-      setError("password", {
-        type: "manual",
-        message:
+  const onSubmit = () => {
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      password,
+    };
+
+    setErrors({ username: "", email: "", password: "", server: "" });
+
+    if (!validatePassword(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password:
           "Password must contain at least one uppercase letter, one number, and be at least 8 characters long.",
-      });
+      }));
+      return;
+    }
+
+    if (!firstName || !lastName) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "Please fill your name",
+      }));
+      return;
+    }
+
+    if (!email) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please check your email",
+      }));
+      return;
+    }
+
+    if (!password) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Please check your password",
+      }));
       return;
     }
 
@@ -46,11 +83,11 @@ const AuthRegister = () => {
     authRegister(data)
       .then((res) => {
         if (res) {
-          if(res.email[0] === "Email đã tồn tại."){
-            setError("server", {
-              type: "manual",
-              message: "Email already exists.",
-            });
+          if (res.email[0] === "Email đã tồn tại.") {
+            setErrors((prev) => ({
+              ...prev,
+              email: "Email đã tồn tại.",
+            }));
             return;
           }
 
@@ -63,10 +100,10 @@ const AuthRegister = () => {
           err.response?.data?.detail ||
           "An unexpected error occurred. Please try again.";
 
-        setError("server", {
-          type: "manual",
-          message: errorMessage,
-        });
+        setErrors((prev) => ({
+          ...prev,
+          server: errorMessage,
+        }));
       })
       .finally(() => {
         setIsLoading(false);
@@ -99,62 +136,82 @@ const AuthRegister = () => {
             <h3>Welcome to hustly.space, where you become a champion</h3>
           </div>
           <div className="form-wrapper">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubmit();
+              }}
+            >
               <div className="form-double-item">
                 <InputForm
                   title="First name"
                   placeholder="First name..."
-                  register={register}
+                  // register={register}
                   name="first_name"
                   required={true}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    setErrors((prev) => ({ ...prev, username: "" }));
+                  }}
                 />
                 <InputForm
                   title="Last name"
                   placeholder="Last name..."
-                  register={register}
+                  // register={register}
                   name="last_name"
                   required={true}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                    setErrors((prev) => ({ ...prev, username: "" }));
+                  }}
                 />
               </div>
-              {(errors.first_name || errors.last_name) && (
-                <div className="text-[#ff0000] mb-2 ">
-                  Please fill your name
+              {errors.username && (
+                <div className="text-[#ff0000] mb-2  text-[12px]">
+                  {errors.username}
                 </div>
               )}
               <InputForm
                 title="Email"
                 placeholder="Enter your email..."
-                register={register}
+                // register={register}
                 name="email"
                 required={true}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setErrors((prev) => ({ ...prev, email: "" }));
+                }}
               />
               {errors.email && (
-                <div className="text-[#ff0000] mb-2 ">
-                  Please check your email
+                <div className="text-[#ff0000] mb-2  text-[12px]">
+                  {errors.email}
                 </div>
               )}
               <InputForm
                 title="Password"
                 placeholder="Enter your password..."
-                register={register}
+                // register={register}
                 name="password"
                 required={true}
                 isPassword={true}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrors((prev) => ({ ...prev, password: "" }));
+                }}
               />
               {errors.password && (
-                <div className="text-[#ff0000] mb-2 ">
-                  {errors.password.message}
+                <div className="text-[#ff0000] mb-2  text-[12px]">
+                  {errors.password}
                 </div>
               )}
               {errors.server && (
-                <div className="text-[#ff0000] mb-2 ">
-                  {errors.server.message}
+                <div className="text-[#ff0000] mb-2  text-[12px]">
+                  {errors.server}
                 </div>
               )}
               <div className="form-footer">
                 <ButtonComponent
-                  type={"button"}
-                  onClick={handleSubmit(onSubmit)}
+                  type={"submit"}
                   title={
                     isLoading ? <BeatLoader color="#000" size={6} /> : "Sign up"
                   }
