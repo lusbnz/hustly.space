@@ -136,19 +136,28 @@ const News = () => {
                       : item.bio}
                   </span>
                   <div className="tags">
-                    {item.domain
-                      ?.filter((item) => item.parent_domain === null) // Lọc chỉ các mục có pd === null
-                      .map((item) => {
-                        const sd = domain?.find((e) => e.id === item.id)?.name;
-                        return (
-                          <Badge
-                            key={item.id}
-                            backgroundColor={`${item.color}1A`}
-                            color={item.color}
-                            name={sd}
-                          />
-                        );
-                      })}
+                    {[
+                      ...new Set(
+                        item.domain?.map((item) =>
+                          item.parent_domain === null
+                            ? item.id
+                            : item.parent_domain
+                        )
+                      ),
+                    ].map((uniqueId) => {
+                      const sd = domain?.find((e) => e.id === uniqueId)?.name;
+                      const colorItem = item.domain?.find(
+                        (e) => e.id === uniqueId || e.parent_domain === uniqueId
+                      );
+                      return (
+                        <Badge
+                          key={uniqueId}
+                          backgroundColor={`${colorItem?.color}1A`}
+                          color={colorItem?.color}
+                          name={sd}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </div>
