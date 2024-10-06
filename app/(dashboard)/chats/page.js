@@ -36,6 +36,8 @@ const Chats = () => {
       })
       .catch((err) => {
         console.log(err);
+        window.localStorage.removeItem("accessToken");
+        router.push("/auth-login");
       })
       .finally(() => {
         setIsFirstRender(false);

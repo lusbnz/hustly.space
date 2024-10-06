@@ -33,6 +33,9 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const uni = universityOptions.find((item) => item.id === userInfo?.city);
 
   const handleSend = (content, image) => {
+    if (content === "" && !image) {
+      return;
+    }
     let threadId;
     setIsLoading(true);
     const data = {

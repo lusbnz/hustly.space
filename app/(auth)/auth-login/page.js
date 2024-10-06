@@ -97,7 +97,7 @@ const AuthLogin = () => {
           <div className="form-container">
             <div className="form-header">
               <h1 className="mb-[16px]">Login account</h1>
-              <h3>Welcome to hustly.space, champ</h3>
+              <h3>Welcome to hustly.space, dong chi</h3>
             </div>
             <div className="form-wrapper">
               <form
@@ -154,7 +154,7 @@ const AuthLogin = () => {
                     }
                   />
                   <span>
-                    Dont have an account?{" "}
+                    {`Don't have an account?`}{" "}
                     <Link className="action" href={"/auth-register"}>
                       Sign up
                     </Link>

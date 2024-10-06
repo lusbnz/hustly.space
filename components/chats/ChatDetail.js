@@ -90,6 +90,9 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
+    if (content === "" && !image) {
+      return;
+    }
     const data = {
       content: content,
       media: [image],

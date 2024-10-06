@@ -105,7 +105,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   });
 
   const achievements = watch("archivement");
-  
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -157,7 +156,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       delete data.sub_domain_1;
       delete data.domain_1;
     }
-    
+
     if (data?.sub_domain_2?.length > 0) {
       data.domains = [
         ...data.domains,
@@ -167,12 +166,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       delete data.sub_domain_2;
       delete data.domain_2;
     }
-    
+
     if (data?.domain_1) {
       data.domains.push({ id: data.domain_1, order: 1 });
       delete data.domain_1;
     }
-    
+
     if (data?.domain_2) {
       data.domains.push({ id: data.domain_2, order: 2 });
       delete data.domain_2;
@@ -261,24 +260,24 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     {
       value: "#ff0000",
       title: "ferno",
-      label: "the one with a burning passion to keep going forward",
+      label: "the one with a burning passion, always pushing forward.",
     },
     {
       value: "#0000ff",
       title: "ocea",
       label:
-        "doesn't talk much, but is extremely competent and productive in what they do",
+        "quiet but incredibly competent and productive in everything they do.",
     },
     {
       value: "#00ff00",
       title: "jade",
       label:
-        "the heart of the team, who radiates postsitive energy toward everyone",
+        "the heart of the team, radiates positive energy to everyone.",
     },
     {
       value: "#ffff00",
       title: "aura",
-      label: "the most creative one, always try to come up with new stuff",
+      label: "the most creative, always coming up with new ideas.",
     },
   ];
 
@@ -347,7 +346,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   </div>
                 )}
                 {!isEdit ? (
-                  <span className="w-[181px] m-name">{watch("first_name")}</span>
+                  <span className="w-[181px] m-name">
+                    {watch("first_name")}
+                  </span>
                 ) : (
                   <input
                     className="outline-0 bg-transparent border-b-[1px] border-b-[#fff]"
@@ -396,19 +397,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 ))}
               </div>
             </div>
-            {/* <SelectForm
-              options={colorOptions}
-              label={"Color"}
-              placeholder={"Color"}
-              noIcon={true}
-              haveSub={true}
-              cstyle={{ marginBottom: "12px" }}
-              name={"color"}
-              handleChangeFilter={handleChangeFilter}
-              defaultValue={watch("color")}
-              isColor={true}
-              required={true}
-            /> */}
             {errors.color && (
               <div className="text-[#ff0000] text-[12px] mb-2">
                 {"This field is required"}
@@ -693,7 +681,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               <div className="relative">
                 <InputForm
                   title={"Archivement"}
-                  placeholder={"Archivement"}
+                  placeholder={
+                    "An academic or professional achievement, an award you've won, or something impressive you've built."
+                  }
                   register={register}
                   name={`archivement[0].description`}
                   isEditor={true}
@@ -706,7 +696,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   <div className="relative" key={index}>
                     <InputForm
                       title={`Achievement`}
-                      placeholder={"Achievement"}
+                      placeholder={"An academic or professional achievement, an award you've won, or something impressive you've built."}
                       register={register}
                       name={`archivement[0].description`}
                       isEditor={true}
@@ -718,27 +708,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </>
             )}
 
-            {/* <div
-              className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
-              onClick={() => {
-                setValue(`archivement[${numberArchivement}]`, "");
-                setNumberArchivement((prev) => prev + 1);
-              }}
-            >
-              <Image src={AddIcon} width={12} height={12} alt="plus" />
-              <span>More Achievement</span>
-            </div> */}
-
-            {/* {errors.archivement && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
-                {"This field is required"}
-              </div>
-            )} */}
-
             <InputForm
               title={"Tldr"}
               placeholder={
-                "I am Quoc Anh from neu, I study finance and like to eat banh bao + play basketball"
+                "I am Quoc Anh from neu, I study finance and like to eat banh bao + play basketball."
               }
               register={register}
               name={"bio"}

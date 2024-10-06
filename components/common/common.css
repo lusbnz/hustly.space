@@ -41,6 +41,7 @@
         height: calc((180 / 1080) * 100vh);
         padding-left: calc((20 / 1920) * 100vw);
         padding-top: calc((20 / 1920) * 100vw);
+        padding-right: calc((20 / 1920) * 100vw);
         box-sizing: border-box;
         background-color: transparent;
         color: #ffffff;
