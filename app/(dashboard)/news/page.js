@@ -51,6 +51,16 @@ const News = () => {
     };
   });
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const rel = searchParams.get("rel");
+
+  useEffect(() => {
+    if (!!rel) {
+      setIsModalOpen(rel);
+      window.history.replaceState(null, null, window.location.pathname);
+    }
+  }, [rel]);
+
   return (
     <>
       <div className="news-wrapper">
@@ -138,10 +148,10 @@ const News = () => {
                   <div className="tags">
                     {[
                       ...new Set(
-                        item.domain?.map((item) =>
-                          item.parent_domain === null
-                            ? item.id
-                            : item.parent_domain
+                        item.domain?.map((domainItem) =>
+                          domainItem.parent_domain !== null
+                            ? domainItem.parent_domain
+                            : domainItem.id
                         )
                       ),
                     ].map((uniqueId) => {
@@ -152,7 +162,7 @@ const News = () => {
                       return (
                         <Badge
                           key={uniqueId}
-                          backgroundColor={`${colorItem?.color}1A`}
+                          backgroundColor={`#dff3e1`}
                           color={colorItem?.color}
                           name={sd}
                         />

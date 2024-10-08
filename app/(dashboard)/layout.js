@@ -2,7 +2,7 @@
 
 import Sidebar from "@/components/layout/Sidebar";
 import "./styles.css";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ModalLayer from "@/components/layout/ModalLayer";
 import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
@@ -61,9 +61,15 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const accessToken = getAuthToken();
+    const searchParams = new URLSearchParams(window.location.search);
+    const rel = searchParams.get("rel");
 
     if (!accessToken && isHaveSidebar) {
-      router.push("/auth-login");
+      if (rel) {
+        router.push(`/auth-login?rel=${rel}`);
+      } else {
+        router.push("/auth-login");
+      }
     }
   }, []);
 
@@ -116,7 +122,14 @@ export default function Layout({ children }) {
       .catch((err) => {
         console.log(err);
         window.localStorage.removeItem("accessToken");
-        router.push("/auth-login");
+        const searchParams = new URLSearchParams(window.location.search);
+        const rel = searchParams.get("rel");
+
+        if (rel) {
+          router.push(`/auth-login?rel=${rel}`);
+        } else {
+          router.push("/auth-login");
+        }
       });
   };
 

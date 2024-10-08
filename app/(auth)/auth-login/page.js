@@ -53,7 +53,7 @@ const AuthLogin = () => {
       .then((res) => {
         if (res) {
           localStorage.setItem("accessToken", res.access);
-          router.push("/news");
+          router.push(`/news${rel ? `?rel=${rel}` : ""}`);
         }
       })
       .catch((err) => {
@@ -76,6 +76,9 @@ const AuthLogin = () => {
 
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const rel = searchParams.get("rel");
 
   return (
     <>
@@ -155,7 +158,10 @@ const AuthLogin = () => {
                   />
                   <span>
                     {`Don't have an account?`}{" "}
-                    <Link className="action" href={"/auth-register"}>
+                    <Link
+                      className="action"
+                      href={`/auth-register${rel ? `?rel=${rel}` : ""}`}
+                    >
                       Sign up
                     </Link>
                   </span>

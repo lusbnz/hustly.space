@@ -209,7 +209,10 @@ const SelectForm = ({
 
   const handleChange = (selectedOption) => {
     setSelectedValue(selectedOption);
-    if (isMulti && name === "skill_set" && selectedOption.length > 5) {
+    if (
+      (isMulti && name === "skill_set" && selectedOption.length > 5) ||
+      (name === "domain__id" && selectedValue?.length > 2)
+    ) {
       return;
     }
 
@@ -226,11 +229,16 @@ const SelectForm = ({
         <div className="h-[18px]"></div>
       ) : (
         <div className="flex w-100 justify-between items-center">
-          <label htmlFor="custom-select" style={{ color: "#484848" }}>
+          <label htmlFor="custom-select" style={{ color: "#e5e5e5" }}>
             {label || "UNIVERSITY"}{" "}
             {name === "skill_set" && (
               <span style={{ fontSize: "12px" }}>
                 {` (${selectedValue?.length || 0}/5)`}
+              </span>
+            )}
+            {name === "domain__id" && (
+              <span style={{ fontSize: "12px" }}>
+                {` (${selectedValue?.length || 0}/2)`}
               </span>
             )}
           </label>
@@ -261,7 +269,8 @@ const SelectForm = ({
         styles={customStyles}
         closeMenuOnSelect={isMulti ? false : true}
         isOptionDisabled={() =>
-          name === "skill_set" && selectedValue?.length >= 5
+          (name === "skill_set" && selectedValue?.length >= 5) ||
+          (name === "domain__id" && selectedValue?.length >= 2)
         }
         value={
           isClear

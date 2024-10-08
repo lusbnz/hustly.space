@@ -1,5 +1,5 @@
 export const memberOptions = [
-  { value: null, label: "All" },
+  // { value: null, label: "" },
   { value: "1", label: "Only one" },
   { value: "2", label: "2 members" },
   { value: "3", label: "3 members" },
@@ -8,24 +8,24 @@ export const memberOptions = [
 ];
 
 export const yearOptions = [
-  { value: null, label: "All"},
+  // { value: null, label: ""},
   { value: "2025", label: "2025" },
   { value: "2024", label: "2024" },
 ];
 
 export const genderChoices = [
-    {value: null, label: "All"},
+    // {value: null, label: ""},
   { value: "MALE", label: "Male" },
   { value: "FEMALE", label: "Female" },
   { value: "OTHER", label: "Other" },
 ];
 
 export const p = [
-    {
-        name: "All",
-        code: 0,
-        codename: null,
-      },
+    // {
+    //     name: "",
+    //     code: 0,
+    //     codename: null,
+    //   },
   {
     name: "Hà Nội",
     code: 1,

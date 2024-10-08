@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     span{
-        color: #484848;
+        color: #e5e5e5;
         font-size: clamp(8px, calc((15 / 1920) * 100vw), 25px);
         font-weight: 500;
     }
@@ -60,7 +60,7 @@
         font-size: clamp(10px, calc((15 / 1920) * 100vw), 25px);
         font-weight: 500;
         line-height: 1;  
-        color: #434343;
+        color: #e5e5e5;
     }
 }
 

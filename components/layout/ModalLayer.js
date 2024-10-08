@@ -10,10 +10,11 @@ import EditIcon from "@/public/icons/edit-icon.svg";
 import InstagramIcon from "@/public/icons/instagram-icon.svg";
 import FacebookIcon from "@/public/icons/facebook-icon.svg";
 import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
+import TrashIcon from "@/public/icons/trash-icon.svg";
 import Image from "next/image";
 import { uploadFile } from "@/api/file";
 import { updateProfile } from "@/api/profile";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
 import {
   memberOptions,
@@ -64,10 +65,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
-  domainOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // domainOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -230,10 +231,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
-  competitionOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // competitionOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const universityOptions = university?.map((item) => {
     return {
@@ -271,8 +272,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     {
       value: "#00ff00",
       title: "jade",
-      label:
-        "the heart of the team, radiates positive energy to everyone.",
+      label: "the heart of the team, radiates positive energy to everyone.",
     },
     {
       value: "#ffff00",
@@ -373,13 +373,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 {colorOptions?.map((item) => (
                   <div
                     key={item.value}
-                    className="flex items-start justify-start gap-[6px] border-[1px] border-[#212121] rounded-[10px] p-[12px] h-[100px] hover:border-[#434343] cursor-pointer"
+                    className="flex items-start justify-start gap-[6px] border-[1px] border-[#212121] rounded-[10px] p-[12px] h-[100px] hover:border-[#e5e5e5] cursor-pointer"
                     onClick={() => {
                       setValue("color", item.value);
                     }}
                     style={
                       watch("color") === item.value
-                        ? { border: "1px solid #434343" }
+                        ? { border: "1px solid #e5e5e5" }
                         : {}
                     }
                   >
@@ -389,7 +389,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     ></div>
                     <div className="flex flex-col w-[90%] items-start justify-start">
                       <span className="text-[12px]">{item.title}</span>
-                      <span className="text-[12px] font-[500] text-[#434343]">
+                      <span className="text-[12px] font-[500] text-[#e5e5e5] lh-[18px]">
                         {item.label}
                       </span>
                     </div>
@@ -573,7 +573,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
 
             {numberDomain === 1 && (
               <div
-                className="mt-[12px] mb-[20px] cursor-pointer text-[#434343] text-[12px] font-[400] flex gap-2 items-center"
+                className="mt-[12px] mb-[20px] cursor-pointer text-[#e5e5e5] text-[12px] font-[400] flex gap-2 items-center"
                 onClick={() => setNumberDomain(2)}
               >
                 <Image src={AddIcon} width={12} height={12} alt="plus" />
@@ -696,7 +696,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   <div className="relative" key={index}>
                     <InputForm
                       title={`Achievement`}
-                      placeholder={"An academic or professional achievement, an award you've won, or something impressive you've built."}
+                      placeholder={
+                        "An academic or professional achievement, an award you've won, or something impressive you've built."
+                      }
                       register={register}
                       name={`archivement[0].description`}
                       isEditor={true}
@@ -785,20 +787,32 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   <BeatLoader color="#fff" size={10} />
                 </div>
               ) : (
-                <div className="flex items-center gap-[6px]">
+                <div className="flex items-center gap-[6px] relative">
                   {watch("bio_image")?.length > 0 && (
-                    <Image
-                      src={watch("bio_image")?.[0].file}
-                      alt="camera-icon"
-                      width={150}
-                      height={150}
-                      style={{
-                        width: "150px",
-                        height: "150px",
-                        objectFit: "cover",
-                        borderRadius: "8px",
-                      }}
-                    />
+                    <>
+                      <Image
+                        src={watch("bio_image")?.[0].file}
+                        alt="camera-icon"
+                        width={150}
+                        height={150}
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <div className="absolute top-[10px] left-[120px] cursor-pointer"
+                      onClick={() => setValue("bio_image", [])}
+                      >
+                        <Image
+                          src={TrashIcon}
+                          alt="edit-icon"
+                          width={16}
+                          height={16}
+                        />
+                      </div>
+                    </>
                   )}
                   <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
                     <input

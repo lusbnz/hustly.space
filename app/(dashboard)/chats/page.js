@@ -26,6 +26,7 @@ const Chats = () => {
   const [isChangeChat, setIsChangeChat] = useState(false);
   const [isLoadingDetail, setIsLoadingDetail] = useState(true);
   const [isMatch, setIsMatch] = useState(false);
+  const [isPin, setIsPin] = useState(false);
   const [lastSender, setLastSender] = useState(null);
 
   const fetchThread = () => {
@@ -97,12 +98,13 @@ const Chats = () => {
     }
   };
 
-  const handleOpenChatDetail = (thread_id, recipient_id, is_match, last_sender) => {
+  const handleOpenChatDetail = (thread_id, recipient_id, is_match, last_sender, is_pin) => {
     setIsLoadingDetail(true);
     setIsActiveChat(thread_id);
     setIsChangeChat(thread_id);
     setLastSender(last_sender);
     setIsMatch(is_match);
+    setIsPin(is_pin);
     if (thread_id === null) {
       setIsModalOpen(false);
     } else {
@@ -206,7 +208,8 @@ const Chats = () => {
                           thread.thread_id,
                           thread.recipient.id,
                           thread.is_match,
-                          thread?.last_message?.sender
+                          thread?.last_message?.sender,
+                          thread?.is_pin
                         )
                       }
                     >
@@ -293,6 +296,7 @@ const Chats = () => {
               isLoading={isLoadingDetail}
               setIsLoading={setIsLoadingDetail}
               isMatch={isMatch}
+              isPin={isPin}
               setIsActiveTab={setIsActiveTab}
               lastSender={lastSender}
               setIsModalOpen={setIsModalOpen}

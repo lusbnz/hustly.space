@@ -120,10 +120,10 @@ const Sidebar = ({
     };
   });
 
-  competitionOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // competitionOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const domainOptions = domain?.map((item) => {
     return {
@@ -137,10 +137,10 @@ const Sidebar = ({
     };
   });
 
-  domainOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // domainOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const handleSignout = () => {
     window.localStorage.removeItem("accessToken");
@@ -338,8 +338,10 @@ const Sidebar = ({
                 options={domainOptions}
                 name={"domain__id"}
                 isClear={isClear}
+                // isMulti={true}
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={DomainIcon} alt="domain" className="image" />}
+                // defaultValue={filter.domain__id}
               />
               <SelectForm
                 label={"Skill set"}

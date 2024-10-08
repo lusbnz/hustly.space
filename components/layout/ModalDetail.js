@@ -20,6 +20,8 @@ import { s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
 import { removeVietnameseTones } from "@/utils/utils";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const dispatch = useDispatch();
@@ -89,10 +91,10 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
     };
   });
 
-  domainOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // domainOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const competitionOptions = competition?.map((item) => {
     return {
@@ -101,10 +103,10 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
     };
   });
 
-  competitionOptions.unshift({
-    value: null,
-    label: "All",
-  });
+  // competitionOptions.unshift({
+  //   value: null,
+  //   label: "",
+  // });
 
   const universityOptions = university?.map((item) => {
     return {
@@ -257,6 +259,19 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       border
                       backgroundColor={"transparent"}
                       color={"#ffffff"}
+                      onClick={() => {
+                        const textToCopy = `${window.location.href}?rel=${isOpen}`;
+
+                        navigator.clipboard
+                          .writeText(textToCopy)
+                          .then(() => {
+                            console.log("Copied to clipboard successfully!");
+                            toast.success("Copied to clipboard");
+                          })
+                          .catch((err) => {
+                            console.error("Failed to copy: ", err);
+                          });
+                      }}
                     />
                     {!isHideMessage && (
                       <ButtonComponent
@@ -307,7 +322,6 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">DOMAIN</span>
                       <div>
-                        
                         {userInfo?.domain?.length > 0 && (
                           <span className="flex flex-wrap gap-[6px]">
                             {userInfo.domain.map((domain) => {
@@ -318,7 +332,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                               const domainColor =
                                 domainOptions.find((d) => d.value === domain.id)
                                   ?.color || "#a7a7a7"; // Lấy color từ domainOptions
-                              
+
                               return (
                                 <span
                                   key={domain.id}
@@ -343,9 +357,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                       domain.id
                                     );
                                     const subColor =
-                                      domainOptions.find(
-                                        (d) => d.value === domain.id
-                                      )?.subOptions?.find(e => e.value === subId)?.color || "#a7a7a7";
+                                      domainOptions
+                                        .find((d) => d.value === domain.id)
+                                        ?.subOptions?.find(
+                                          (e) => e.value === subId
+                                        )?.color || "#a7a7a7";
 
                                     return (
                                       <span
@@ -402,7 +418,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                             objectFit: "cover",
                             width: "calc((375 / 1920) * 100vw)",
                             height: "100%",
-                            borderRadius: "8px"
+                            borderRadius: "8px",
                           }}
                         />
                       )}
@@ -422,6 +438,8 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
           toggleOpenModal={toggleFirstChat}
         />
       )}
+
+      <ToastContainer />
     </>
   );
 };

@@ -8,7 +8,14 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/auth-login");
+    const searchParams = new URLSearchParams(window.location.search);
+    const rel = searchParams.get("rel");
+
+    if (rel) {
+      router.push(`/auth-login?rel=${rel}`);
+    } else {
+      router.push("/auth-login");
+    }
   }, [router]);
 
   return (

@@ -25,6 +25,7 @@ const ChatDetail = ({
   isLoading,
   setIsLoading,
   isMatch,
+  isPin,
   setIsActiveTab,
   lastSender,
   setIsModalOpen,
@@ -106,7 +107,7 @@ const ChatDetail = ({
 
   const handlePin = () => {
     const data = {
-      is_pin: true,
+      is_pin: !isPin,
     };
     updateThread(userInfo?.id, chatId, data);
   };
