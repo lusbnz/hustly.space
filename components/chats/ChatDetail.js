@@ -58,6 +58,7 @@ const ChatDetail = ({
         })
         .then(() => {
           setIsFirstRender(false);
+          setIsLoading(false);
         });
     }
   };
@@ -76,7 +77,7 @@ const ChatDetail = ({
 
   useEffect(() => {
     setIsFirstRender(true);
-    setIsLoading(true);
+    // setIsLoading(true);
   }, [isChangeChat]);
 
   useEffect(() => {

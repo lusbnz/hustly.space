@@ -26,6 +26,7 @@ const Chats = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [isChangeChat, setIsChangeChat] = useState(false);
   const [isLoadingDetail, setIsLoadingDetail] = useState(true);
+  const [isLoadingChat, setIsLoadingChat] = useState(true);
   const [isMatch, setIsMatch] = useState(false);
   const [isPin, setIsPin] = useState(false);
   const [lastSender, setLastSender] = useState(null);
@@ -92,10 +93,6 @@ const Chats = () => {
       return () => clearInterval(intervalId);
     }
   }, [isFetched]);
-
-  const toggleSetLoadingDetail = (key) => {
-    setIsLoadingDetail(key);
-  };
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
@@ -331,8 +328,8 @@ const Chats = () => {
               handleOpenDetail={handleOpenDetail}
               tab={isActiveTab}
               isChangeChat={isChangeChat}
-              isLoading={isLoadingDetail}
-              setIsLoading={setIsLoadingDetail}
+              isLoading={isLoadingChat}
+              setIsLoading={setIsLoadingChat}
               isMatch={isMatch}
               isPin={isPin}
               setIsActiveTab={setIsActiveTab}
