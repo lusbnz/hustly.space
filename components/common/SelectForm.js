@@ -26,6 +26,7 @@ const SelectForm = ({
   isMulti,
   clearBtn,
   handleDeleteDomain,
+  handleDelete,
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -250,7 +251,14 @@ const SelectForm = ({
               height={12}
               alt="trash"
               className="cursor-pointer"
-              onClick={handleDeleteDomain}
+              onClick={
+                handleDelete
+                  ? () => {
+                      setSelectedValue(null);
+                      handleDelete(name);
+                    }
+                  : handleDeleteDomain
+              }
             />
           )}
         </div>
@@ -279,10 +287,7 @@ const SelectForm = ({
             ? options?.filter((option) =>
                 defaultValue?.includes(option.value)
               ) || []
-            : options &&
-              options?.find(
-                (option) => String(option.value) === String(defaultValue)
-              )
+            : selectedValue
         }
         onChange={handleChange}
       />

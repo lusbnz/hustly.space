@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./layout.css";
 import Logo from "@/public/images/logo.svg";
 import Image from "next/image";
@@ -88,6 +88,14 @@ const Sidebar = ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleDelete = (name) => {
+    setFilter((prev) => {
+      const newFilter = { ...prev };
+      delete newFilter[name];
+      return newFilter;
+    });
   };
 
   const handleClear = () => {
@@ -202,6 +210,8 @@ const Sidebar = ({
                     className="image"
                   />
                 }
+                clearBtn={true}
+                handleDelete={handleDelete}
               />
 
               <div className="my-[12px] range">
@@ -263,10 +273,11 @@ const Sidebar = ({
                       />
                     )}
                   />
-                  <div className="text-white hidden lg:flex"
-                  style={{
-                    fontSize: 'clamp(8px, 10px, 12px)',
-                  }}
+                  <div
+                    className="text-white hidden lg:flex"
+                    style={{
+                      fontSize: "clamp(8px, 10px, 12px)",
+                    }}
                   >
                     {ageV.min} - {ageV.max}
                   </div>
@@ -281,6 +292,8 @@ const Sidebar = ({
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
                 icon={<Image src={UserIcon} alt="gender" className="image" />}
+                clearBtn={true}
+                handleDelete={handleDelete}
               />
 
               <div className="flex w-100 items-center gap-[6px] bg-[#171717]">
@@ -294,6 +307,8 @@ const Sidebar = ({
                   icon={
                     <Image src={CupIcon} alt="competition" className="image" />
                   }
+                  clearBtn={true}
+                  handleDelete={handleDelete}
                 />
 
                 <SelectForm
@@ -310,6 +325,8 @@ const Sidebar = ({
                       className="image"
                     />
                   }
+                  clearBtn={true}
+                  handleDelete={handleDelete}
                 />
               </div>
               <SelectForm
@@ -320,6 +337,8 @@ const Sidebar = ({
                 handleChangeFilter={handleChangeFilter}
                 isClear={isClear}
                 icon={<Image src={PlaceIcon} alt="city" className="image" />}
+                clearBtn={true}
+                handleDelete={handleDelete}
               />
               <SelectForm
                 label={"Team Member"}
@@ -331,6 +350,8 @@ const Sidebar = ({
                 icon={
                   <Image src={UserIcon} alt="team_member" className="image" />
                 }
+                clearBtn={true}
+                handleDelete={handleDelete}
               />
               <SelectForm
                 label={"Domain"}
@@ -342,6 +363,8 @@ const Sidebar = ({
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={DomainIcon} alt="domain" className="image" />}
                 // defaultValue={filter.domain__id}
+                clearBtn={true}
+                handleDelete={handleDelete}
               />
               <SelectForm
                 label={"Skill set"}
