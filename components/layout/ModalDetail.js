@@ -20,7 +20,7 @@ import { s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
 import { removeVietnameseTones } from "@/utils/utils";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
@@ -211,45 +211,43 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                   {userInfo?.bio}
                 </span>
                 <div className="contact">
-                  <div className="contact-wrapper">
-                    <span>CONTACT</span>
-                    <div className="flex social items-center">
-                      <div
-                        className="social-icon"
-                        onClick={() => {
-                          if (!!userInfo?.social_link?.instagram) {
-                            window.open(
-                              userInfo?.social_link?.instagram,
-                              "_blank"
-                            );
-                          }
-                        }}
-                      >
-                        <Image src={InstagramIcon} alt="image" />
-                      </div>
-                      <div
-                        className="social-icon"
-                        onClick={() => {
-                          if (!!userInfo?.social_link?.mail) {
-                            window.open(userInfo?.social_link?.mail, "_blank");
-                          }
-                        }}
-                      >
-                        <Image src={FacebookIcon} alt="image" />
-                      </div>
-                      <div
-                        className="social-icon"
-                        onClick={() => {
-                          if (!!userInfo?.social_link?.linkedin) {
-                            window.open(
-                              userInfo?.social_link?.linkedin,
-                              "_blank"
-                            );
-                          }
-                        }}
-                      >
-                        <Image src={LinkedInIcon} alt="image" />
-                      </div>
+                  <span style={{ color: "#484848 !important" }}>CONTACT</span>
+                  <div className="flex social items-center">
+                    <div
+                      className="social-icon"
+                      onClick={() => {
+                        if (!!userInfo?.social_link?.instagram) {
+                          window.open(
+                            userInfo?.social_link?.instagram,
+                            "_blank"
+                          );
+                        }
+                      }}
+                    >
+                      <Image src={InstagramIcon} alt="image" />
+                    </div>
+                    <div
+                      className="social-icon"
+                      onClick={() => {
+                        if (!!userInfo?.social_link?.mail) {
+                          window.open(userInfo?.social_link?.mail, "_blank");
+                        }
+                      }}
+                    >
+                      <Image src={FacebookIcon} alt="image" />
+                    </div>
+                    <div
+                      className="social-icon"
+                      onClick={() => {
+                        if (!!userInfo?.social_link?.linkedin) {
+                          window.open(
+                            userInfo?.social_link?.linkedin,
+                            "_blank"
+                          );
+                        }
+                      }}
+                    >
+                      <Image src={LinkedInIcon} alt="image" />
                     </div>
                   </div>
                   <div className="flex w-100 gap-[6px] action-wrapper">

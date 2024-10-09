@@ -40,6 +40,7 @@ const TextEditor = ({ handleSend }) => {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+
     if (file) {
       try {
         const data = new FormData();
@@ -113,8 +114,17 @@ const TextEditor = ({ handleSend }) => {
           <input
             type="file"
             ref={fileInputRef}
-            onChange={handleFileChange}
-            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              
+              if (file && file.size > 20 * 1024 * 1024) {
+                alert("File size exceeds 20MB. Please select a smaller file.");
+                e.target.value = ""; // Reset input file để không chọn tệp lớn
+              } else {
+                handleFileChange(e); // Gọi hàm xử lý nếu file hợp lệ
+              }
+            }}
+            accept="image/*, audio/*, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
             className="hidden"
           />
           <div
