@@ -27,8 +27,10 @@ const AuthLogin = () => {
     password: "",
     server: "",
   });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     dispatch(setUserInfo(null));
     const accessToken = getAuthToken();
     if (!!accessToken) {
@@ -77,8 +79,8 @@ const AuthLogin = () => {
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
 
-  const searchParams = new URLSearchParams(window.location.search);
-  const rel = searchParams.get("rel");
+  const searchParams = isClient ? new URLSearchParams(window.location.search) : null;
+  const rel = searchParams ? searchParams.get("rel") : null;
 
   return (
     <>
