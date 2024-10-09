@@ -255,7 +255,9 @@ const SelectForm = ({
                 handleDelete
                   ? () => {
                       setSelectedValue(null);
-                      handleDelete(name);
+                      if(!!selectedValue){
+                        handleDelete(name);
+                      }
                     }
                   : handleDeleteDomain
               }
