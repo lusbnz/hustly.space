@@ -29,6 +29,7 @@ const ChatDetail = ({
   setIsActiveTab,
   lastSender,
   setIsModalOpen,
+  setSideRender,
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
   const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -46,17 +47,19 @@ const ChatDetail = ({
   });
 
   const fetchMessage = () => {
-    getMessage(userInfo?.id, chatId)
-      .then((res) => {
-        setMessages(res.reverse());
-        setIsFetched(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .then(() => {
-        setIsFirstRender(false);
-      });
+    if (!!chatId) {
+      getMessage(userInfo?.id, chatId)
+        .then((res) => {
+          setMessages(res.reverse());
+          setIsFetched(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          setIsFirstRender(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -113,6 +116,7 @@ const ChatDetail = ({
   };
 
   const handleDelete = () => {
+    setSideRender(true);
     deleteThread(userInfo?.id, chatId);
     handleOpenDetail(null);
     setChatId(null);
@@ -245,9 +249,11 @@ const ChatDetail = ({
               </>
             ))}
           </div>
-          {messages?.length === 1 && messages[0]?.sender === userInfo.id ? (
+          {isMatch ? (
+            <TextEditor handleSend={handleSend} />
+          ) : messages?.length === 1 && messages[0]?.sender === userInfo?.id ? (
             <></>
-          ) : !isMatch ? (
+          ) : (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
               <ButtonComponent
                 type={"button"}
@@ -263,9 +269,6 @@ const ChatDetail = ({
                 onClick={handleAccept}
               />
             </div>
-          ) : (
-            // <CKEditorComponent onSend={handleEditorSend} />
-            <TextEditor handleSend={handleSend} />
           )}
         </>
       ) : (

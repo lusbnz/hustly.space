@@ -128,7 +128,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
                         width={14}
                         height={14}
                       />
-                      {moment(userInfo?.updated_at).format("HH:mm")}
+                      {userInfo?.age || '18'}
                     </span>
                     <span className="location flex items-center gap-[4px]">
                       <Image
