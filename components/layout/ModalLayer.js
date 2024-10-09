@@ -379,7 +379,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }}
                     style={
                       watch("color") === item.value
-                        ? { border: "1px solid #e5e5e5" }
+                        ? { border: "1px solid #666" }
                         : {}
                     }
                   >
@@ -389,7 +389,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     ></div>
                     <div className="flex flex-col w-[90%] items-start justify-start">
                       <span className="text-[12px]">{item.title}</span>
-                      <span className="text-[12px] font-[500] text-[#e5e5e5] lh-[18px]">
+                      <span className="text-[12px] font-[500] text-[#666] lh-[18px]">
                         {item.label}
                       </span>
                     </div>
