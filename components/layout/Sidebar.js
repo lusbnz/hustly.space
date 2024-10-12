@@ -397,6 +397,7 @@ const Sidebar = ({
                 // defaultValue={filter.domain__id}
                 clearBtn={true}
                 handleDelete={handleDelete}
+                isSidebar={true}
               />
               <SelectForm
                 label={"Skill set"}

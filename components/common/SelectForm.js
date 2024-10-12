@@ -27,6 +27,7 @@ const SelectForm = ({
   clearBtn,
   handleDeleteDomain,
   handleDelete,
+  isSidebar
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -237,7 +238,7 @@ const SelectForm = ({
                 {` (${selectedValue?.length || 0}/5)`}
               </span>
             )}
-            {name === "domain__id" && (
+            {name === "domain__id" && !isSidebar && (
               <span style={{ fontSize: "12px" }}>
                 {` (${selectedValue?.length || 0}/2)`}
               </span>

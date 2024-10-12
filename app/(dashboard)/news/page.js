@@ -114,7 +114,7 @@ const News = () => {
                         style={{ backgroundColor: item.color || "#ffffff" }}
                       ></div>
                     </span>
-                    <div className="flex gap-[24px]">
+                    <div className="flex gap-[24px] items-center">
                       <div className="location flex items-center gap-[4px]">
                         <Image
                           src={LocationIcon}
