@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
 import { removeVietnameseTones } from "@/utils/utils";
+import { checkUnread } from "@/api/profile";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -38,6 +39,31 @@ const Sidebar = ({
   const [searchValue, setSearchValue] = useState("");
   const [isClear, setIsClear] = useState(false);
   const [ageV, setAgeV] = useState({ min: 18, max: 25 });
+  const [isFetchUnread, setIsFetchUnread] = useState(false);
+  const [isUnread, setIsUnread] = useState(false);
+
+  const unreadCheck = () => {
+    checkUnread()
+      .then((res) => {
+        setIsUnread(res.remain_unread);
+        setIsFetchUnread(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsFetchUnread(false);
+      });
+  };
+
+  useEffect(() => {
+    if (!isFetchUnread) {
+      const intervalId = setInterval(() => {
+        unreadCheck();
+      }, 2000);
+      return () => clearInterval(intervalId);
+    }
+  }, [isFetchUnread]);
 
   const handleChangeAge = (rangeValue) => {
     setAgeV(rangeValue);
@@ -176,7 +202,10 @@ const Sidebar = ({
                     style={{ objectFit: "contain" }}
                   />
                 </div>
-                <div className="search-container" onClick={handleOpenChat}>
+                <div
+                  className="search-container relative"
+                  onClick={handleOpenChat}
+                >
                   <Image
                     src={Search}
                     alt="search"
@@ -184,6 +213,9 @@ const Sidebar = ({
                     style={{ objectFit: "contain" }}
                     onClick={handleOpenChat}
                   />
+                  {isUnread && (
+                    <div className="w-[10px] h-[10px] bg-red-500 rounded-full absolute top-[-2px] right-[-2px]"></div>
+                  )}
                 </div>
               </div>
               <input

@@ -196,9 +196,9 @@ const Chats = () => {
                 <div className="chat-detail">
                   {listThread
                     ?.filter((thread) => {
-                      // if (isActiveTab === "all") {
-                      //   return thread.is_match === true;
-                      // }
+                      if (isActiveTab === "all") {
+                        return thread.is_match === true;
+                      }
                       if (isActiveTab === "pinned") {
                         return thread.is_pin === true;
                       }
