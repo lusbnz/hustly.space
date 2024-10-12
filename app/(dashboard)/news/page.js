@@ -115,7 +115,7 @@ const News = () => {
                       ></div>
                     </span>
                     <div className="flex gap-[24px] items-center">
-                      <div className="location flex items-center gap-[4px]">
+                      <div className="location flex items-start gap-[4px]">
                         <Image
                           src={LocationIcon}
                           alt="location-icon"
@@ -124,7 +124,7 @@ const News = () => {
                         />
                         <span>{uni || "Hanoi"}</span>
                       </div>
-                      <div className="location flex items-center gap-[4px]">
+                      <div className="location flex items-start gap-[4px]">
                         <Image
                           src={BirthdayIcon}
                           alt="birth-icon"
@@ -133,7 +133,7 @@ const News = () => {
                         />
                         <span>{item.age || "18"}</span>
                       </div>
-                      <div className="location h-[16px] flex items-center gap-[4px]">
+                      <div className="location h-[16px] flex items-start gap-[4px]">
                         <Image
                           src={UserIcon}
                           alt="mem-icon"
