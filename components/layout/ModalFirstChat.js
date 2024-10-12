@@ -143,7 +143,12 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
                 </div>
               </div>
               <div>
-                <TextEditor handleSend={handleSend} />
+                <TextEditor handleSend={handleSend} 
+                isDetail={false}
+                setHaveImage={() => {}}
+                isLoading={false}
+                setIsLoading={() => {}}
+                />
               </div>
             </>
           )}

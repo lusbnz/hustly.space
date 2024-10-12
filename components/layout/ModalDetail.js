@@ -22,6 +22,7 @@ import ModalFirstChat from "./ModalFirstChat";
 import { removeVietnameseTones } from "@/utils/utils";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Badge from "../common/Badge";
 
 const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   const dispatch = useDispatch();
@@ -322,6 +323,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       <div>
                         {userInfo?.domain?.length > 0 && (
                           <span className="flex flex-wrap gap-[6px]">
+                            {/* Display main domains */}
                             {userInfo.domain.map((domain) => {
                               const domainLabel = findLabelById(
                                 domain.id,
@@ -329,26 +331,21 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                               );
                               const domainColor =
                                 domainOptions.find((d) => d.value === domain.id)
-                                  ?.color || "#a7a7a7"; // Lấy color từ domainOptions
+                                  ?.color || "#fff";
 
                               return (
-                                <span
+                                <Badge
                                   key={domain.id}
-                                  className={`value d-badge`}
-                                  style={{
-                                    color: domainColor,
-                                    backgroundColor: `${domainColor}1A`,
-                                  }}
-                                >
-                                  {/* Hiển thị label cho domain chính */}
-                                  {domainLabel}
-                                </span>
+                                  backgroundColor={`#434343`}
+                                  color={domainColor}
+                                  name={domainLabel}
+                                />
                               );
                             })}
 
+                            {/* Display sub-domains */}
                             {userInfo.domain.map((domain) =>
-                              domain.sub_domains &&
-                              domain.sub_domains.length > 0
+                              domain.sub_domains?.length > 0
                                 ? domain.sub_domains.map((subId) => {
                                     const subLabel = findLabelById(
                                       subId,
@@ -359,20 +356,15 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                         .find((d) => d.value === domain.id)
                                         ?.subOptions?.find(
                                           (e) => e.value === subId
-                                        )?.color || "#a7a7a7";
+                                        )?.color || "#fff"; // Get sub-domain color
 
                                     return (
-                                      <span
+                                      <Badge
                                         key={subId}
-                                        className={`value d-badge`}
-                                        style={{
-                                          color: subColor,
-                                          backgroundColor: `${subColor}1A`,
-                                        }}
-                                      >
-                                        {subLabel}{" "}
-                                        {/* Hiển thị label cho từng sub_domain */}
-                                      </span>
+                                        backgroundColor={`#434343`}
+                                        color={subColor}
+                                        name={subLabel}
+                                      />
                                     );
                                   })
                                 : null
@@ -406,20 +398,22 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                     </div>
                     <div className="w-100 border-t border-t-[#fff] mt-[6px]"></div>
                     <div className="flex flex-col gap-[6px] mb-10">
-                      {userInfo?.bio_image?.[0]?.file && (
-                        <Image
-                          src={userInfo?.bio_image?.[0]?.file}
-                          alt="icon"
-                          width={200}
-                          height={100}
-                          style={{
-                            objectFit: "cover",
-                            width: "calc((375 / 1920) * 100vw)",
-                            height: "100%",
-                            borderRadius: "8px",
-                          }}
-                        />
-                      )}
+                      {userInfo?.bio_image?.length > 0 &&
+                        userInfo.bio_image.map((image, index) => (
+                          <Image
+                            key={index}
+                            src={image?.file}
+                            alt={`image-${index}`}
+                            width={200}
+                            height={100}
+                            style={{
+                              objectFit: "cover",
+                              width: "calc((375 / 1920) * 100vw)",
+                              height: "calc((300 / 1920) * 100vw)",
+                              borderRadius: "8px",
+                            }}
+                          />
+                        ))}
                     </div>
                   </div>
                 </div>

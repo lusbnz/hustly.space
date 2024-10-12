@@ -38,6 +38,8 @@ const ChatDetail = ({
   const [messages, setMessages] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isFetched, setIsFetched] = useState(false);
+  const [haveImage, setHaveImage] = useState(false);
+  const [isLoadingMessage, setIsLoadingMessage] = useState(false);
 
   const psOptions = p?.map((item) => {
     return {
@@ -95,7 +97,9 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
+    setIsLoadingMessage(true);
     if (content === "" && !image) {
+      setIsLoadingMessage(false);
       return;
     }
     const data = {
@@ -106,6 +110,9 @@ const ChatDetail = ({
       .then((res) => {})
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoadingMessage(false);
       });
   };
 
@@ -188,7 +195,18 @@ const ChatDetail = ({
               </div>
             </div>
           </div>
-          <div className="cd-content">
+          <div
+            className="cd-content"
+            style={
+              haveImage
+                ? {
+                    height: "60%",
+                  }
+                : {
+                    height: "100%",
+                  }
+            }
+          >
             {messages.map((message, index) => (
               <>
                 {/* {index === 2 && <div className="separator-date">today</div>} */}
@@ -251,7 +269,13 @@ const ChatDetail = ({
             ))}
           </div>
           {isMatch ? (
-            <TextEditor handleSend={handleSend} />
+            <TextEditor
+              handleSend={handleSend}
+              isDetail={true}
+              setHaveImage={(e) => setHaveImage(e)}
+              isLoading={isLoadingMessage}
+              setIsLoading={(e) => setIsLoadingMessage(e)}
+            />
           ) : messages?.length === 1 && messages[0]?.sender === userInfo?.id ? (
             <></>
           ) : (

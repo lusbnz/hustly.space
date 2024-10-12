@@ -82,6 +82,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   } = useForm({
     defaultValues: {
       first_name: userInfo?.first_name,
+      last_name: userInfo?.last_name,
       age: userInfo?.age,
       color: userInfo?.color,
       city: userInfo?.city,
@@ -125,18 +126,21 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
 
   const handleUploadBio = async (e) => {
     setIsLoadingBioImage(true);
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        const data = new FormData();
-        data.append("file", file);
-        const res = await uploadFile(data);
-        setValue("bio_image", [res]);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      } finally {
-        setIsLoadingBioImage(false);
-      }
+    const files = Array.from(e.target.files);
+    try {
+      const uploadedFiles = await Promise.all(
+        files.map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          const res = await uploadFile(data);
+          return res;
+        })
+      );
+      setValue("bio_image", [...(watch("bio_image") || []), ...uploadedFiles]);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    } finally {
+      setIsLoadingBioImage(false);
     }
   };
 
@@ -191,7 +195,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     ];
     delete data.year_competition;
     if (data.bio_image?.length > 0) {
-      data.bio_image = [data.bio_image[0]?.id];
+      data.bio_image = data.bio_image.map((img) => img.id);
     }
 
     if (data.archivement) {
@@ -346,15 +350,23 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   </div>
                 )}
                 {!isEdit ? (
-                  <span className="w-[181px] m-name">
-                    {watch("first_name")}
-                  </span>
+                  <div className="flex items-center gap-[6px]">
+                    <span className="m-name">{watch("first_name")}</span>
+                    <span className="m-name">{watch("last_name")}</span>
+                  </div>
                 ) : (
-                  <input
-                    className="outline-0 bg-transparent border-b-[1px] border-b-[#fff]"
-                    {...register("first_name")}
-                    required={true}
-                  />
+                  <div className="flex items-center gap-[6px]">
+                    <input
+                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[60px]"
+                      {...register("first_name")}
+                      required={true}
+                    />
+                    <input
+                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[60px]"
+                      {...register("last_name")}
+                      required={true}
+                    />
+                  </div>
                 )}
               </div>
               <Image
@@ -692,7 +704,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             ) : (
               <>
-                {achievements?.map((achievement, index) => (
+                {achievements?.slice(0, 1).map((achievement, index) => (
                   <div className="relative" key={index}>
                     <InputForm
                       title={`Achievement`}
@@ -787,31 +799,49 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   <BeatLoader color="#fff" size={10} />
                 </div>
               ) : (
-                <div className="flex items-center gap-[6px] relative">
+                <div className="flex items-center gap-[2px] relative w-[490px] flex-wrap">
                   {watch("bio_image")?.length > 0 && (
                     <>
-                      <Image
-                        src={watch("bio_image")?.[0].file}
-                        alt="camera-icon"
-                        width={150}
-                        height={150}
-                        style={{
-                          width: "150px",
-                          height: "150px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                        }}
-                      />
-                      <div className="absolute top-[10px] left-[120px] cursor-pointer"
-                      onClick={() => setValue("bio_image", [])}
-                      >
-                        <Image
-                          src={TrashIcon}
-                          alt="edit-icon"
-                          width={16}
-                          height={16}
-                        />
-                      </div>
+                      {watch("bio_image").map((image, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            position: "relative",
+                            display: "inline-block",
+                            marginRight: "10px",
+                            width: "150px",
+                          }}
+                        >
+                          <Image
+                            src={image?.file}
+                            alt="camera-icon"
+                            width={150}
+                            height={150}
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              objectFit: "cover",
+                              borderRadius: "8px",
+                            }}
+                          />
+                          <div
+                            className="absolute top-[10px] left-[120px] cursor-pointer"
+                            onClick={() => {
+                              const newBioImages = watch("bio_image").filter(
+                                (_, i) => i !== index
+                              );
+                              setValue("bio_image", newBioImages);
+                            }}
+                          >
+                            <Image
+                              src={TrashIcon}
+                              alt="edit-icon"
+                              width={16}
+                              height={16}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </>
                   )}
                   <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
