@@ -98,8 +98,14 @@ const News = () => {
                     )}
                   </div>
                   <div className="flex flex-col info justify-center">
-                    <span className="name flex items-end gap-[4px]">
-                      <span className="lh-1 h-[12px] text-[18px] text-center">
+                    <span className="name flex items-center gap-[4px]">
+                      <span
+                        className="lh-1 h-[12px]text-center"
+                        style={{
+                          fontSize:
+                            "clamp(14px, calc((22 / 1920) * 100vw), 26px)",
+                        }}
+                      >
                         {item.first_name} {item.last_name}
                       </span>
 

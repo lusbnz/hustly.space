@@ -172,14 +172,23 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                   )}
                 </div>
                 <div className="flex flex-col justify-center info">
-                  <span className="name flex items-end gap-[4px]">
-                    <span className="lh-1 h-[12px] text-[14px] text-center">
+                  <span className="name flex items-center gap-[4px]">
+                    <span
+                      className="lh-1 h-[12px] text-center"
+                      style={{
+                        fontSize:
+                          "clamp(10px, calc((18 / 1920) * 100vw), 22px)",
+                      }}
+                    >
                       {userInfo?.first_name} {userInfo?.last_name}
                     </span>
 
                     <div
-                      className={`w-[10px] h-[10px] rounded-full`}
-                      style={{ backgroundColor: userInfo?.color || "#ffffff" }}
+                      className={`rounded-full`}
+                      style={{ backgroundColor: userInfo?.color || "#ffffff",
+                        width: 'calc(14 / 1920 * 100vw)',
+                        height: 'calc(14 / 1920 * 100vw)',
+                       }}
                     ></div>
                   </span>
                   <div className="flex gap-[12px]">
