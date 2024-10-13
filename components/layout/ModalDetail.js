@@ -140,6 +140,38 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
     return subOption ? subOption.label : "Not found";
   }
 
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    let bigint = parseInt(hex, 16);
+    let r = (bigint >> 16) & 255;
+    let g = (bigint >> 8) & 255;
+    let b = bigint & 255;
+    return [r, g, b];
+  }
+
+  function rgbToHex(r, g, b) {
+    return (
+      "#" +
+      ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
+    );
+  }
+
+  function lightenColor(hex, factor = 0.5) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r + (255 - r) * factor);
+    g = Math.round(g + (255 - g) * factor);
+    b = Math.round(b + (255 - b) * factor);
+    return rgbToHex(r, g, b);
+  }
+
+  function darkenColor(hex, factor = 0.5) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r * (1 - factor));
+    g = Math.round(g * (1 - factor));
+    b = Math.round(b * (1 - factor));
+    return rgbToHex(r, g, b);
+  }
+
   return (
     <>
       <div
@@ -185,10 +217,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
 
                     <div
                       className={`rounded-full`}
-                      style={{ backgroundColor: userInfo?.color || "#ffffff",
-                        width: 'calc(14 / 1920 * 100vw)',
-                        height: 'calc(14 / 1920 * 100vw)',
-                       }}
+                      style={{
+                        backgroundColor: userInfo?.color || "#ffffff",
+                        width: "calc(14 / 1920 * 100vw)",
+                        height: "calc(14 / 1920 * 100vw)",
+                      }}
                     ></div>
                   </span>
                   <div className="flex gap-[12px]">
@@ -345,8 +378,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                               return (
                                 <Badge
                                   key={domain.id}
-                                  backgroundColor={`#434343`}
-                                  color={domainColor}
+                                  backgroundColor={lightenColor(
+                                    domainColor,
+                                    0.5
+                                  )}
+                                  color={darkenColor(domainColor, 0.3)}
                                   name={domainLabel}
                                 />
                               );
@@ -370,8 +406,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                     return (
                                       <Badge
                                         key={subId}
-                                        backgroundColor={`#434343`}
-                                        color={subColor}
+                                        backgroundColor={lightenColor(
+                                          subColor,
+                                          0.5
+                                        )}
+                                        color={darkenColor(subColor, 0.3)}
                                         name={subLabel}
                                       />
                                     );

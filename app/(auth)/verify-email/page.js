@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const VerifyEmail = () => {
   const [isClient, setIsClient] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
@@ -23,7 +23,12 @@ const VerifyEmail = () => {
     setTimeout(() => {
       verifyEmail(email, token)
         .then((res) => {
-          router.push("/auth-login?verify=true");
+          if (res.error_messages) {
+            router.push("/auth-login?verify=false");
+          } else {
+            localStorage.setItem("accessToken", res.access);
+            router.push("/news?verify=true");
+          }
         })
         .catch((err) => {
           router.push("/auth-login?verify=false");
@@ -33,12 +38,12 @@ const VerifyEmail = () => {
 
   return (
     <>
-        <div className="w-[100vw] h-[100vh] flex items-center justify-center bg-[#000]">
-            <BeatLoader color="#fff" size={16}/>
-        </div>
+      <div className="w-[100vw] h-[100vh] flex items-center justify-center bg-[#000]">
+        <BeatLoader color="#fff" size={16} />
+      </div>
       <ToastContainer />
     </>
-  )
+  );
 };
 
 export default VerifyEmail;

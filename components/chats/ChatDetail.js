@@ -266,8 +266,8 @@ const ChatDetail = ({
                                 <Image
                                   src={message.media[0]?.file}
                                   alt="message-image"
-                                  width={300}
-                                  height={200}
+                                  width={200}
+                                  height={100}
                                 />
                               ) : (
                                 // Render non-image file with AttachmentIcon

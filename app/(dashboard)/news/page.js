@@ -25,11 +25,24 @@ const News = () => {
   const suggestion = useSelector((state) => state.suggestion.results);
   const [check, setCheck] = useState(null);
   const [paramsData, setParamsData] = useState();
+  const [isClient, setIsClient] = useState(false);
 
   const loading = useRef(false);
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [isFirstRender, setIsFirstRender] = useState(true);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    const sp = isClient ? new URLSearchParams(window.location.search) : null;
+    const res = sp ? sp.get("verify") : null;
+    if (!!res) {
+      toast.success("Check your email to verify your account.");
+    }
+  }, [isClient]);
 
   useEffect(() => {
     setSuggestionData(suggestion);
@@ -118,6 +131,38 @@ const News = () => {
       window.history.replaceState(null, null, window.location.pathname);
     }
   }, [rel]);
+
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    let bigint = parseInt(hex, 16);
+    let r = (bigint >> 16) & 255;
+    let g = (bigint >> 8) & 255;
+    let b = bigint & 255;
+    return [r, g, b];
+  }
+
+  function rgbToHex(r, g, b) {
+    return (
+      "#" +
+      ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
+    );
+  }
+
+  function lightenColor(hex, factor = 0.5) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r + (255 - r) * factor);
+    g = Math.round(g + (255 - g) * factor);
+    b = Math.round(b + (255 - b) * factor);
+    return rgbToHex(r, g, b);
+  }
+
+  function darkenColor(hex, factor = 0.5) {
+    let [r, g, b] = hexToRgb(hex);
+    r = Math.round(r * (1 - factor));
+    g = Math.round(g * (1 - factor));
+    b = Math.round(b * (1 - factor));
+    return rgbToHex(r, g, b);
+  }
 
   return (
     <>
@@ -240,8 +285,11 @@ const News = () => {
                           return (
                             <Badge
                               key={uniqueId}
-                              backgroundColor={`#434343`}
-                              color={colorItem?.color}
+                              backgroundColor={lightenColor(
+                                colorItem?.color,
+                                0.5
+                              )}
+                              color={darkenColor(colorItem?.color, 0.3)}
                               name={sd}
                             />
                           );
