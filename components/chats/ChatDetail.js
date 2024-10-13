@@ -15,6 +15,7 @@ import { p } from "@/data/data";
 import { deleteThread, updateThread } from "@/api/thread";
 import { useSelector } from "react-redux";
 import { removeVietnameseTones } from "@/utils/utils";
+import AttachmentIcon from "@/public/icons/attachment.svg";
 
 const ChatDetail = ({
   chatId,
@@ -255,12 +256,36 @@ const ChatDetail = ({
                         dangerouslySetInnerHTML={{ __html: message.content }}
                       />
                       {message.media?.length > 0 && (
-                        <Image
-                          src={message.media[0]?.file}
-                          alt="message-image"
-                          width={300}
-                          height={200}
-                        />
+                        <>
+                        {message.media[0]?.file && (
+                          <div>
+                            {/* Check if the media is an image or not */}
+                            {message.media[0]?.file.endsWith(".jpg") || 
+                              message.media[0]?.file.endsWith(".jpeg") || 
+                              message.media[0]?.file.endsWith(".png") ? (
+                              <Image
+                                src={message.media[0]?.file}
+                                alt="message-image"
+                                width={300}
+                                height={200}
+                              />
+                            ) : (
+                              // Render non-image file with AttachmentIcon
+                              <div className="file-preview flex items-center justify-center p-2 min-w-[100px] h-[32px] rounded-[4px]">
+                                <Image
+                                  src={AttachmentIcon}
+                                  alt="attachment icon"
+                                  width={24}
+                                  height={24}
+                                />
+                                <span className="ml-2">
+                                  {message.media[0]?.file.split('/').pop()} {/* Show file name */}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </>
                       )}
                     </div>
                   </div>

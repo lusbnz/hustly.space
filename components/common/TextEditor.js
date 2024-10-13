@@ -26,6 +26,7 @@ const TextEditor = ({
   const [imageId, setImageId] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isImage, setIsImage] = useState(false);
+  const [fileName, setFileName] = useState(null);
 
   const onSend = () => {
     if (editorData.trim()) {
@@ -38,6 +39,7 @@ const TextEditor = ({
         setTempImage(null);
         setTempFile(null);
         setImageId(null);
+        setFileName(null);
       }
       editorRef.current.focus(); // Refocus the editor after sending
     }
@@ -74,6 +76,7 @@ const TextEditor = ({
         } else {
           setTempFile(fileUrl); // Store non-image file URL
           setIsImage(false);
+          setFileName(res.name);
         }
 
         setIsLoading(false);
@@ -81,8 +84,11 @@ const TextEditor = ({
         console.error("Error uploading file:", error);
         toast.error("Upload file less than 10MB");
         setIsImage(false);
+        setTempImage(null);
+        setFileName(null);
         setTempFile(null); // Reset on error
         setIsLoading(false);
+
       }
     }
   };
@@ -121,6 +127,7 @@ const TextEditor = ({
     setTempImage(null);
     setTempFile(null); // Reset non-image file
     setIsImage(false);
+    setFileName(null);
     setImageId(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset the file input
@@ -163,14 +170,14 @@ const TextEditor = ({
         )}
         {tempFile && (
           <div className={`relative flex justify-between p-4`}>
-            <div className="flex items-center justify-center p-2 w-[100px] h-[32px] rounded-[4px] bg-[#171717]">
+            <div className="flex items-center justify-center p-2 min-w-[100px] h-[32px] rounded-[4px] bg-[#171717]">
               <Image
                 src={AttachmentIcon}
                 alt="Attachment"
                 width={16}
                 height={16}
               />
-              <span className="text-white ml-2">{tempFile.name}</span>{" "}
+              <span className="text-white text-[12px] ml-2">{fileName?.length > 15 ? fileName.slice(0, 15) + "..." : fileName}</span>{" "}
               {/* Show file name */}
             </div>
             <div className="cursor-pointer" onClick={handleRemoveImage}>
