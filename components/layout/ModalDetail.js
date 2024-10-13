@@ -365,7 +365,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       <div>
                         {userInfo?.domain?.length > 0 && (
                           <span className="flex flex-wrap gap-[6px]">
-                            {/* Display main domains */}
+                            {/* Hiển thị domain chính */}
                             {userInfo.domain.map((domain) => {
                               const domainLabel = findLabelById(
                                 domain.id,
@@ -376,47 +376,47 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                   ?.color || "#fff";
 
                               return (
-                                <Badge
-                                  key={domain.id}
-                                  backgroundColor={lightenColor(
-                                    domainColor,
-                                    0.5
+                                <div key={domain.id}>
+                                  <div className="font-[500] text-white mb-1"
+                                  style={{
+                                    fontSize: "clamp(14px, (17px / 1024 * 100vh), 17px)",
+                                  }}
+                                  >
+                                    {domainLabel}
+                                  </div>{" "}
+                                  {/* Hiển thị text của domain cha */}
+                                  {/* Hiển thị sub-domains */}
+                                  {domain.sub_domains?.length > 0 && (
+                                    <span className="flex gap-[6px]">
+                                      {domain.sub_domains.map((subId) => {
+                                        const subLabel = findLabelById(
+                                          subId,
+                                          domain.id
+                                        );
+                                        const subColor =
+                                          domainOptions
+                                            .find((d) => d.value === domain.id)
+                                            ?.subOptions?.find(
+                                              (e) => e.value === subId
+                                            )?.color || "#fff"; // Lấy màu của sub-domain
+
+                                        return (
+                                          <Badge
+                                            key={subId}
+                                            backgroundColor={lightenColor(
+                                              subColor,
+                                              0.5
+                                            )}
+                                            color={darkenColor(subColor, 0.3)}
+                                            name={subLabel}
+                                          />
+                                        );
+                                      })}
+                                    </span>
                                   )}
-                                  color={darkenColor(domainColor, 0.3)}
-                                  name={domainLabel}
-                                />
+                                </div>
                               );
                             })}
-
-                            {/* Display sub-domains */}
-                            {userInfo.domain.map((domain) =>
-                              domain.sub_domains?.length > 0
-                                ? domain.sub_domains.map((subId) => {
-                                    const subLabel = findLabelById(
-                                      subId,
-                                      domain.id
-                                    );
-                                    const subColor =
-                                      domainOptions
-                                        .find((d) => d.value === domain.id)
-                                        ?.subOptions?.find(
-                                          (e) => e.value === subId
-                                        )?.color || "#fff"; // Get sub-domain color
-
-                                    return (
-                                      <Badge
-                                        key={subId}
-                                        backgroundColor={lightenColor(
-                                          subColor,
-                                          0.5
-                                        )}
-                                        color={darkenColor(subColor, 0.3)}
-                                        name={subLabel}
-                                      />
-                                    );
-                                  })
-                                : null
-                            )}
                           </span>
                         )}
                       </div>
