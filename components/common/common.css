@@ -83,7 +83,7 @@
 }
 
 .badge{
-    padding: 0 calc((8 / 1920) * 100vw);
+    padding: calc((2 / 1920) * 100vw) calc((8 / 1920) * 100vw);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,4 +91,6 @@
     font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
     font-weight: 500;
     cursor: pointer;
+    white-space: nowrap;
+    width: fit-content;
 }

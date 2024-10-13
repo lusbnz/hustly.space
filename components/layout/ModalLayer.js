@@ -844,21 +844,23 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                       ))}
                     </>
                   )}
-                  <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                      onChange={handleUploadBio}
-                    />
-                    <Image
-                      src={AddIcon}
-                      alt="camera-icon"
-                      width={16}
-                      height={16}
-                      className="cursor-pointer"
-                    />
-                  </div>
+                  {watch("bio_image")?.length < 3 && (
+                    <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        onChange={handleUploadBio}
+                      />
+                      <Image
+                        src={AddIcon}
+                        alt="camera-icon"
+                        width={16}
+                        height={16}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>

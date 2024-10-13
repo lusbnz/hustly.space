@@ -387,7 +387,7 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                   {/* Hiển thị text của domain cha */}
                                   {/* Hiển thị sub-domains */}
                                   {domain.sub_domains?.length > 0 && (
-                                    <span className="flex gap-[6px]">
+                                    <span className="flex flex-wrap gap-[6px]">
                                       {domain.sub_domains.map((subId) => {
                                         const subLabel = findLabelById(
                                           subId,

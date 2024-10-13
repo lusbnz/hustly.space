@@ -417,7 +417,7 @@ const Sidebar = ({
                 Clear all
               </div>
             </div>
-            <div className="sidebar-footer z-[1]">
+            <div className="sidebar-footer pt-2 z-[1]">
               <div className="flex items-center gap-[12px]">
                 {userInfo?.avatar ? (
                   <div className="avatar-image">
