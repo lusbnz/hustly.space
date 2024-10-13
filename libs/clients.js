@@ -26,18 +26,23 @@ API.interceptors.request.use((config) => {
   return { ...config };
 });
 
-API.interceptors.response.use(response => response, async error => {
-  const { config, response: { status } } = error
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const {
+      config,
+      response: { status },
+    } = error;
 
-  const token = getAuthToken()
-  if (status === 401 && !!token) {
-    redirect("/auth-login")
+    const token = getAuthToken();
+    if (status === 401 && !!token) {
+      redirect("/auth-login");
+    }
+    if (status === 400) {
+      return error.response;
+    }
+    return Promise.reject(error);
   }
-  if (status === 400) {
-    return error.response;
-  }
-  return Promise.reject(error);
-}
 );
 
 export { API };

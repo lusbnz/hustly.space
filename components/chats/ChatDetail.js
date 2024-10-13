@@ -200,7 +200,7 @@ const ChatDetail = ({
             style={
               haveImage
                 ? {
-                    height: "60%",
+                    height: "55%",
                   }
                 : {
                     height: "100%",

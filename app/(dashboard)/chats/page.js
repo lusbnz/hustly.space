@@ -203,7 +203,7 @@ const Chats = () => {
                         return thread.is_pin === true;
                       }
                       if (isActiveTab === "unread") {
-                        return thread.is_match === false;
+                        return !thread.is_match && thread.last_message.sender !== userInfo?.id;
                       }
                       return true;
                     })

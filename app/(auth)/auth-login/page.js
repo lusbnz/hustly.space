@@ -79,7 +79,9 @@ const AuthLogin = () => {
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
 
-  const searchParams = isClient ? new URLSearchParams(window.location.search) : null;
+  const searchParams = isClient
+    ? new URLSearchParams(window.location.search)
+    : null;
   const rel = searchParams ? searchParams.get("rel") : null;
 
   return (
@@ -147,6 +149,16 @@ const AuthLogin = () => {
                     {errors.server}
                   </div>
                 )}
+                <div
+                  className="text-white text-[12px] d-flex w-full items-center justify-end text-end cursor-pointer hover:opacity-80"
+                  onClick={() => {
+                    router.push(
+                      `/auth-reset-password${rel ? `?rel=${rel}` : ""}`
+                    );
+                  }}
+                >
+                  Forgot password?
+                </div>
                 <div className="form-footer">
                   <ButtonComponent
                     type={"submit"}

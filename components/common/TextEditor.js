@@ -27,13 +27,17 @@ const TextEditor = ({
   const [isImage, setIsImage] = useState(false);
 
   const onSend = () => {
-    handleSend(editorData, imageId);
-    setIsImage(false);
-    setEditorData("");
-    if (editorRef.current) {
-      editorRef.current.innerHTML = "";
-      setTempImage(null);
-      setImageId(null);
+    if (editorData.trim()) {
+      // Ensure the editor data is not just whitespace
+      handleSend(editorData, imageId);
+      setIsImage(false);
+      setEditorData("");
+      if (editorRef.current) {
+        editorRef.current.innerHTML = ""; // Clear editor
+        setTempImage(null);
+        setImageId(null);
+      }
+      editorRef.current.focus(); // Refocus the editor after sending
     }
   };
 
@@ -128,7 +132,7 @@ const TextEditor = ({
         style={
           tempImage
             ? {
-                height: "calc(300 /1080 * 100vh)",
+                height: "calc(320 /1080 * 100vh)",
               }
             : {
                 height: "calc(200 /1080 * 100vh)",

@@ -1,7 +1,6 @@
 .news-wrapper{
     padding-top: calc((90 / 1080) * 100vh);
     margin-left: calc((100 / 1920) * 100vw);
-    height: 100vh;
     overflow-y: auto;
 }
 

@@ -13,7 +13,7 @@ import { setUserInfo } from "@/reducers/userInfoSlice";
 import { setCompetition } from "@/reducers/competitionSlice";
 import { setUniversity } from "@/reducers/universitySlice";
 import { setDomain } from "@/reducers/domainSlice";
-import { setSuggestion } from "@/reducers/suggestionSlice";
+import { setFilterData, setSuggestion } from "@/reducers/suggestionSlice";
 import { getAuthToken } from "@/libs/clients";
 import Head from "next/head";
 
@@ -49,7 +49,8 @@ export default function Layout({ children }) {
     setIsLoading(true);
     getSuggestions(data)
       .then((res) => {
-        dispatch(setSuggestion(res));
+        dispatch(setFilterData(data));
+        dispatch(setSuggestion(res.data.results));
       })
       .catch((err) => {
         console.log(err);
@@ -76,10 +77,12 @@ export default function Layout({ children }) {
   useEffect(() => {
     if (!isFirstRender) {
       const data = {
+        page: 1,
+        size: 20,
         university__id: filter.university__id,
         team_member_count: filter.team_member_count,
         city: filter.city,
-        competition__id: filter.competition__id,
+      competition__id: filter.competition__id,
         domain__id: filter.domain__id,
         skill_set: Array.isArray(filter.skill_set)
           ? filter.skill_set.join(",")
@@ -103,6 +106,8 @@ export default function Layout({ children }) {
   const search = (value) => {
     const data = {
       search: value,
+      page: 1,
+      size: 20,
     };
 
     fetchSuggestion(data);

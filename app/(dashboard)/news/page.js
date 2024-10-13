@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import Badge from "@/components/common/Badge";
 import ModalDetail from "@/components/layout/ModalDetail";
@@ -11,19 +11,77 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { checkThread, createThread } from "@/api/thread";
 import { removeVietnameseTones } from "@/utils/utils";
+import { BeatLoader } from "react-spinners";
+import { getSuggestions } from "@/api/profile";
+import InfiniteScroll from "react-infinite-scroller";
 
 const News = () => {
+  const filterData = useSelector((state) => state.suggestion.filterData);
   const userInfo = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
   const domain = useSelector((state) => state.domain);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [suggestionData, setSuggestionData] = useState([]);
-  const suggestion = useSelector((state) => state.suggestion);
+  const suggestion = useSelector((state) => state.suggestion.results);
   const [check, setCheck] = useState(null);
+  const [paramsData, setParamsData] = useState();
+
+  const loading = useRef(false);
+  const [page, setPage] = useState(2);
+  const [hasMore, setHasMore] = useState(true);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
-    setSuggestionData(suggestion.data);
-  }, [suggestion]);
+    setSuggestionData(suggestion);
+    setParamsData(filterData);
+    if (suggestion?.length < 20) {
+      setHasMore(false);
+    }
+  }, [suggestion, filterData]);
+
+  const loadChild = () => {
+    setIsFirstRender(false);
+    if (loading.current || !hasMore || isFirstRender) return;
+    loading.current = true;
+
+    let data = { page };
+
+    if (!!paramsData) {
+      data = { ...paramsData, page };
+    }
+
+    getSuggestions(data)
+      .then((res) => {
+        setSuggestionData((prevSuggestionData) => [
+          ...prevSuggestionData,
+          ...res?.data?.results,
+        ]);
+
+        if (res?.data?.results?.length < 20) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(() => {
+        setPage(page + 1);
+        loading.current = false;
+      });
+  };
+
+  const infiniteScrollLoader = (
+    <div
+      className="w-100 d-flex items-center justify-center h-[400px]"
+      style={{
+        marginLeft: "calc((440 / 1920) * 100vw)",
+      }}
+    >
+      <BeatLoader size={10} color="#fff" />
+    </div>
+  );
 
   const handleDetailCard = (index) => {
     if (isModalOpen === index) {
@@ -70,116 +128,131 @@ const News = () => {
           </span>
           <span className="description">Have you found a partner yet?</span>
         </div>
-        <div className="card-wrapper grid grid-cols-1 md:grid-cols-2 pb-12 mb-12">
-          {suggestionData?.map((item) => {
-            const uni = universityOptions.find((e) => e.id === item?.city);
+        <InfiniteScroll
+          loadMore={loadChild}
+          hasMore={hasMore}
+          useWindow={false}
+          loader={
+            !!suggestionData &&
+            suggestionData?.length > 0 &&
+            infiniteScrollLoader
+          }
+        >
+          <div className="card-wrapper grid grid-cols-1 md:grid-cols-2 pb-12 mb-12">
+            {!!suggestionData &&
+              suggestionData?.map((item) => {
+                const uni = universityOptions.find((e) => e.id === item?.city);
 
-            return (
-              <div
-                className="card-item"
-                key={item.id}
-                onClick={() => handleDetailCard(item.id)}
-              >
-                <div className="card-header flex">
-                  <div className="avatar">
-                    {item?.avatar?.file && (
-                      <Image
-                        src={item?.avatar?.file}
-                        alt="avatar"
-                        width={64}
-                        height={64}
-                        style={{
-                          objectFit: "cover",
-                          height: "100%",
-                          width: "100%",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col info justify-center">
-                    <span className="name flex items-center gap-[4px]">
-                      <span
-                        className="lh-1 h-[12px]text-center"
-                        style={{
-                          fontSize:
-                            "clamp(14px, calc((22 / 1920) * 100vw), 26px)",
-                        }}
-                      >
-                        {item.first_name} {item.last_name}
+                return (
+                  <div
+                    className="card-item"
+                    key={item.id}
+                    onClick={() => handleDetailCard(item.id)}
+                  >
+                    <div className="card-header flex">
+                      <div className="avatar">
+                        {item?.avatar?.file && (
+                          <Image
+                            src={item?.avatar?.file}
+                            alt="avatar"
+                            width={64}
+                            height={64}
+                            style={{
+                              objectFit: "cover",
+                              height: "100%",
+                              width: "100%",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div className="flex flex-col info justify-center">
+                        <span className="name flex items-center gap-[4px]">
+                          <span
+                            className="lh-1 h-[12px]text-center"
+                            style={{
+                              fontSize:
+                                "clamp(14px, calc((22 / 1920) * 100vw), 26px)",
+                            }}
+                          >
+                            {item.first_name} {item.last_name}
+                          </span>
+
+                          <div
+                            className={`w-[10px] h-[10px] rounded-full`}
+                            style={{ backgroundColor: item.color || "#ffffff" }}
+                          ></div>
+                        </span>
+                        <div className="flex gap-[24px] items-center">
+                          <div className="location flex items-start gap-[4px]">
+                            <Image
+                              src={LocationIcon}
+                              alt="location-icon"
+                              width={12}
+                              height={12}
+                            />
+                            <span>{uni || "Hanoi"}</span>
+                          </div>
+                          <div className="location flex items-start gap-[4px]">
+                            <Image
+                              src={BirthdayIcon}
+                              alt="birth-icon"
+                              width={12}
+                              height={12}
+                            />
+                            <span>{item.age || "18"}</span>
+                          </div>
+                          <div className="location h-[16px] flex items-start gap-[4px]">
+                            <Image
+                              src={UserIcon}
+                              alt="mem-icon"
+                              width={12}
+                              height={12}
+                            />
+                            <span>{item.team_member_count}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <span className="description">
+                        {item.bio?.length > 100
+                          ? item.bio?.slice(0, 100) + "..."
+                          : item.bio}
                       </span>
-
-                      <div
-                        className={`w-[10px] h-[10px] rounded-full`}
-                        style={{ backgroundColor: item.color || "#ffffff" }}
-                      ></div>
-                    </span>
-                    <div className="flex gap-[24px] items-center">
-                      <div className="location flex items-start gap-[4px]">
-                        <Image
-                          src={LocationIcon}
-                          alt="location-icon"
-                          width={12}
-                          height={12}
-                        />
-                        <span>{uni || "Hanoi"}</span>
-                      </div>
-                      <div className="location flex items-start gap-[4px]">
-                        <Image
-                          src={BirthdayIcon}
-                          alt="birth-icon"
-                          width={12}
-                          height={12}
-                        />
-                        <span>{item.age || "18"}</span>
-                      </div>
-                      <div className="location h-[16px] flex items-start gap-[4px]">
-                        <Image
-                          src={UserIcon}
-                          alt="mem-icon"
-                          width={12}
-                          height={12}
-                        />
-                        <span>{item.team_member_count}</span>
+                      <div className="tags">
+                        {[
+                          ...new Set(
+                            item.domain?.map((domainItem) =>
+                              domainItem.parent_domain !== null
+                                ? domainItem.parent_domain
+                                : domainItem.id
+                            )
+                          ),
+                        ].map((uniqueId) => {
+                          const sd = domain?.find(
+                            (e) => e.id === uniqueId
+                          )?.name;
+                          const colorItem = item.domain?.find(
+                            (e) =>
+                              e.id === uniqueId || e.parent_domain === uniqueId
+                          );
+                          return (
+                            <Badge
+                              key={uniqueId}
+                              backgroundColor={`#434343`}
+                              color={colorItem?.color}
+                              name={sd}
+                            />
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="card-body">
-                  <span className="description">
-                    {item.bio?.length > 100
-                      ? item.bio?.slice(0, 100) + "..."
-                      : item.bio}
-                  </span>
-                  <div className="tags">
-                    {[
-                      ...new Set(
-                        item.domain?.map((domainItem) =>
-                          domainItem.parent_domain !== null
-                            ? domainItem.parent_domain
-                            : domainItem.id
-                        )
-                      ),
-                    ].map((uniqueId) => {
-                      const sd = domain?.find((e) => e.id === uniqueId)?.name;
-                      const colorItem = item.domain?.find(
-                        (e) => e.id === uniqueId || e.parent_domain === uniqueId
-                      );
-                      return (
-                        <Badge
-                          key={uniqueId}
-                          backgroundColor={`#434343`}
-                          color={colorItem?.color}
-                          name={sd}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+          </div>
+        </InfiniteScroll>
       </div>
       {isModalOpen !== false && (
         <ModalDetail isOpen={isModalOpen} check={check} />
