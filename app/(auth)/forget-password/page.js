@@ -50,10 +50,7 @@ const ForgetPassword = () => {
     setIsLoading(true);
     forgetPassword({ email: Email })
       .then((res) => {
-        if (res) {
-          localStorage.setItem("accessToken", res.access);
-          router.push(`/news${rel ? `?rel=${rel}` : ""}`);
-        }
+        router.push(`/auth-login?forgot=${Email}`);
       })
       .catch((err) => {
         console.log(err);

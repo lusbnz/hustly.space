@@ -54,6 +54,12 @@ const AuthLogin = () => {
         toast.error("Your account has not been verified.");
       }
     }
+    const ers = sp ? sp.get("forgot") : null;
+    if (!!ers) {
+      if (!!ers) {
+        toast.success("Check your email to get password.");
+      }
+    }
   }, [isClient]);
 
   const onSubmit = () => {

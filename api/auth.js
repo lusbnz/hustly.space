@@ -11,7 +11,7 @@ export const authRegister = async (data) => {
 };
 
 export const forgetPassword = async (data) => {
-  const res = await API.post(`/profile/forget_password`, data);
+  const res = await API.post(`/authentication/forget_password`, data);
   return res.data;
 };
 
