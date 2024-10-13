@@ -21,17 +21,19 @@ const VerifyEmail = () => {
     const email = sp ? sp.get("email") : null;
     const token = sp ? sp.get("token") : null;
     setTimeout(() => {
-      verifyEmail(email, token)
-        .then((res) => {
-          if (res.error_messages) {
+      if (!!email && !!token) {
+        verifyEmail({ email, token })
+          .then((res) => {
+            if (res.error_messages) {
+              router.push("/auth-login?verify=false");
+            } else {
+              router.push("/auth-login?verify=true");
+            }
+          })
+          .catch((err) => {
             router.push("/auth-login?verify=false");
-          } else {
-            router.push("/auth-login?verify=true");
-          }
-        })
-        .catch((err) => {
-          router.push("/auth-login?verify=false");
-        });
+          });
+      }
     }, 1000);
   }, [isClient]);
 
