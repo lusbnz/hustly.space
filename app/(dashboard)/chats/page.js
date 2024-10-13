@@ -197,7 +197,7 @@ const Chats = () => {
                   {listThread
                     ?.filter((thread) => {
                       if (isActiveTab === "all") {
-                        return thread.is_match === true;
+                        return thread.is_match === true || (!thread.is_match && thread.last_message.sender === userInfo?.id);
                       }
                       if (isActiveTab === "pinned") {
                         return thread.is_pin === true;
