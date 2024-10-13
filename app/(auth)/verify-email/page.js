@@ -26,8 +26,7 @@ const VerifyEmail = () => {
           if (res.error_messages) {
             router.push("/auth-login?verify=false");
           } else {
-            localStorage.setItem("accessToken", res.access);
-            router.push("/news?verify=true");
+            router.push("/auth-login?verify=true");
           }
         })
         .catch((err) => {

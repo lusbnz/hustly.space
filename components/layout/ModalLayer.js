@@ -738,8 +738,14 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
-            <div className="contact">
-              <span>Social</span>
+            <div className="contact-l">
+              <span
+                style={{
+                  color: "#fff !important",
+                }}
+              >
+                Social
+              </span>
               <div className="flex social items-center">
                 <div
                   className="social-icon"
@@ -793,7 +799,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             )}
 
             <div className="more mt-[12px]">
-              <label>Bio Image</label>
+              <label>Bio Image ({watch('bio_image')?.length}/3)</label>
               {isLoadingBioImage ? (
                 <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
                   <BeatLoader color="#fff" size={10} />

@@ -10,6 +10,18 @@
     }
 }
 
+.contact-l{
+    margin-top: calc((22 / 1080) * 100vh);
+    margin-bottom: calc((10 / 1080) * 100vh);
+    display: flex;
+    flex-direction: column;
+    span{
+        color: #fff;
+        font-size: clamp(8px, calc((15 / 1920) * 100vw), 25px);
+        font-weight: 500;
+    }
+}
+
 .social{
     gap: calc((18 / 1080) * 100vh);
     margin-top: calc((10 / 1080) * 100vh);

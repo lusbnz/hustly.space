@@ -32,17 +32,17 @@ const News = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isFirstRender, setIsFirstRender] = useState(true);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
-  useEffect(() => {
-    const sp = isClient ? new URLSearchParams(window.location.search) : null;
-    const res = sp ? sp.get("verify") : null;
-    if (!!res) {
-      toast.success("Check your email to verify your account.");
-    }
-  }, [isClient]);
+  // useEffect(() => {
+  //   const sp = isClient ? new URLSearchParams(window.location.search) : null;
+  //   const res = sp ? sp.get("verify") : null;
+  //   if (!!res) {
+  //     toast.success("Check your email to verify your account.");
+  //   }
+  // }, [isClient]);
 
   useEffect(() => {
     setSuggestionData(suggestion);
