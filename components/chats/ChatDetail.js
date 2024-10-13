@@ -257,35 +257,46 @@ const ChatDetail = ({
                       />
                       {message.media?.length > 0 && (
                         <>
-                        {message.media[0]?.file && (
-                          <div>
-                            {/* Check if the media is an image or not */}
-                            {message.media[0]?.file.endsWith(".jpg") || 
-                              message.media[0]?.file.endsWith(".jpeg") || 
+                          {message.media[0]?.file && (
+                            <div>
+                              {/* Check if the media is an image or not */}
+                              {message.media[0]?.file.endsWith(".jpg") ||
+                              message.media[0]?.file.endsWith(".jpeg") ||
                               message.media[0]?.file.endsWith(".png") ? (
-                              <Image
-                                src={message.media[0]?.file}
-                                alt="message-image"
-                                width={300}
-                                height={200}
-                              />
-                            ) : (
-                              // Render non-image file with AttachmentIcon
-                              <div className="file-preview flex items-center justify-center p-2 min-w-[100px] h-[32px] rounded-[4px]">
                                 <Image
-                                  src={AttachmentIcon}
-                                  alt="attachment icon"
-                                  width={24}
-                                  height={24}
+                                  src={message.media[0]?.file}
+                                  alt="message-image"
+                                  width={300}
+                                  height={200}
                                 />
-                                <span className="ml-2">
-                                  {message.media[0]?.file.split('/').pop()} {/* Show file name */}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </>
+                              ) : (
+                                // Render non-image file with AttachmentIcon
+                                <div className="file-preview flex items-center justify-center p-2 min-w-[100px] h-[32px] rounded-[4px] cursor-pointer">
+                                  <a
+                                    href={message.media[0]?.file} // URL of the file to download
+                                    download={message.media[0]?.file} // Name of the file
+                                    className="flex items-center"
+                                    target="_blank"
+                                  >
+                                    <Image
+                                      src={AttachmentIcon}
+                                      alt="attachment icon"
+                                      width={12}
+                                      height={12}
+                                    />
+                                    <span className="ml-2">
+                                      {message.media[0]?.name?.length > 15
+                                        ? message.media[0]?.name.slice(0, 15) +
+                                          "..."
+                                        : message?.media[0]?.name}{" "}
+                                      {/* Show file name */}
+                                    </span>
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>

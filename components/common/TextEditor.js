@@ -24,6 +24,7 @@ const TextEditor = ({
   const [tempImage, setTempImage] = useState(null);
   const [tempFile, setTempFile] = useState(null);
   const [imageId, setImageId] = useState(null);
+  const [fileId, setFileId] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isImage, setIsImage] = useState(false);
   const [fileName, setFileName] = useState(null);
@@ -31,7 +32,7 @@ const TextEditor = ({
   const onSend = () => {
     if (editorData.trim()) {
       // Ensure the editor data is not just whitespace
-      handleSend(editorData, isImage ? imageId : tempFile);
+      handleSend(editorData, isImage ? imageId : fileId);
       setIsImage(false);
       setEditorData("");
       if (editorRef.current) {
@@ -39,6 +40,7 @@ const TextEditor = ({
         setTempImage(null);
         setTempFile(null);
         setImageId(null);
+        setFileId(null)
         setFileName(null);
       }
       editorRef.current.focus(); // Refocus the editor after sending
@@ -77,6 +79,7 @@ const TextEditor = ({
           setTempFile(fileUrl); // Store non-image file URL
           setIsImage(false);
           setFileName(res.name);
+          setFileId(res.id);
         }
 
         setIsLoading(false);
@@ -129,6 +132,7 @@ const TextEditor = ({
     setIsImage(false);
     setFileName(null);
     setImageId(null);
+    setFileId(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset the file input
     }
