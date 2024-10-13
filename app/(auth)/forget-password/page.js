@@ -9,24 +9,20 @@ import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
-import { authLogin } from "@/api/auth";
+import { authLogin, forgetPassword } from "@/api/auth";
 import { BeatLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { getAuthToken } from "@/libs/clients";
 import Head from "next/head";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-const AuthLogin = () => {
+const ForgetPassword = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [Email, setEmail] = useState("");
   const [errors, setErrors] = useState({
-    username: "",
-    password: "",
+    email: "",
     server: "",
   });
   const [isClient, setIsClient] = useState(false);
@@ -40,44 +36,19 @@ const AuthLogin = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const sp = isClient ? new URLSearchParams(window.location.search) : null;
-    const res = sp ? sp.get("register") : null;
-    if (!!res) {
-      toast.success("Check your email to verify your account.");
-    }
-    const ser = sp ? sp.get("verify") : null;
-    if (!!ser) {
-      if (ser === "true") {
-        toast.success("Your account has been verified.");
-      } else {
-        toast.error("Your account has not been verified.");
-      }
-    }
-  }, [isClient]);
-
   const onSubmit = () => {
-    setErrors({ username: "", password: "", server: "" });
+    setErrors({ email: "", server: "" });
 
-    if (!validateEmail(username)) {
-      setErrors((prev) => ({
-        ...prev,
-        username: "Please enter a valid email address.",
-      }));
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setErrors((prev) => ({
-        ...prev,
-        password:
-          "Password must contain at least one uppercase letter, one number, and be at least 8 characters long.",
-      }));
-      return;
-    }
+    if (!validateEmail(Email)) {
+        setErrors((prev) => ({
+          ...prev,
+          email: "Please enter a valid email address.",
+        }));
+        return;
+      }
 
     setIsLoading(true);
-    authLogin({ username, password })
+    forgetPassword({ email: Email })
       .then((res) => {
         if (res) {
           localStorage.setItem("accessToken", res.access);
@@ -88,7 +59,7 @@ const AuthLogin = () => {
         console.log(err);
         setErrors((prev) => ({
           ...prev,
-          server: "Password or username is incorrect.",
+          server: 'Something went wrong. Please try again later.',
         }));
       })
       .finally(() => {
@@ -100,15 +71,6 @@ const AuthLogin = () => {
     // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasMinLength = password.length >= 8;
-
-    return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
 
   const searchParams = isClient
@@ -135,7 +97,7 @@ const AuthLogin = () => {
           </div>
           <div className="form-container">
             <div className="form-header">
-              <h1 className="mb-[16px]">Login account</h1>
+              <h1 className="mb-[16px]">Forgot password</h1>
               <h3>Welcome to hustly.space, dong chi</h3>
             </div>
             <div className="form-wrapper">
@@ -148,32 +110,16 @@ const AuthLogin = () => {
                 <InputForm
                   title={"Email"}
                   placeholder={"Enter your email..."}
-                  name="username"
+                  name="email"
                   required={true}
                   onChange={(e) => {
-                    setUsername(e.target.value);
-                    setErrors((prev) => ({ ...prev, username: "" }));
+                    setEmail(e.target.value);
+                    setErrors((prev) => ({ ...prev, email: "" }));
                   }}
                 />
-                {errors.username && (
+                {errors.email && (
                   <div className="text-[#ff0000] text-[12px]">
-                    {errors.username}
-                  </div>
-                )}
-                <InputForm
-                  title={"Password"}
-                  placeholder={"Enter your password..."}
-                  name="password"
-                  required={true}
-                  isPassword={true}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors((prev) => ({ ...prev, password: "" }));
-                  }}
-                />
-                {errors.password && (
-                  <div className="text-[#ff0000] text-[12px]">
-                    {errors.password}
+                    {errors.email}
                   </div>
                 )}
                 {errors.server && (
@@ -181,14 +127,6 @@ const AuthLogin = () => {
                     {errors.server}
                   </div>
                 )}
-                <div
-                  className="text-white text-[12px] d-flex w-full items-center justify-end text-end cursor-pointer hover:opacity-80"
-                  onClick={() => {
-                    router.push(`/forget-password${rel ? `?rel=${rel}` : ""}`);
-                  }}
-                >
-                  Forgot password?
-                </div>
                 <div className="form-footer">
                   <ButtonComponent
                     type={"submit"}
@@ -196,17 +134,17 @@ const AuthLogin = () => {
                       isLoading ? (
                         <BeatLoader color="#000" size={6} />
                       ) : (
-                        "Sign in"
+                        "Confirm"
                       )
                     }
                   />
                   <span>
-                    {`Don't have an account?`}{" "}
+                    {`Wait, I remember my password...`}{" "}
                     <Link
                       className="action"
-                      href={`/auth-register${rel ? `?rel=${rel}` : ""}`}
+                      href={`/auth-login${rel ? `?rel=${rel}` : ""}`}
                     >
-                      Sign up
+                      Click here
                     </Link>
                   </span>
                 </div>
@@ -218,9 +156,8 @@ const AuthLogin = () => {
           <Image src={Banner} alt="banner" className="banner-auth" />
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
 
-export default AuthLogin;
+export default ForgetPassword;

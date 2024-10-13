@@ -10,10 +10,12 @@ import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { authRegister } from "@/api/auth";
+import { authRegister, verifyEmail } from "@/api/auth";
 import { BeatLoader } from "react-spinners";
 import { getAuthToken } from "@/libs/clients";
 import Head from "next/head";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthRegister = () => {
   const router = useRouter();
@@ -48,6 +50,14 @@ const AuthRegister = () => {
     };
 
     setErrors({ username: "", email: "", password: "", server: "" });
+
+    if (!validateEmail(email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address.",
+      }));
+      return;
+    }
 
     if (!validatePassword(password)) {
       setErrors((prev) => ({
@@ -93,8 +103,7 @@ const AuthRegister = () => {
             }));
             return;
           }
-          
-          router.push(`/auth-login${rel ? `?rel=${rel}` : ""}`);
+          router.push(`/auth-login?register=email${rel ? `&rel=${rel}` : ""}`);
         }
       })
       .catch((err) => {
@@ -113,6 +122,12 @@ const AuthRegister = () => {
       });
   };
 
+  const validateEmail = (email) => {
+    // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const validatePassword = (password) => {
     const hasUpperCase = /[A-Z]/.test(password); // Kiểm tra có chữ hoa
     const hasLowerCase = /[a-z]/.test(password); // Kiểm tra có chữ thường
@@ -122,7 +137,9 @@ const AuthRegister = () => {
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
 
-  const searchParams = isClient ? new URLSearchParams(window.location.search) : null;
+  const searchParams = isClient
+    ? new URLSearchParams(window.location.search)
+    : null;
   const rel = searchParams ? searchParams.get("rel") : null;
 
   return (
@@ -250,6 +267,7 @@ const AuthRegister = () => {
           <Image src={Banner} alt="banner" className="banner-auth" />
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

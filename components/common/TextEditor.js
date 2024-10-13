@@ -22,6 +22,7 @@ const TextEditor = ({
   const editorRef = useRef(null);
   const fileInputRef = useRef(null);
   const [tempImage, setTempImage] = useState(null);
+  const [tempFile, setTempFile] = useState(null);
   const [imageId, setImageId] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isImage, setIsImage] = useState(false);
@@ -29,12 +30,13 @@ const TextEditor = ({
   const onSend = () => {
     if (editorData.trim()) {
       // Ensure the editor data is not just whitespace
-      handleSend(editorData, imageId);
+      handleSend(editorData, isImage ? imageId : tempFile);
       setIsImage(false);
       setEditorData("");
       if (editorRef.current) {
         editorRef.current.innerHTML = ""; // Clear editor
         setTempImage(null);
+        setTempFile(null);
         setImageId(null);
       }
       editorRef.current.focus(); // Refocus the editor after sending
@@ -62,15 +64,24 @@ const TextEditor = ({
         const data = new FormData();
         data.append("file", file);
         const res = await uploadFile(data);
-        const imageUrl = res.file;
-        setTempImage(imageUrl);
-        setIsImage(true);
-        setImageId(res.id);
+        const fileUrl = res.file;
+
+        // Determine if the uploaded file is an image
+        if (file.type.startsWith("image/")) {
+          setTempImage(fileUrl);
+          setIsImage(true);
+          setImageId(res.id);
+        } else {
+          setTempFile(fileUrl); // Store non-image file URL
+          setIsImage(false);
+        }
+
         setIsLoading(false);
       } catch (error) {
         console.error("Error uploading file:", error);
         toast.error("Upload file less than 10MB");
         setIsImage(false);
+        setTempFile(null); // Reset on error
         setIsLoading(false);
       }
     }
@@ -108,6 +119,7 @@ const TextEditor = ({
 
   const handleRemoveImage = () => {
     setTempImage(null);
+    setTempFile(null); // Reset non-image file
     setIsImage(false);
     setImageId(null);
     if (fileInputRef.current) {
@@ -117,27 +129,20 @@ const TextEditor = ({
 
   useEffect(() => {
     if (isDetail) {
-      if (isImage) {
-        setHaveImage(true);
-      } else {
-        setHaveImage(false);
-      }
+      setHaveImage(isImage || Boolean(tempFile)); // Check if there's an image or non-image file
     }
-  }, [tempImage]);
+  }, [tempImage, tempFile]);
 
   return (
     <div className={`relative`}>
       <div
         className={`w-100 bg-[#222] rounded-[8px] mt-[4px]`}
-        style={
-          tempImage
-            ? {
-                height: "calc(320 /1080 * 100vh)",
-              }
-            : {
-                height: "calc(200 /1080 * 100vh)",
-              }
-        }
+        style={{
+          height:
+            tempImage || tempFile
+              ? "calc(320 /1080 * 100vh)"
+              : "calc(200 /1080 * 100vh)",
+        }}
       >
         {tempImage && (
           <div className={`relative flex justify-between p-4`}>
@@ -151,6 +156,23 @@ const TextEditor = ({
                 objectFit: "cover",
               }}
             />
+            <div className="cursor-pointer" onClick={handleRemoveImage}>
+              <Image src={TrashIcon} alt="Delete" width={20} height={20} />
+            </div>
+          </div>
+        )}
+        {tempFile && (
+          <div className={`relative flex justify-between p-4`}>
+            <div className="flex items-center justify-center p-2 w-[100px] h-[32px] rounded-[4px] bg-[#171717]">
+              <Image
+                src={AttachmentIcon}
+                alt="Attachment"
+                width={16}
+                height={16}
+              />
+              <span className="text-white ml-2">{tempFile.name}</span>{" "}
+              {/* Show file name */}
+            </div>
             <div className="cursor-pointer" onClick={handleRemoveImage}>
               <Image src={TrashIcon} alt="Delete" width={20} height={20} />
             </div>
@@ -186,7 +208,7 @@ const TextEditor = ({
                   handleFileChange(e); // Gọi hàm xử lý nếu file hợp lệ
                 }
               }}
-              accept="image/*"
+              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt"
               className="hidden"
             />
             <div

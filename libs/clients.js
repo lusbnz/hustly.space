@@ -14,7 +14,7 @@ const API = axios.create({
 
 API.interceptors.request.use((config) => {
   const isAuthRequest =
-    config.url.includes("signin") || config.url.includes("signup");
+    config.url.includes("signin") || config.url.includes("signup") || config.url.includes("forget_password") || config.url.includes("reset_password") || config.url.includes("verify_email");
 
   if (!isAuthRequest) {
     config.headers = {
