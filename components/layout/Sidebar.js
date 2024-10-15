@@ -60,7 +60,7 @@ const Sidebar = ({
     if (!isFetchUnread) {
       const intervalId = setInterval(() => {
         unreadCheck();
-      }, 2000);
+      }, 4000);
       return () => clearInterval(intervalId);
     }
   }, [isFetchUnread]);

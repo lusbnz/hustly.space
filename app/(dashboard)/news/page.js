@@ -47,7 +47,7 @@ const News = () => {
   useEffect(() => {
     setSuggestionData(suggestion);
     setParamsData(filterData);
-    if (suggestion?.length < 20) {
+    if (suggestion?.length < 10) {
       setHasMore(false);
     }
   }, [suggestion, filterData]);
@@ -70,7 +70,7 @@ const News = () => {
           ...res?.data?.results,
         ]);
 
-        if (res?.data?.results?.length < 20) {
+        if (res?.data?.results?.length < 10) {
           setHasMore(false);
         } else {
           setHasMore(true);

@@ -78,7 +78,7 @@ export default function Layout({ children }) {
     if (!isFirstRender) {
       const data = {
         page: 1,
-        size: 20,
+        size: 10,
         university__id: filter.university__id,
         team_member_count: filter.team_member_count,
         city: filter.city,
@@ -107,7 +107,7 @@ export default function Layout({ children }) {
     const data = {
       search: value,
       page: 1,
-      size: 20,
+      size: 10,
     };
 
     fetchSuggestion(data);
