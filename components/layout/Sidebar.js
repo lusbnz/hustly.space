@@ -56,14 +56,14 @@ const Sidebar = ({
       });
   };
 
-  useEffect(() => {
-    if (!isFetchUnread) {
-      const intervalId = setInterval(() => {
-        unreadCheck();
-      }, 4000);
-      return () => clearInterval(intervalId);
-    }
-  }, [isFetchUnread]);
+  // useEffect(() => {
+  //   if (!isFetchUnread) {
+  //     const intervalId = setInterval(() => {
+  //       unreadCheck();
+  //     }, 4000);
+  //     return () => clearInterval(intervalId);
+  //   }
+  // }, [isFetchUnread]);
 
   const handleChangeAge = (rangeValue) => {
     setAgeV(rangeValue);
