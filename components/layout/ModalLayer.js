@@ -293,7 +293,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     setValue("domain_2", null);
     setValue("sub_domain_2", null);
     setNumberDomain(1);
-  };
+  };  
 
   return (
     <>
