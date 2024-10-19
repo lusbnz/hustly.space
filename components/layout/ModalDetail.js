@@ -260,10 +260,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.instagram) {
-                          window.open(
-                            userInfo?.social_link?.instagram,
-                            "_blank"
-                          );
+                          const instagramUrl = userInfo?.social_link?.instagram.startsWith('http')
+                            ? userInfo?.social_link?.instagram
+                            : `https://${userInfo?.social_link?.instagram}`;
+                      
+                          window.open(instagramUrl, "_blank");
                         }
                       }}
                     >
@@ -273,7 +274,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.mail) {
-                          window.open(userInfo?.social_link?.mail, "_blank");
+                          const mailUrl = userInfo?.social_link?.mail.startsWith('http')
+                            ? userInfo?.social_link?.mail
+                            : `https://${userInfo?.social_link?.mail}`;
+                      
+                          window.open(mailUrl, "_blank");
                         }
                       }}
                     >
@@ -283,10 +288,11 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.linkedin) {
-                          window.open(
-                            userInfo?.social_link?.linkedin,
-                            "_blank"
-                          );
+                          const linkedinUrl = userInfo?.social_link?.linkedin.startsWith('http')
+                            ? userInfo?.social_link?.linkedin
+                            : `https://${userInfo?.social_link?.linkedin}`;
+                      
+                          window.open(linkedinUrl, "_blank");
                         }
                       }}
                     >
