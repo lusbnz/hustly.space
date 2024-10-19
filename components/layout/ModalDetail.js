@@ -349,12 +349,20 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                         {userInfo?.skill_set && (
                           <div className="skills flex flex-wrap gap-[6px]">
                             {userInfo.skill_set.map((skill) => (
-                              <span
+                              // <span
+                              //   key={skill}
+                              //   className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                              // >
+                              //   {s?.find((item) => item.value === skill)?.label}
+                              // </span>
+                              <Badge
                                 key={skill}
-                                className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                              >
-                                {s?.find((item) => item.value === skill)?.label}
-                              </span>
+                                backgroundColor={"#323232"}
+                                color={"#A7A7A7"}
+                                name={
+                                  s?.find((item) => item.value === skill)?.label
+                                }
+                              />
                             ))}
                           </div>
                         )}
@@ -377,10 +385,12 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
 
                               return (
                                 <div key={domain.id}>
-                                  <div className="font-[500] text-white mb-1"
-                                  style={{
-                                    fontSize: "clamp(14px, (17px / 1024 * 100vh), 17px)",
-                                  }}
+                                  <div
+                                    className="font-[500] text-white mb-1"
+                                    style={{
+                                      fontSize:
+                                        "clamp(14px, (17px / 1024 * 100vh), 17px)",
+                                    }}
                                   >
                                     {domainLabel}
                                   </div>{" "}
@@ -403,11 +413,8 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                                         return (
                                           <Badge
                                             key={subId}
-                                            backgroundColor={lightenColor(
-                                              subColor,
-                                              0.5
-                                            )}
-                                            color={darkenColor(subColor, 0.3)}
+                                            backgroundColor={"#323232"}
+                                            color={"#A7A7A7"}
                                             name={subLabel}
                                           />
                                         );
@@ -429,12 +436,18 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
                             {userInfo?.archivement?.map((archivement) => {
                               if (!!archivement.description) {
                                 return (
-                                  <span
+                                  // <span
+                                  //   key={archivement.id}
+                                  //   className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
+                                  // >
+                                  //   {archivement.description}
+                                  // </span>
+                                  <Badge
                                     key={archivement.id}
-                                    className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                                  >
-                                    {archivement.description}
-                                  </span>
+                                    backgroundColor={"#323232"}
+                                    color={"#A7A7A7"}
+                                    name={archivement.description}
+                                  />
                                 );
                               } else {
                                 return null;
