@@ -42,6 +42,21 @@ const Sidebar = ({
   const [isFetchUnread, setIsFetchUnread] = useState(false);
   const [isUnread, setIsUnread] = useState(false);
 
+  // const profileId = userInfo?.id;
+  // const token = getAuthToken();
+
+  // const [wsUrl, setWsUrl] = useState(
+  //   `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+  // );
+
+  // useEffect(() => {
+  //   setWsUrl(
+  //     `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+  //   );
+  // }, [profileId]);
+
+  // const { response } = useSocket(wsUrl, token);
+
   const unreadCheck = () => {
     checkUnread()
       .then((res) => {

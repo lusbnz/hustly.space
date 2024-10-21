@@ -7,7 +7,7 @@ import Dots from "@/public/icons/dots-icon.svg";
 import Trash from "@/public/icons/trash-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
-import { getMessage, sendMessage } from "@/api/message";
+import { getMessage } from "@/api/message";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import TextEditor from "../common/TextEditor";
@@ -16,6 +16,8 @@ import { deleteThread, updateThread } from "@/api/thread";
 import { useSelector } from "react-redux";
 import { removeVietnameseTones } from "@/utils/utils";
 import AttachmentIcon from "@/public/icons/attachment.svg";
+import { getAuthToken } from "@/libs/clients";
+import useSocket from "@/hooks/useSocket";
 
 const ChatDetail = ({
   chatId,
@@ -38,9 +40,33 @@ const ChatDetail = ({
   const contentRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const [isFetched, setIsFetched] = useState(false);
   const [haveImage, setHaveImage] = useState(false);
   const [isLoadingMessage, setIsLoadingMessage] = useState(false);
+
+  const profileId = userInfo?.id;
+  const token = getAuthToken();
+
+  const [wsUrl, setWsUrl] = useState(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
+
+  useEffect(() => {
+    if(!!chatId){
+      setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
+    }
+  }, [profileId, chatId])
+
+  const { response, sendMessage  } = useSocket(wsUrl, token);
+
+  useEffect(() => {
+    if (!!response) {
+      if(response?.length > 0){
+        setMessages(response?.reverse());
+      } else {
+        setMessages((prev) => ([response, ...prev]))
+      }
+      setIsLoading(false);
+      setIsFirstRender(false);
+    }
+  }, [response]);
 
   const psOptions = p?.map((item) => {
     return {
@@ -49,23 +75,6 @@ const ChatDetail = ({
     };
   });
 
-  const fetchMessage = () => {
-    if (!!chatId) {
-      getMessage(userInfo?.id, chatId)
-        .then((res) => {
-          setMessages(res.reverse());
-          setIsFetched(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .then(() => {
-          setIsFirstRender(false);
-          setIsLoading(false);
-        });
-    }
-  };
-
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
@@ -73,25 +82,8 @@ const ChatDetail = ({
   }, []);
 
   useEffect(() => {
-    if (isFirstRender && chatId) {
-      fetchMessage();
-    }
-  }, [chatId]);
-
-  useEffect(() => {
     setIsFirstRender(true);
-    // setIsLoading(true);
   }, [isChangeChat]);
-
-  useEffect(() => {
-    if (isFetched) {
-      const intervalId = setInterval(() => {
-        setIsFetched(false);
-        fetchMessage();
-      }, 100);
-      return () => clearInterval(intervalId);
-    }
-  }, [isFetched]);
 
   const checkIsMe = (message) => {
     return message.sender === userInfo?.id;
@@ -105,16 +97,16 @@ const ChatDetail = ({
     }
     const data = {
       content: content,
-      media: [image],
     };
-    sendMessage(userInfo?.id, chatId, data)
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoadingMessage(false);
-      });
+
+    if(image){
+      data.media = [image];
+    } else{
+      data.media = [];
+    }
+
+    sendMessage(data)
+    setIsLoadingMessage(false);
   };
 
   const handlePin = () => {

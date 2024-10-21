@@ -12,6 +12,8 @@ import BeatLoader from "react-spinners/BeatLoader";
 import Image from "next/image";
 import PinIcon from "@/public/icons/pin-icon.svg";
 import { useSelector } from "react-redux";
+import { getAuthToken } from "@/libs/clients";
+import useSocket from "@/hooks/useSocket";
 
 const Chats = () => {
   const userInfo = useSelector((state) => state.userInfo);
@@ -23,32 +25,40 @@ const Chats = () => {
   const [listThread, setListThread] = useState([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isSideRender, setIsSideRender] = useState(true);
-  const [isFetched, setIsFetched] = useState(false);
   const [isChangeChat, setIsChangeChat] = useState(false);
-  const [isLoadingDetail, setIsLoadingDetail] = useState(true);
   const [isLoadingChat, setIsLoadingChat] = useState(true);
   const [isMatch, setIsMatch] = useState(false);
   const [isPin, setIsPin] = useState(false);
   const [lastSender, setLastSender] = useState(null);
 
-  const fetchThread = () => {
-    getThread(userInfo?.id)
-      .then((res) => {
-        setListThread(res);
-        setIsFetched(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        window.localStorage.removeItem("accessToken");
-        router.push("/auth-login");
-      })
-      .finally(() => {
-        setIsFirstRender(false);
-        if(!isFirstRender){
-          setIsSideRender(false);
-        }
-      });
-  };
+  const profileId = userInfo?.id;
+  const token = getAuthToken();
+
+  const [wsUrl, setWsUrl] = useState(
+    `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+  );
+
+  useEffect(() => {
+    setWsUrl(
+      `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+    );
+  }, [profileId]);
+
+  const { response } = useSocket(wsUrl, token);
+
+  useEffect(() => {
+    if (!!response) {
+      setListThread(response);
+      setIsSideRender(false);
+    }
+    setIsFirstRender(false);
+  }, [response]);
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/auth-login");
+    }
+  }, [token]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -58,9 +68,6 @@ const Chats = () => {
       setIsActiveChat(chatId);
     }
 
-    if (isFirstRender) {
-      fetchThread();
-    }
   }, []);
 
   useEffect(() => {
@@ -84,16 +91,6 @@ const Chats = () => {
     }
   }, [listThread]);
 
-  useEffect(() => {
-    if (isFetched) {
-      const intervalId = setInterval(() => {
-        fetchThread();
-        setIsFetched(false);
-      }, 4000);
-      return () => clearInterval(intervalId);
-    }
-  }, [isFetched]);
-
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
     setIsActiveChat(null);
@@ -112,7 +109,7 @@ const Chats = () => {
     last_sender,
     is_pin
   ) => {
-    setIsLoadingDetail(true);
+    setIsLoadingChat(true);
     setIsActiveChat(thread_id);
     setIsChangeChat(thread_id);
     setLastSender(last_sender);
@@ -197,13 +194,20 @@ const Chats = () => {
                   {listThread
                     ?.filter((thread) => {
                       if (isActiveTab === "all") {
-                        return thread?.is_match === true || (!thread.is_match && thread?.last_message?.sender === userInfo?.id);
+                        return (
+                          thread?.is_match === true ||
+                          (!thread.is_match &&
+                            thread?.last_message?.sender === userInfo?.id)
+                        );
                       }
                       if (isActiveTab === "pinned") {
                         return thread?.is_pin === true;
                       }
                       if (isActiveTab === "unread") {
-                        return !thread?.is_match && thread?.last_message?.sender !== userInfo?.id;
+                        return (
+                          !thread?.is_match &&
+                          thread?.last_message?.sender !== userInfo?.id
+                        );
                       }
                       return true;
                     })
@@ -338,13 +342,7 @@ const Chats = () => {
               setSideRender={() => setIsSideRender(true)}
             />
           </div>
-          {isModalOpen && (
-            <ModalDetail
-              isOpen={isModalOpen}
-              isChat={true}
-              setIsLoadingDetail={setIsLoadingDetail}
-            />
-          )}
+          {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
         </>
       )}
     </div>

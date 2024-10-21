@@ -1,49 +1,30 @@
-import { useEffect, useRef, useCallback, useState } from "react";
-import io from "socket.io-client";
+import { useEffect, useRef, useState } from "react";
 
-let socket;
-
-const useSocket = (event, data = null) => {
-  const socketRef = useRef();
+const useSocket = (url, token) => {
+  const socketRef = useRef(null);
   const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
-        transports: ["websocket"],
-        withCredentials: true,
-      });
-      socketRef.current = socket;
-    }
+    socketRef.current = new WebSocket(`${url}?token=${token}`);
 
-    if (event) {
-      socketRef.current.on(event, (resData) => {
-        setResponse(resData);
-      });
-    }
-
-    return () => {
-      if (event) {
-        socketRef.current.off(event);
-      }
+    socketRef.current.onmessage = (event) => {
+      setResponse(JSON.parse(event.data));
     };
-  }, [event]);
 
-  const emitEvent = useCallback((emitEventName, emitData) => {
-    if (emitEventName) {
-      socketRef.current.emit(emitEventName, emitData, (ackData) => {
-        if (ackData && ackData.error) {
-          setError(ackData.error);
-        }
-      });
+    // return () => {
+    //   socketRef.current.close();
+    // };
+  }, [url, token]);
+
+  const sendMessage = (message) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.send(JSON.stringify(message));
     }
-  }, []);
+  };
 
   return {
     response,
-    error,
-    emitEvent,
+    sendMessage,
   };
 };
 

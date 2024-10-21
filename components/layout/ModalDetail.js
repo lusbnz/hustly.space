@@ -24,7 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Badge from "../common/Badge";
 
-const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
+const ModalDetail = ({ isOpen, check }) => {
   const dispatch = useDispatch();
   const userInfomation = useSelector((state) => state.userInfo);
   const university = useSelector((state) => state.university);
@@ -43,9 +43,6 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
   };
 
   const fetchUserInfo = () => {
-    if (isChat) {
-      setIsLoadingDetail(true);
-    }
     setIsLoading(true);
     getUser(isOpen)
       .then((res) => {
@@ -57,9 +54,6 @@ const ModalDetail = ({ isOpen, setIsLoadingDetail, isChat, check }) => {
       })
       .finally(() => {
         setIsLoading(false);
-        if (isChat) {
-          setIsLoadingDetail(false);
-        }
       });
   };
 
