@@ -48,7 +48,29 @@ const Chats = () => {
 
   useEffect(() => {
     if (!!response) {
-      setListThread(response);
+      if(response?.length > 0){
+        setListThread(response);
+      } else{
+        setListThread((prev) => {
+          const index = prev.findIndex((item) => item.thread_id === response.thread_id);
+
+          console.log(index);
+          
+          if (index !== -1) {
+            // Thay thế thread có thread_id trùng
+            const newList = [...prev];
+            console.log("newList", newList);
+            console.log("response", response);
+            
+            
+            newList[index] = response;
+            return newList;
+          } else {
+            // Nếu không có thread_id trùng, thêm mới
+            return [response, ...prev];
+          }
+        });
+      }
       setIsSideRender(false);
     }
     setIsFirstRender(false);

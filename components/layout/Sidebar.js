@@ -22,6 +22,8 @@ import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
 import { removeVietnameseTones } from "@/utils/utils";
 import { checkUnread } from "@/api/profile";
+import { getAuthToken } from "@/libs/clients";
+import useSocket from "@/hooks/useSocket";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -39,46 +41,32 @@ const Sidebar = ({
   const [searchValue, setSearchValue] = useState("");
   const [isClear, setIsClear] = useState(false);
   const [ageV, setAgeV] = useState({ min: 18, max: 25 });
-  const [isFetchUnread, setIsFetchUnread] = useState(false);
   const [isUnread, setIsUnread] = useState(false);
 
-  // const profileId = userInfo?.id;
-  // const token = getAuthToken();
+  const profileId = userInfo?.id;
+  const token = getAuthToken();
 
-  // const [wsUrl, setWsUrl] = useState(
-  //   `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
-  // );
+  const [wsUrl, setWsUrl] = useState(
+    `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+  );
 
-  // useEffect(() => {
-  //   setWsUrl(
-  //     `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
-  //   );
-  // }, [profileId]);
+  useEffect(() => {
+    setWsUrl(
+      `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
+    );
+  }, [profileId]);
 
-  // const { response } = useSocket(wsUrl, token);
+  const { response } = useSocket(wsUrl, token);
 
-  const unreadCheck = () => {
-    checkUnread()
-      .then((res) => {
-        setIsUnread(res.remain_unread);
-        setIsFetchUnread(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsFetchUnread(false);
-      });
-  };
-
-  // useEffect(() => {
-  //   if (!isFetchUnread) {
-  //     const intervalId = setInterval(() => {
-  //       unreadCheck();
-  //     }, 4000);
-  //     return () => clearInterval(intervalId);
-  //   }
-  // }, [isFetchUnread]);
+  useEffect(() => {
+    if (!!response) {
+      if(response?.length > 0){
+        setIsUnread(response?.some((item) => item.unread_count > 0));
+      } else {
+        setIsUnread(true);
+      }
+    }
+  }, [response]);
 
   const handleChangeAge = (rangeValue) => {
     setAgeV(rangeValue);

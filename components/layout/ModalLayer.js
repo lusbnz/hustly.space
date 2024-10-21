@@ -503,6 +503,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("competition")}
                 required={true}
+                clearBtn={true}
+                handleDelete={() => {
+                  setValue("competition", undefined);
+                  setValue("year_competition", undefined);
+                }}
               />
               <SelectForm
                 options={yearOptions}

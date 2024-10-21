@@ -27,9 +27,13 @@ const SelectForm = ({
   clearBtn,
   handleDeleteDomain,
   handleDelete,
-  isSidebar
+  isSidebar,
 }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(
+    !isSidebar
+      ? options.find((option) => String(option.value) === String(defaultValue))
+      : null
+  );
 
   const CustomSingleValue = ({ data, children, ...props }) => {
     return (
@@ -256,7 +260,7 @@ const SelectForm = ({
                 handleDelete
                   ? () => {
                       setSelectedValue(null);
-                      if(!!selectedValue){
+                      if (!!selectedValue) {
                         handleDelete(name);
                       }
                     }
