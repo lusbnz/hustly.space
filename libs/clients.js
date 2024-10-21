@@ -4,7 +4,10 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 export function getAuthToken() {
-  return window.localStorage.getItem("accessToken") ?? "";
+  if (typeof window !== "undefined") {
+    return window.localStorage.getItem("accessToken") ?? "";
+  }
+  return "";
 }
 
 const API = axios.create({
