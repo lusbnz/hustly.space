@@ -161,7 +161,7 @@ const ChatDetail = ({
         <div className="w-100 h-[80vh] flex items-center justify-center">
           <BeatLoader color="#ffffff" size={10} />
         </div>
-      ) : !!chatId && !isLoading ? (
+      ) : !!chatId && !isLoading && !isLoadingR ? (
         <>
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">

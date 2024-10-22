@@ -40,28 +40,27 @@ const Chats = () => {
   );
 
   useEffect(() => {
-    setWsUrl(
-      `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
-    );
+    setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`);
   }, [profileId]);
 
   const { response } = useSocket(wsUrl, token);
 
   useEffect(() => {
     if (!!response) {
-      if(response?.length > 0){
+      if (response?.length > 0) {
         setListThread(response);
-      } else{
+      } else {
         setListThread((prev) => {
-          const index = prev.findIndex((item) => item.thread_id === response.thread_id);
-          
+          const index = prev.findIndex(
+            (item) => item.thread_id === response.thread_id
+          );
+
           if (index !== -1) {
             // Thay thế thread có thread_id trùng
             const newList = [...prev];
             console.log("newList", newList);
             console.log("response", response);
-            
-            
+
             newList[index] = response;
             return newList;
           } else {
@@ -84,16 +83,13 @@ const Chats = () => {
   useEffect(() => {
     // const searchParams = new URLSearchParams(window.location.search);
     // const chatId = searchParams.get("chatId");
-
     // if (chatId) {
     //   setIsActiveChat(chatId);
     //   searchParams.delete("chatId");
     //   const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-      
     //   // Use the history API to update the URL
     //   window.history.replaceState(null, "", newUrl);
     // }
-
   }, []);
 
   useEffect(() => {
@@ -260,18 +256,21 @@ const Chats = () => {
                       return (
                         <div
                           className={`chat-item ${
-                            isActiveChat === thread?.recipient?.id && "bg-[#222]"
+                            isActiveChat === thread?.recipient?.id &&
+                            "bg-[#222]"
                           }`}
                           key={thread?.recipient?.id}
-                          onClick={() =>
-                            handleOpenChatDetail(
-                              thread?.thread_id,
-                              thread?.recipient?.id,
-                              thread?.is_match,
-                              thread?.last_message?.sender,
-                              thread?.is_pin
-                            )
-                          }
+                          onClick={() => {
+                            if (isActiveChat !== thread.thread_id) {
+                              handleOpenChatDetail(
+                                thread?.thread_id,
+                                thread?.recipient?.id,
+                                thread?.is_match,
+                                thread?.last_message?.sender,
+                                thread?.is_pin
+                              );
+                            }
+                          }}
                         >
                           <div className="flex items-center gap-[6px]">
                             <div className="chat-avatar">
