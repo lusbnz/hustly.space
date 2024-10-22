@@ -53,8 +53,6 @@ const Chats = () => {
       } else{
         setListThread((prev) => {
           const index = prev.findIndex((item) => item.thread_id === response.thread_id);
-
-          console.log(index);
           
           if (index !== -1) {
             // Thay thế thread có thread_id trùng
@@ -88,6 +86,11 @@ const Chats = () => {
 
     if (chatId) {
       setIsActiveChat(chatId);
+      searchParams.delete("chatId");
+      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+      
+      // Use the history API to update the URL
+      window.history.replaceState(null, "", newUrl);
     }
 
   }, []);
@@ -143,7 +146,7 @@ const Chats = () => {
       setIsModalOpen(recipient_id);
     }
 
-    router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
+    // router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
   };
 
   const handleOpenDetail = () => {
