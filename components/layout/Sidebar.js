@@ -40,7 +40,7 @@ const Sidebar = ({
   const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");
   const [isClear, setIsClear] = useState(false);
-  const [ageV, setAgeV] = useState({ min: 18, max: 25 });
+  const [ageV, setAgeV] = useState({ min: 18, max: 40 });
   const [isUnread, setIsUnread] = useState(false);
 
   const profileId = userInfo?.id;
