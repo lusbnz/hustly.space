@@ -32,7 +32,7 @@ import { removeVietnameseTones } from "@/utils/utils";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);

@@ -35,7 +35,7 @@ const Sidebar = ({
   const router = useRouter();
   const pathname = usePathname();
   const university = useSelector((state) => state.university);
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");

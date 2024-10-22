@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
 import { getCompetion, getDomain, getUniversity } from "@/api/option";
 import { BeatLoader } from "react-spinners";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { setCompetition } from "@/reducers/competitionSlice";
 import { setUniversity } from "@/reducers/universitySlice";
@@ -21,6 +21,7 @@ export default function Layout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
   const [openModalSetting, setOpenModalSetting] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +41,12 @@ export default function Layout({ children }) {
   const [isFirstSetting, setIsFirstSetting] = useState(false);
 
   const isHaveSidebar = pathname === "/news";
+
+  useEffect(() => {
+    // if(!userInfo?.id && !isFirstRender) {
+    //   fetchProfile()
+    // }
+  }, [userInfo])
 
   const toggleOpenModalSetting = () => {
     setOpenModalSetting(!openModalSetting);

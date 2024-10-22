@@ -23,10 +23,11 @@ import { removeVietnameseTones } from "@/utils/utils";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Badge from "../common/Badge";
+import { setIsLoadingR, setReceiveInfo } from "@/reducers/userInfoSlice";
 
 const ModalDetail = ({ isOpen, check }) => {
   const dispatch = useDispatch();
-  const userInfomation = useSelector((state) => state.userInfo);
+  const userInfomation = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
@@ -43,17 +44,20 @@ const ModalDetail = ({ isOpen, check }) => {
   };
 
   const fetchUserInfo = () => {
+    dispatch(setIsLoadingR(true));
     setIsLoading(true);
     getUser(isOpen)
       .then((res) => {
         setUserInfo(res);
         localStorage.setItem("receive", JSON.stringify(res));
+        dispatch(setReceiveInfo(res));
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
         setIsLoading(false);
+        dispatch(setIsLoadingR(false));
       });
   };
 
@@ -182,7 +186,7 @@ const ModalDetail = ({ isOpen, check }) => {
             <>
               <div className="card-header flex">
                 <div className="avatar">
-                  {userInfo?.avatar?.file && (
+                  {!!userInfo?.avatar?.file ? (
                     <Image
                       src={userInfo?.avatar?.file}
                       alt="avatar"
@@ -195,9 +199,19 @@ const ModalDetail = ({ isOpen, check }) => {
                         borderRadius: "50%",
                       }}
                     />
+                  ) : (
+                    <div
+                      style={{
+                        width: "calc((64 / 1920) * 100vw)",
+                        height: "calc((64 / 1920) * 100vw)",
+                        backgroundColor: "#B8B8B8",
+                        borderRadius: "100%",
+                        marginRight: "8px",
+                      }}
+                    ></div>
                   )}
                 </div>
-                <div className="flex flex-col justify-center info">
+                <div className="flex flex-col justify-center info gap-[8px]">
                   <span className="name flex items-center gap-[4px]">
                     <span
                       className="lh-1 h-[12px] text-center"
@@ -254,10 +268,11 @@ const ModalDetail = ({ isOpen, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.instagram) {
-                          const instagramUrl = userInfo?.social_link?.instagram.startsWith('http')
-                            ? userInfo?.social_link?.instagram
-                            : `https://${userInfo?.social_link?.instagram}`;
-                      
+                          const instagramUrl =
+                            userInfo?.social_link?.instagram.startsWith("http")
+                              ? userInfo?.social_link?.instagram
+                              : `https://${userInfo?.social_link?.instagram}`;
+
                           window.open(instagramUrl, "_blank");
                         }
                       }}
@@ -268,10 +283,11 @@ const ModalDetail = ({ isOpen, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.mail) {
-                          const mailUrl = userInfo?.social_link?.mail.startsWith('http')
-                            ? userInfo?.social_link?.mail
-                            : `https://${userInfo?.social_link?.mail}`;
-                      
+                          const mailUrl =
+                            userInfo?.social_link?.mail.startsWith("http")
+                              ? userInfo?.social_link?.mail
+                              : `https://${userInfo?.social_link?.mail}`;
+
                           window.open(mailUrl, "_blank");
                         }
                       }}
@@ -282,10 +298,11 @@ const ModalDetail = ({ isOpen, check }) => {
                       className="social-icon"
                       onClick={() => {
                         if (!!userInfo?.social_link?.linkedin) {
-                          const linkedinUrl = userInfo?.social_link?.linkedin.startsWith('http')
-                            ? userInfo?.social_link?.linkedin
-                            : `https://${userInfo?.social_link?.linkedin}`;
-                      
+                          const linkedinUrl =
+                            userInfo?.social_link?.linkedin.startsWith("http")
+                              ? userInfo?.social_link?.linkedin
+                              : `https://${userInfo?.social_link?.linkedin}`;
+
                           window.open(linkedinUrl, "_blank");
                         }
                       }}

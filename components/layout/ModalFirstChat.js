@@ -14,7 +14,7 @@ import { createThread } from "@/api/thread";
 import { removeVietnameseTones } from "@/utils/utils";
 
 const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
-  const user = useSelector((state) => state.userInfo);
+  const user = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {

@@ -16,7 +16,8 @@ import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
 
 const Chats = () => {
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
+  const receiveInfo = useSelector((state) => state.userInfo.receiveInfo);
 
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
@@ -81,17 +82,17 @@ const Chats = () => {
   }, [token]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const chatId = searchParams.get("chatId");
+    // const searchParams = new URLSearchParams(window.location.search);
+    // const chatId = searchParams.get("chatId");
 
-    if (chatId) {
-      setIsActiveChat(chatId);
-      searchParams.delete("chatId");
-      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    // if (chatId) {
+    //   setIsActiveChat(chatId);
+    //   searchParams.delete("chatId");
+    //   const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
       
-      // Use the history API to update the URL
-      window.history.replaceState(null, "", newUrl);
-    }
+    //   // Use the history API to update the URL
+    //   window.history.replaceState(null, "", newUrl);
+    // }
 
   }, []);
 
@@ -146,7 +147,7 @@ const Chats = () => {
       setIsModalOpen(recipient_id);
     }
 
-    // router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
+    router.replace(`/chats?chatId=${thread_id}`, undefined, { shallow: true });
   };
 
   const handleOpenDetail = () => {
@@ -222,7 +223,7 @@ const Chats = () => {
                         return (
                           thread?.is_match === true ||
                           (!thread.is_match &&
-                            thread?.last_message?.sender === userInfo?.id)
+                            thread?.last_message?.sender !== receiveInfo?.id)
                         );
                       }
                       if (isActiveTab === "pinned") {
@@ -231,7 +232,7 @@ const Chats = () => {
                       if (isActiveTab === "unread") {
                         return (
                           !thread?.is_match &&
-                          thread?.last_message?.sender !== userInfo?.id
+                          thread?.last_message?.sender === receiveInfo?.id
                         );
                       }
                       return true;

@@ -17,7 +17,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 const News = () => {
   const filterData = useSelector((state) => state.suggestion.filterData);
-  const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const domain = useSelector((state) => state.domain);
   const [isModalOpen, setIsModalOpen] = useState(false);

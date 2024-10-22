@@ -35,8 +35,10 @@ const ChatDetail = ({
   setSideRender,
   setListThread
 }) => {
-  const userInfo = useSelector((state) => state.userInfo);
-  const recipientInfo = JSON.parse(localStorage.getItem("receive"));
+  const userInfo = useSelector((state) => state.userInfo.userInfo);
+  // const recipientInfo = JSON.parse(localStorage.getItem("receive"));
+  const recipientInfo = useSelector((state) => state.userInfo.receiveInfo);
+  const isLoadingR = useSelector((state) => state.userInfo.isLoadingR);
 
   const contentRef = useRef(null);
   const [messages, setMessages] = useState([]);
@@ -87,7 +89,7 @@ const ChatDetail = ({
   }, [isChangeChat]);
 
   const checkIsMe = (message) => {
-    return message.sender === userInfo?.id;
+    return message.sender !== recipientInfo?.id;
   };
 
   const handleSend = (content, image) => {
@@ -155,7 +157,7 @@ const ChatDetail = ({
 
   return (
     <div className="cd-wrapper">
-      {isFirstRender && isLoading && !!chatId ? (
+      {isFirstRender && isLoading && !!chatId && isLoadingR ? (
         <div className="w-100 h-[80vh] flex items-center justify-center">
           <BeatLoader color="#ffffff" size={10} />
         </div>
@@ -317,7 +319,7 @@ const ChatDetail = ({
               isLoading={isLoadingMessage}
               setIsLoading={(e) => setIsLoadingMessage(e)}
             />
-          ) : messages?.length === 1 && messages[0]?.sender === userInfo?.id ? (
+          ) : messages?.length === 1 && messages[0]?.sender !== recipientInfo?.id ? (
             <></>
           ) : (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
