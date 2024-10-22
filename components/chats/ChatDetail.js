@@ -33,6 +33,7 @@ const ChatDetail = ({
   lastSender,
   setIsModalOpen,
   setSideRender,
+  setListThread
 }) => {
   const userInfo = useSelector((state) => state.userInfo);
   const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -129,7 +130,19 @@ const ChatDetail = ({
       is_match: true,
     };
     updateThread(userInfo?.id, chatId, data)
-      .then((res) => {})
+      .then((res) => {
+        setListThread((prev) => {
+          const index = prev.findIndex((item) => item.thread_id === res.thread_id);
+
+          if (index !== -1) {
+            const newList = [...prev];
+            newList[index] = res;
+            return newList;
+          } else {
+            return [res, ...prev];
+          }
+        });
+      })
       .catch((err) => {
         console.log(err);
       })

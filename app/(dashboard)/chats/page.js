@@ -256,14 +256,14 @@ const Chats = () => {
                       return (
                         <div
                           className={`chat-item ${
-                            isActiveChat === thread.recipient.id && "bg-[#222]"
+                            isActiveChat === thread?.recipient?.id && "bg-[#222]"
                           }`}
-                          key={thread.recipient.id}
+                          key={thread?.recipient?.id}
                           onClick={() =>
                             handleOpenChatDetail(
-                              thread.thread_id,
-                              thread.recipient.id,
-                              thread.is_match,
+                              thread?.thread_id,
+                              thread?.recipient?.id,
+                              thread?.is_match,
                               thread?.last_message?.sender,
                               thread?.is_pin
                             )
@@ -362,6 +362,7 @@ const Chats = () => {
               lastSender={lastSender}
               setIsModalOpen={setIsModalOpen}
               setSideRender={() => setIsSideRender(true)}
+              setListThread={(e) => setListThread(e)}
             />
           </div>
           {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
