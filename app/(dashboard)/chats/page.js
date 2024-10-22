@@ -248,6 +248,9 @@ const Chats = () => {
                     })
 
                     ?.map((thread) => {
+                      if(!thread.thread_id){
+                        return;
+                      }
                       const sanitizedContent =
                         thread?.last_message?.content.replace(
                           /<br\s*\/?>/gi,
