@@ -235,10 +235,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
-  // competitionOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
+  competitionOptions.unshift({
+    value: null,
+    label: "Searching for a competition...",
+  });
 
   const universityOptions = university?.map((item) => {
     return {
