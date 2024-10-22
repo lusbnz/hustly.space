@@ -421,6 +421,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 register={register}
                 name={"age"}
                 required={true}
+                isNumber={true}
               />
               <SelectForm
                 options={genderChoices}

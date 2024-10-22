@@ -11,7 +11,8 @@ const InputForm = ({
   isPassword,
   tstyle,
   defaultValue,
-  onChange
+  onChange,
+  isNumber
 }) => {
   return (
     <div className="input-form">
@@ -25,7 +26,7 @@ const InputForm = ({
       ) : (
         <input
           placeholder={placeholder}
-          type={isPassword ? "password" : "text"}
+          type={isPassword ? "password" : isNumber ? "number" : "text"}
           {...(register && register(name, { required }))}
           defaultValue={defaultValue}
           onChange={onChange}
