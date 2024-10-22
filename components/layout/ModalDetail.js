@@ -122,7 +122,7 @@ const ModalDetail = ({ isOpen, check }) => {
   function findLabelById(id, parentDomain) {
     if (parentDomain === null) {
       const mainDomain = domainOptions.find((domain) => domain.value === id);
-      return mainDomain ? mainDomain.label : "Not found";
+      return mainDomain ? mainDomain?.label : "Not found";
     }
 
     const parent = domainOptions.find(
@@ -131,7 +131,7 @@ const ModalDetail = ({ isOpen, check }) => {
     if (!parent || !parent.subOptions) return "Not found";
 
     const subOption = parent.subOptions.find((sub) => sub.value === id);
-    return subOption ? subOption.label : "Not found";
+    return subOption ? subOption?.label : "Not found";
   }
 
   function hexToRgb(hex) {
@@ -331,7 +331,7 @@ const ModalDetail = ({ isOpen, check }) => {
                       <span className="key">COMPETITION</span>
                       {userInfo?.competition?.[0] && (
                         <span className="value">
-                          {com.label}
+                          {com?.label}
                           {" - "}
                           {userInfo?.competition?.[0]?.year_competition}
                         </span>

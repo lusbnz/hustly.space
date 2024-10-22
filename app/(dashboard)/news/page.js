@@ -78,6 +78,7 @@ const News = () => {
       })
       .catch((err) => {
         console.log("err", err);
+        setHasMore(false);
       })
       .finally(() => {
         setPage(page + 1);
