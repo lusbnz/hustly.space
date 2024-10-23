@@ -65,7 +65,13 @@ const ChatDetail = ({
       if(response?.length > 0){
         setMessages(response?.reverse());
       } else {
-        setMessages((prev) => ([response, ...prev]))
+        const isDuplicate = messages.some((message) => message._id === response._id);
+        if(!isDuplicate){
+          setMessages([response, ...messages]);
+        }
+        else {
+          setMessages(response);
+        }
       }
       setIsLoading(false);
       setIsFirstRender(false);

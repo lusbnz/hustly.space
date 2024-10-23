@@ -58,8 +58,6 @@ const Chats = () => {
           if (index !== -1) {
             // Thay thế thread có thread_id trùng
             const newList = [...prev];
-            console.log("newList", newList);
-            console.log("response", response);
 
             newList[index] = response;
             return newList;
