@@ -176,8 +176,8 @@ const ChatDetail = ({
       })
       .finally(() => {
         setIsActiveTab("all");
-        setChatId(null);
-        setIsModalOpen(false);
+        // setChatId(null);
+        // setIsModalOpen(false);
       });
   };
 
