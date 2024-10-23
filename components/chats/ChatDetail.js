@@ -28,6 +28,7 @@ const ChatDetail = ({
   isLoading,
   setIsLoading,
   isMatch,
+  setIsMatch,
   isPin,
   setIsPin,
   setIsActiveTab,
@@ -176,6 +177,7 @@ const ChatDetail = ({
       })
       .finally(() => {
         setIsActiveTab("all");
+        setIsMatch(true)
         // setChatId(null);
         // setIsModalOpen(false);
       });

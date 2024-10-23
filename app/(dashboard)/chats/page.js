@@ -217,7 +217,7 @@ const Chats = () => {
                         return (
                           thread?.is_match === true ||
                           (!thread.is_match &&
-                            thread?.last_message?.sender !== receiveInfo?.id)
+                            thread?.last_message?.sender === userInfo?.id)
                         );
                       }
                       if (isActiveTab === "pinned") {
@@ -226,7 +226,7 @@ const Chats = () => {
                       if (isActiveTab === "unread") {
                         return (
                           !thread?.is_match &&
-                          thread?.last_message?.sender === receiveInfo?.id
+                          thread?.last_message?.sender !== userInfo?.id
                         );
                       }
                       return true;
@@ -361,6 +361,7 @@ const Chats = () => {
               isLoading={isLoadingChat}
               setIsLoading={setIsLoadingChat}
               isMatch={isMatch}
+              setIsMatch={setIsMatch}
               isPin={isPin}
               setIsPin={setIsPin}
               setIsActiveTab={setIsActiveTab}
