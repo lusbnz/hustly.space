@@ -109,6 +109,7 @@ const ForgetPassword = () => {
                   placeholder={"Enter your email..."}
                   name="email"
                   required={true}
+                  isAuth={true}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     setErrors((prev) => ({ ...prev, email: "" }));

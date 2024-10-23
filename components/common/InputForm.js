@@ -12,7 +12,8 @@ const InputForm = ({
   tstyle,
   defaultValue,
   onChange,
-  isNumber
+  isNumber,
+  isAuth
 }) => {
   return (
     <div className="input-form">
@@ -25,6 +26,7 @@ const InputForm = ({
         />
       ) : (
         <input
+          style={isAuth ? {height: "46px"} : {}}
           placeholder={placeholder}
           type={isPassword ? "password" : isNumber ? "number" : "text"}
           {...(register && register(name, { required }))}

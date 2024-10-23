@@ -93,8 +93,11 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
+    console.log('content', content);
+    console.log('image', image);
+    
     setIsLoadingMessage(true);
-    if (content === "" && !image) {
+    if (!content && !image) {
       setIsLoadingMessage(false);
       return;
     }
@@ -107,6 +110,8 @@ const ChatDetail = ({
     } else{
       data.media = [];
     }
+
+    console.log('data', data)
 
     sendMessage(data)
     setIsLoadingMessage(false);

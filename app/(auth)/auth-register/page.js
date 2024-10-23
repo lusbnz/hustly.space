@@ -178,6 +178,7 @@ const AuthRegister = () => {
                     // register={register}
                     name="first_name"
                     required={true}
+                    isAuth={true}
                     onChange={(e) => {
                       setFirstName(e.target.value);
                       setErrors((prev) => ({ ...prev, username: "" }));
@@ -189,6 +190,7 @@ const AuthRegister = () => {
                     // register={register}
                     name="last_name"
                     required={true}
+                    isAuth={true}
                     onChange={(e) => {
                       setLastName(e.target.value);
                       setErrors((prev) => ({ ...prev, username: "" }));
@@ -205,6 +207,7 @@ const AuthRegister = () => {
                   placeholder="Enter your email..."
                   // register={register}
                   name="email"
+                  isAuth={true}
                   required={true}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -221,6 +224,7 @@ const AuthRegister = () => {
                   placeholder="Enter your password..."
                   // register={register}
                   name="password"
+                  isAuth={true}
                   required={true}
                   isPassword={true}
                   onChange={(e) => {

@@ -30,7 +30,7 @@ const TextEditor = ({
   const [fileName, setFileName] = useState(null);
 
   const onSend = () => {
-    if (editorData.trim()) {
+    if (isImage || fileId || editorData.trim()) {
       // Ensure the editor data is not just whitespace
       handleSend(editorData, isImage ? imageId : fileId);
       setIsImage(false);

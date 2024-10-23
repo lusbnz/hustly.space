@@ -156,6 +156,7 @@ const AuthLogin = () => {
                   placeholder={"Enter your email..."}
                   name="username"
                   required={true}
+                  isAuth={true}
                   onChange={(e) => {
                     setUsername(e.target.value);
                     setErrors((prev) => ({ ...prev, username: "" }));
@@ -172,6 +173,7 @@ const AuthLogin = () => {
                   name="password"
                   required={true}
                   isPassword={true}
+                  isAuth={true}
                   onChange={(e) => {
                     setPassword(e.target.value);
                     setErrors((prev) => ({ ...prev, password: "" }));
