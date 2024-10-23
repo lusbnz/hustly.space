@@ -29,6 +29,7 @@ const ChatDetail = ({
   setIsLoading,
   isMatch,
   isPin,
+  setIsPin,
   setIsActiveTab,
   lastSender,
   setIsModalOpen,
@@ -93,9 +94,6 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
-    console.log('content', content);
-    console.log('image', image);
-    
     setIsLoadingMessage(true);
     if (!content && !image) {
       setIsLoadingMessage(false);
@@ -111,8 +109,6 @@ const ChatDetail = ({
       data.media = [];
     }
 
-    console.log('data', data)
-
     sendMessage(data)
     setIsLoadingMessage(false);
   };
@@ -121,7 +117,26 @@ const ChatDetail = ({
     const data = {
       is_pin: !isPin,
     };
-    updateThread(userInfo?.id, chatId, data);
+    updateThread(userInfo?.id, chatId, data)
+      .then((res) => {
+        setListThread((prev) => {
+          const index = prev.findIndex((item) => item.thread_id === res.thread_id);
+
+          if (index !== -1) {
+            const newList = [...prev];
+            newList[index] = res;
+            return newList;
+          } else {
+            return [res, ...prev];
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsPin(!isPin);
+      });
   };
 
   const handleDelete = () => {

@@ -364,6 +364,7 @@ const Chats = () => {
               setIsLoading={setIsLoadingChat}
               isMatch={isMatch}
               isPin={isPin}
+              setIsPin={setIsPin}
               setIsActiveTab={setIsActiveTab}
               lastSender={lastSender}
               setIsModalOpen={setIsModalOpen}
