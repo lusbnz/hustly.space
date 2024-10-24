@@ -51,16 +51,16 @@ const Sidebar = ({
   );
 
   useEffect(() => {
-    setWsUrl(
-      `wss://backend.hustlyspace.com/ws/${profileId}/thread/`
-    );
+    if (!!profileId) {
+      setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`);
+    }
   }, [profileId]);
 
   const { response } = useSocket(wsUrl, token);
 
   useEffect(() => {
     if (!!response) {
-      if(response?.length > 0){
+      if (response?.length > 0) {
         setIsUnread(response?.some((item) => item.unread_count > 0));
       } else {
         setIsUnread(true);
