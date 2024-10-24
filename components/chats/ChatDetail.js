@@ -102,7 +102,7 @@ const ChatDetail = ({
 
   const handleSend = (content, image) => {
     setIsLoadingMessage(true);
-    if (!content && !image) {
+    if ((!content || content === '&nbsp;' ) && !image) {
       setIsLoadingMessage(false);
       return;
     }
@@ -147,8 +147,10 @@ const ChatDetail = ({
   };
 
   const handleDelete = () => {
-    setSideRender(true);
     deleteThread(userInfo?.id, chatId);
+    setListThread((prev) => {
+      return prev.filter((item) => item.thread_id !== chatId);
+    });
     handleOpenDetail(null);
     setChatId(null);
     setIsModalOpen(false);
@@ -243,7 +245,7 @@ const ChatDetail = ({
                   }
             }
           >
-            {messages.map((message, index) => (
+            {messages?.map((message, index) => (
               <>
                 {/* {index === 2 && <div className="separator-date">today</div>} */}
 

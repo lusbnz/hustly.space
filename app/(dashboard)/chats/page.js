@@ -383,7 +383,7 @@ const Chats = () => {
               setIsActiveTab={setIsActiveTab}
               lastSender={lastSender}
               setIsModalOpen={setIsModalOpen}
-              setSideRender={() => setIsSideRender(true)}
+              setSideRender={() => setIsSideRender(!isSideRender)}
               setListThread={(e) => setListThread(e)}
             />
           </div>
