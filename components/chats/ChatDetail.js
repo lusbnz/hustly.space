@@ -54,7 +54,7 @@ const ChatDetail = ({
   const [wsUrl, setWsUrl] = useState(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
 
   useEffect(() => {
-    if(!!chatId){
+    if(!!chatId && !!profileId){
       setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
     }
   }, [profileId, chatId])
