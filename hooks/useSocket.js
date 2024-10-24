@@ -11,9 +11,9 @@ const useSocket = (url, token) => {
       setResponse(JSON.parse(event.data));
     };
 
-    return () => {
-      socketRef.current.close();
-    };
+    // return () => {
+    //   socketRef.current.close();
+    // };
   }, [url, token]);
 
   const sendMessage = (message) => {
