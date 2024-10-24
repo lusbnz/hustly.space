@@ -292,9 +292,9 @@ const Chats = () => {
                             </div>
                             <div className="chat-infomation">
                               <div className="flex items-center w-100">
-                                <div className="w-[80%] chat-name flex items-center">
+                                <div className="w-100 chat-name flex items-center">
                                   <span
-                                    className="flex-grow"
+                                    className="w-100"
                                     style={{
                                       display: "-webkit-box",
                                       WebkitBoxOrient: "vertical",

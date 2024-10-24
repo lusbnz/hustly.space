@@ -63,21 +63,25 @@ const ChatDetail = ({
 
   useEffect(() => {
     if (!!response) {
-      if(response?.length > 0){
-        setMessages(response?.reverse());
-      } else {
-        const isDuplicate = messages.some((message) => message._id === response._id);
-        if(!isDuplicate){
-          setMessages([response, ...messages]);
+      if (Array.isArray(response) && response.length > 0) {
+        // Nếu response là một mảng và có nhiều tin nhắn
+        const newMessages = response.filter(
+          (newMessage) => !messages.some((message) => message._id === newMessage._id)
+        );
+        if (newMessages.length > 0) {
+          setMessages((prevMessages) => [...newMessages.reverse(), ...prevMessages]);
         }
-        else {
-          setMessages(response);
+      } else if (typeof response === "object" && !Array.isArray(response)) {
+        // Nếu response là một tin nhắn đơn lẻ
+        const isDuplicate = messages.some((message) => message._id === response._id);
+        if (!isDuplicate) {
+          setMessages((prevMessages) => [response, ...prevMessages]);
         }
       }
       setIsLoading(false);
       setIsFirstRender(false);
     }
-  }, [response]);
+  }, [response, messages]);
 
   const psOptions = p?.map((item) => {
     return {
