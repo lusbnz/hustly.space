@@ -51,26 +51,30 @@
                 cursor: pointer;
             }
             .chat-avatar{
-                width: calc((56 / 1920) * 100vw);
-                height: calc((56 / 1920) * 100vw);
+                width: calc((56 / 1920) * 100vw) !important;
+                height: calc((56 / 1920) * 100vw) !important;
                 border-radius: 50%;
                 background-color: #8b8b8b;
+                flex-shrink: 0;
             }
             .chat-infomation{
                 display: flex;
                 flex-direction: column;
                 align-items: start;
                 gap: calc((6 / 1080) * 100vh);
+                max-width: calc((75 / 100) * 100%); 
                 .chat-name{
                     color: #fff;
-                    font-size: clamp(12px, calc((19 / 1920) * 100vw), 29px);
+                    font-size: clamp(12px, calc((17 / 1920) * 100vw), 29px);
                     font-weight: 500;
                     line-height: 1.5;
+                    max-width: 100%;
                 }
                 .last-message{
-                    font-size: clamp(10px, calc((17 / 1920) * 100vw), 27px);
+                    font-size: clamp(10px, calc((16 / 1920) * 100vw), 27px);
                     font-weight: 500;
                     line-height: 1;
+                    max-width: 100%;
                 }
             }
             .chat-advance{

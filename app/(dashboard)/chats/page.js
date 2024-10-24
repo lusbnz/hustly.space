@@ -246,7 +246,7 @@ const Chats = () => {
                     })
 
                     ?.map((thread) => {
-                      if(!thread.thread_id){
+                      if (!thread.thread_id) {
                         return;
                       }
                       const sanitizedContent =
@@ -291,20 +291,36 @@ const Chats = () => {
                               )}
                             </div>
                             <div className="chat-infomation">
-                              <span className="chat-name flex items-center">
-                                {thread?.recipient?.name}
-                                {thread.is_pin && (
-                                  <div className="chat-pin">
-                                    <Image
-                                      src={PinIcon}
-                                      alt="pin"
-                                      width={12}
-                                      height={12}
-                                      className="ml-1"
-                                    />
-                                  </div>
-                                )}
-                              </span>
+                              <div className="flex items-center w-100">
+                                <div className="w-[80%] chat-name flex items-center">
+                                  <span
+                                    className="flex-grow"
+                                    style={{
+                                      display: "-webkit-box",
+                                      WebkitBoxOrient: "vertical",
+                                      WebkitLineClamp: 1,
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      whiteSpace: "pre-line",
+                                    }}
+                                  >
+                                    {thread?.recipient?.name}
+                                  </span>
+                                </div>
+                                <div className="w-[12px] chat-name flex items-center">
+                                  {thread.is_pin && (
+                                    <div className="chat-pin">
+                                      <Image
+                                        src={PinIcon}
+                                        alt="pin"
+                                        width={12}
+                                        height={12}
+                                        className="ml-[2px]"
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                               <span
                                 className="last-message"
                                 style={

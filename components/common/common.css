@@ -91,6 +91,12 @@
     font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
     font-weight: 500;
     cursor: pointer;
-    white-space: nowrap;
     width: fit-content;
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: normal;
+    word-wrap: break-word; 
+    max-width: 300px;
 }

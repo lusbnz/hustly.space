@@ -235,10 +235,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
-  competitionOptions.unshift({
-    value: null,
-    label: "Searching for a competition...",
-  });
+  // competitionOptions.unshift({
+  //   value: null,
+  //   label: "Searching for a competition...",
+  // });
 
   const universityOptions = university?.map((item) => {
     return {
@@ -519,6 +519,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("year_competition")}
                 required={true}
+                clearBtn={true}
+                handleDelete={() => {
+                  setValue("competition", undefined);
+                  setValue("year_competition", undefined);
+                }}
               />
             </div>
             {(errors.competition || errors.year_competition) && (
