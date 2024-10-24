@@ -96,7 +96,7 @@
     padding: 4px 8px;
     font-size: 14px;
     border-radius: 4px;
-    white-space: normal;
-    word-wrap: break-word; 
+    white-space: pre-line;
+    word-wrap: break-word;
     max-width: 300px;
 }
