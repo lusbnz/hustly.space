@@ -301,7 +301,7 @@ const Chats = () => {
                                       WebkitLineClamp: 1,
                                       overflow: "hidden",
                                       textOverflow: "ellipsis",
-                                      whiteSpace: "pre-line",
+                                      whiteSpace: "normal",
                                     }}
                                   >
                                     {thread?.recipient?.name}
