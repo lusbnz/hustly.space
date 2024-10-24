@@ -53,8 +53,8 @@ const ChatDetail = ({
 
   const [wsUrl, setWsUrl] = useState(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
 
-  useEffect(() => {
-    if(!!chatId && !!profileId){
+  useEffect(() => {    
+    if(!!chatId && !!profileId) {
       setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
     }
   }, [profileId, chatId])
@@ -249,7 +249,7 @@ const ChatDetail = ({
                   }
             }
           >
-            {messages?.map((message, index) => (
+            {messages.map((message, index) => (
               <>
                 {/* {index === 2 && <div className="separator-date">today</div>} */}
 

@@ -65,11 +65,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     };
   });
 
-  // domainOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
-
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const {
@@ -234,11 +229,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       label: removeVietnameseTones(item.name),
     };
   });
-
-  // competitionOptions.unshift({
-  //   value: null,
-  //   label: "Searching for a competition...",
-  // });
 
   const universityOptions = university?.map((item) => {
     return {

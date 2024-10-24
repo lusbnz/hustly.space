@@ -40,7 +40,9 @@ const Chats = () => {
   );
 
   useEffect(() => {
-    setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`);
+    if (!!profileId) {
+      setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`);
+    }
   }, [profileId]);
 
   const { response } = useSocket(wsUrl, token);

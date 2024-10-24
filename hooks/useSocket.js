@@ -5,15 +5,17 @@ const useSocket = (url, token) => {
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket(`${url}?token=${token}`);
+    if (url && !url.includes("undefined")) {
+      socketRef.current = new WebSocket(`${url}?token=${token}`);
 
-    socketRef.current.onmessage = (event) => {
-      setResponse(JSON.parse(event.data));
-    };
+      socketRef.current.onmessage = (event) => {
+        setResponse(JSON.parse(event.data));
+      };
 
-    // return () => {
-    //   socketRef.current.close();
-    // };
+      // return () => {
+      //   socketRef.current.close();
+      // };
+    }
   }, [url, token]);
 
   const sendMessage = (message) => {
