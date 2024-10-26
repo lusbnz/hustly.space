@@ -147,7 +147,7 @@ const TextEditor = ({
   return (
     <div className={`relative`}>
       <div
-        className={`w-100 bg-[#222] rounded-[8px] mt-[4px]`}
+        className={`w-100 bg-[#222] rounded-[8px] mt-[12px]`}
         style={{
           height:
             tempImage || tempFile
