@@ -500,7 +500,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 defaultValue={watch("competition")}
                 required={true}
                 clearBtn={true}
-                register={register}
+                // register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
@@ -516,18 +516,18 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 defaultValue={watch("year_competition")}
                 required={true}
                 clearBtn={true}
-                register={register}
+                // register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
                 }}
               />
             </div>
-            {(errors.competition || errors.year_competition) && (
+            {/* {(errors.competition || errors.year_competition) && (
               <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
-            )}
+            )} */}
 
             <SelectForm
               options={domainOptions}
