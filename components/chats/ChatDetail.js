@@ -62,24 +62,19 @@ const ChatDetail = ({
   const { response, sendMessage  } = useSocket(wsUrl, token);
 
   useEffect(() => {
-    if (!!response) {
-      if (Array.isArray(response) && response.length > 0) {
-        const newMessages = response.filter(
-          (newMessage) => !messages.some((message) => message._id === newMessage._id)
-        );
-        if (newMessages.length > 0) {
-          setMessages((prevMessages) => [...newMessages.reverse(), ...prevMessages]);
-        }
-      } else if (!Array.isArray(response)) {
-        const isDuplicate = messages.some((message) => message._id === response._id);
-        if (!isDuplicate) {
-          setMessages((prevMessages) => [response, ...prevMessages]);
-        }
-      }
-      setIsLoading(false);
-      setIsFirstRender(false);
+    if (!response) return; // Case 3: No response, do nothing
+  
+    if (Array.isArray(response) && response.length > 0) {
+      // Case 1: Thread with existing messages
+      setMessages(response.reverse());
+    } else if (typeof response === 'object' && !Array.isArray(response)) {
+      // Case 2: New incoming message
+      setMessages((prevMessages) => [response, ...prevMessages]);
     }
-  }, [response, messages]);
+  
+    setIsLoading(false);
+    setIsFirstRender(false);
+  }, [response]);
 
   const psOptions = p?.map((item) => {
     return {
