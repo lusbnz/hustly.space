@@ -28,12 +28,17 @@ const SelectForm = ({
   handleDeleteDomain,
   handleDelete,
   isSidebar,
+  register,
 }) => {
   const [selectedValue, setSelectedValue] = useState(
     !isSidebar
       ? options.find((option) => String(option.value) === String(defaultValue))
       : null
   );
+
+  const { ref, onChange, ...rest } = register
+    ? register(name, { required })
+    : {};
 
   const CustomSingleValue = ({ data, children, ...props }) => {
     return (
@@ -226,6 +231,8 @@ const SelectForm = ({
       ? selectedOption.map((option) => option.value)
       : selectedOption?.value || "";
 
+    onChange(value);
+
     handleChangeFilter(name, value);
   };
 
@@ -297,6 +304,8 @@ const SelectForm = ({
             : selectedValue
         }
         onChange={handleChange}
+        ref={ref}
+        {...rest}
       />
     </div>
   );

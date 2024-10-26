@@ -140,7 +140,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   };
 
   const handleUpdateSetting = (data) => {
-    const ageValue = Number(data.age);
+    const ageValue = Number(data.age) || 18;
 
     if (isNaN(ageValue) || ageValue < 18) {
       setError("age", {
@@ -283,7 +283,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     setValue("domain_2", null);
     setValue("sub_domain_2", null);
     setNumberDomain(1);
-  };  
+  };
 
   return (
     <>
@@ -422,6 +422,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("gender")}
                 required={true}
+                register={register}
               />
             </div>
             {errors.age ||
@@ -440,6 +441,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("city")}
                 required={true}
+                register={register}
               />
               <SelectForm
                 options={dsOptions}
@@ -450,6 +452,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("district")}
                 required={true}
+                register={register}
               />
             </div>
             {(errors.city || errors.district) && (
@@ -467,6 +470,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("university")}
                 required={true}
+                register={register}
               />
               <SelectForm
                 options={memberOptions}
@@ -477,6 +481,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 handleChangeFilter={handleChangeFilter}
                 defaultValue={watch("team_member_count")}
                 required={true}
+                register={register}
               />
             </div>
             {(errors.university || errors.team_member_count) && (
@@ -495,6 +500,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 defaultValue={watch("competition")}
                 required={true}
                 clearBtn={true}
+                register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
@@ -510,6 +516,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 defaultValue={watch("year_competition")}
                 required={true}
                 clearBtn={true}
+                register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
@@ -536,6 +543,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               handleChangeFilter={handleChangeFilter}
               defaultValue={watch("domain_1")}
               required={true}
+              register={register}
             />
             {watch("domain_1") && (
               <div
@@ -612,6 +620,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   required={true}
                   clearBtn={true}
                   handleDeleteDomain={handleDeleteDomain}
+                  register={register}
                 />
                 {watch("domain_2") && (
                   <div
@@ -683,6 +692,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               defaultValue={watch("skill_set")}
               required={true}
               isMulti={true}
+              register={register}
             />
             {errors.skill_set && (
               <div className="text-[#ff0000] text-[12px] mb-2">
@@ -800,7 +810,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             )}
 
             <div className="more mt-[12px]">
-              <label>Bio Image ({watch('bio_image')?.length}/3)</label>
+              <label>Bio Image ({watch("bio_image")?.length}/3)</label>
               {isLoadingBioImage ? (
                 <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
                   <BeatLoader color="#fff" size={10} />
