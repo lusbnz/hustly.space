@@ -90,10 +90,6 @@ const ChatDetail = ({
     setIsFirstRender(false);
   }, [response]);
 
-  useEffect(() => {
-    console.log('messages', messages);
-  }, [messages])
-
   const psOptions = p?.map((item) => {
     return {
       value: item.code,
