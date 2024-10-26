@@ -64,15 +64,13 @@ const ChatDetail = ({
   useEffect(() => {
     if (!!response) {
       if (Array.isArray(response) && response.length > 0) {
-        // Nếu response là một mảng và có nhiều tin nhắn
         const newMessages = response.filter(
           (newMessage) => !messages.some((message) => message._id === newMessage._id)
         );
         if (newMessages.length > 0) {
           setMessages((prevMessages) => [...newMessages.reverse(), ...prevMessages]);
         }
-      } else if (typeof response === "object" && !Array.isArray(response)) {
-        // Nếu response là một tin nhắn đơn lẻ
+      } else if (!Array.isArray(response)) {
         const isDuplicate = messages.some((message) => message._id === response._id);
         if (!isDuplicate) {
           setMessages((prevMessages) => [response, ...prevMessages]);
