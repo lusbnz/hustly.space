@@ -3,7 +3,7 @@ import "./common.css";
 
 const Badge = ({ backgroundColor, color, name }) => {
   return (
-    <span
+    <div
       className={`badge`}
       style={{
         backgroundColor: backgroundColor || "#E2E2E2",
@@ -11,7 +11,7 @@ const Badge = ({ backgroundColor, color, name }) => {
       }}
     >
       {name}
-    </span>
+    </div>
   );
 };
 

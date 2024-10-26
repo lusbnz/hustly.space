@@ -269,28 +269,24 @@ const News = () => {
                       <div className="tags">
                         {[
                           ...new Set(
-                            item.domain?.map((domainItem) =>
-                              domainItem.parent_domain !== null
-                                ? domainItem.parent_domain
-                                : domainItem.id
+                            item.domain?.map(
+                              (domainItem) =>
+                                domainItem.parent_domain ?? domainItem.id
                             )
                           ),
                         ].map((uniqueId) => {
-                          const sd = domain?.find(
+                          const mainDomain = domain?.find(
                             (e) => e.id === uniqueId
-                          )?.name;
-                          const colorItem = item.domain?.find(
-                            (e) =>
-                              e.id === uniqueId || e.parent_domain === uniqueId
                           );
+
+                          const color = mainDomain?.color;
+                          const sd = mainDomain?.name;
+
                           return (
                             <Badge
                               key={uniqueId}
-                              backgroundColor={lightenColor(
-                                colorItem?.color,
-                                0.5
-                              )}
-                              color={darkenColor(colorItem?.color, 0.3)}
+                              backgroundColor={lightenColor(color, 0.5)}
+                              color={darkenColor(color, 0.3)}
                               name={sd}
                             />
                           );

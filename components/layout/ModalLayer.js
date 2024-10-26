@@ -400,7 +400,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             </div>
             {errors.color && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -427,7 +427,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             </div>
             {errors.age ||
               (errors.gender && (
-                <div className="text-[#ff0000] text-[12px] mb-2">
+                <div className="text-[#ff0000] text-[12px] mb-3">
                   {"This field is required"}
                 </div>
               ))}
@@ -456,7 +456,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               />
             </div>
             {(errors.city || errors.district) && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -485,7 +485,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               />
             </div>
             {(errors.university || errors.team_member_count) && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -524,7 +524,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               />
             </div>
             {(errors.competition || errors.year_competition) && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -675,7 +675,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             )}
 
             {errors.domain_1 && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -695,7 +695,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               register={register}
             />
             {errors.skill_set && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -744,7 +744,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               required={true}
             />
             {errors.bio && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
@@ -805,7 +805,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder="https://"
                 onChange={(e) => {
                   setValue(`link_${openSocial}`, e.target.value);
-                }}
+                }}  
               ></input>
             )}
 
@@ -882,7 +882,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               )}
             </div>
             {errors.bio_image && (
-              <div className="text-[#ff0000] text-[12px] mb-2">
+              <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
               </div>
             )}
