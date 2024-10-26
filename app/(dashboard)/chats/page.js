@@ -43,7 +43,7 @@ const Chats = () => {
     if (!!profileId) {
       setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`);
     }
-  }, [profileId]);
+  }, [isFirstRender, isSideRender, profileId]);
 
   const { response } = useSocket(wsUrl, token);
 
@@ -81,15 +81,7 @@ const Chats = () => {
   }, [token]);
 
   useEffect(() => {
-    // const searchParams = new URLSearchParams(window.location.search);
-    // const chatId = searchParams.get("chatId");
-    // if (chatId) {
-    //   setIsActiveChat(chatId);
-    //   searchParams.delete("chatId");
-    //   const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-    //   // Use the history API to update the URL
-    //   window.history.replaceState(null, "", newUrl);
-    // }
+    setIsSideRender(false);
   }, []);
 
   useEffect(() => {
