@@ -36,9 +36,9 @@ const SelectForm = ({
       : null
   );
 
-  const { ref, onChange, ...rest } = register
-    ? register(name, { required })
-    : {};
+  const { ref, onChange = () => {}, ...rest } = register
+  ? register(name, { required })
+  : {};
 
   const CustomSingleValue = ({ data, children, ...props }) => {
     return (
@@ -231,9 +231,10 @@ const SelectForm = ({
       ? selectedOption.map((option) => option.value)
       : selectedOption?.value || "";
 
-    onChange(value);
-
     handleChangeFilter(name, value);
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   return (
