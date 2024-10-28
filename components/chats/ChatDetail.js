@@ -68,23 +68,25 @@ const ChatDetail = ({
   useEffect(() => {
     if (!response) return; // Case 3: No response, do nothing
   
-    if (Array.isArray(response) && response.length > 0) {
-      // Case 1: Thread with existing messages
-      const uniqueMessages = response.filter(
-        (newMessage) => !isDuplicateMessage(newMessage, messages)
-      );
-      if (uniqueMessages.length > 0) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          ...uniqueMessages.reverse(),
-        ]);
-      }
-    } else if (typeof response === 'object' && !Array.isArray(response)) {
-      // Case 2: New incoming message
-      if (!isDuplicateMessage(response, messages)) {
-        setMessages((prevMessages) => [response, ...prevMessages]);
-      }
-    }
+    // if (Array.isArray(response) && response.length > 0) {
+    //   // Case 1: Thread with existing messages
+    //   const uniqueMessages = response.filter(
+    //     (newMessage) => !isDuplicateMessage(newMessage, messages)
+    //   );
+    //   if (uniqueMessages.length > 0) {
+    //     setMessages((prevMessages) => [
+    //       ...uniqueMessages.reverse(),
+    //       ...prevMessages,
+    //     ]);
+    //   }
+    // } else if (typeof response === 'object' && !Array.isArray(response)) {
+    //   // Case 2: New incoming message
+    //   if (!isDuplicateMessage(response, messages)) {
+    //     setMessages((prevMessages) => [response, ...prevMessages]);
+    //   }
+    // }
+
+    setMessages(response?.reverse());
   
     setIsLoading(false);
     setIsFirstRender(false);
