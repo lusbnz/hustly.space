@@ -35,7 +35,7 @@ const ChatDetail = ({
   lastSender,
   setIsModalOpen,
   setSideRender,
-  setListThread
+  setListThread,
 }) => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   // const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -51,15 +51,19 @@ const ChatDetail = ({
   const profileId = userInfo?.id;
   const token = getAuthToken();
 
-  const [wsUrl, setWsUrl] = useState(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
+  const [wsUrl, setWsUrl] = useState(
+    `wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`
+  );
 
-  useEffect(() => {    
-    if(!!chatId && !!profileId) {
-      setWsUrl(`wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`);
+  useEffect(() => {
+    if (!!chatId && !!profileId) {
+      setWsUrl(
+        `wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`
+      );
     }
-  }, [profileId, chatId])
+  }, [profileId, chatId]);
 
-  const { response, sendMessage  } = useSocket(wsUrl, token);
+  const { response, sendMessage } = useSocket(wsUrl, token);
 
   const isDuplicateMessage = (newMessage, messages) => {
     return messages.some((message) => message._id === newMessage._id);
@@ -67,7 +71,7 @@ const ChatDetail = ({
 
   useEffect(() => {
     if (!response) return; // Case 3: No response, do nothing
-  
+
     // if (Array.isArray(response) && response.length > 0) {
     //   // Case 1: Thread with existing messages
     //   const uniqueMessages = response.filter(
@@ -87,7 +91,7 @@ const ChatDetail = ({
     // }
 
     setMessages(response?.reverse());
-  
+
     setIsLoading(false);
     setIsFirstRender(false);
   }, [response]);
@@ -115,7 +119,7 @@ const ChatDetail = ({
 
   const handleSend = (content, image) => {
     setIsLoadingMessage(true);
-    if ((!content || content === '&nbsp;' ) && !image) {
+    if ((!content || content === "&nbsp;") && !image) {
       setIsLoadingMessage(false);
       return;
     }
@@ -123,13 +127,13 @@ const ChatDetail = ({
       content: content,
     };
 
-    if(image){
+    if (image) {
       data.media = [image];
-    } else{
+    } else {
       data.media = [];
     }
 
-    sendMessage(data)
+    sendMessage(data);
     setIsLoadingMessage(false);
   };
 
@@ -140,7 +144,9 @@ const ChatDetail = ({
     updateThread(userInfo?.id, chatId, data)
       .then((res) => {
         setListThread((prev) => {
-          const index = prev.findIndex((item) => item.thread_id === res.thread_id);
+          const index = prev.findIndex(
+            (item) => item.thread_id === res.thread_id
+          );
 
           if (index !== -1) {
             const newList = [...prev];
@@ -149,7 +155,7 @@ const ChatDetail = ({
           } else {
             return [res, ...prev];
           }
-        })
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -176,7 +182,9 @@ const ChatDetail = ({
     updateThread(userInfo?.id, chatId, data)
       .then((res) => {
         setListThread((prev) => {
-          const index = prev.findIndex((item) => item.thread_id === res.thread_id);
+          const index = prev.findIndex(
+            (item) => item.thread_id === res.thread_id
+          );
 
           if (index !== -1) {
             const newList = [...prev];
@@ -192,7 +200,7 @@ const ChatDetail = ({
       })
       .finally(() => {
         setIsActiveTab("all");
-        setIsMatch(true)
+        setIsMatch(true);
         // setChatId(null);
         // setIsModalOpen(false);
       });
@@ -263,7 +271,7 @@ const ChatDetail = ({
                 {/* {index === 2 && <div className="separator-date">today</div>} */}
 
                 <div
-                  key={message._id}
+                  key={`${message._id}-${index}`}
                   className={`message ${checkIsMe(message) && "own"}`}
                   ref={contentRef}
                 >
@@ -362,7 +370,8 @@ const ChatDetail = ({
               isLoading={isLoadingMessage}
               setIsLoading={(e) => setIsLoadingMessage(e)}
             />
-          ) : messages?.length === 1 && messages[0]?.sender !== recipientInfo?.id ? (
+          ) : messages?.length === 1 &&
+            messages[0]?.sender !== recipientInfo?.id ? (
             <></>
           ) : (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
