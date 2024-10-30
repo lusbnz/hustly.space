@@ -107,8 +107,8 @@ const Chats = () => {
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
-    setIsActiveChat(null);
-    setIsModalOpen(false);
+    // setIsActiveChat(null);
+    // setIsModalOpen(false);
     if (tab === "all") {
       router.replace(`/chats`, undefined, { shallow: true });
     } else {
