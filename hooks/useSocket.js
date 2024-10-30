@@ -20,7 +20,10 @@ const useSocket = (url, token) => {
 
   const sendMessage = (message) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify(message));
+      const messageStr = JSON.stringify(message);
+      console.log("Sending message:", messageStr);
+      socketRef.current.send(messageStr);
+  
     }
   };
 

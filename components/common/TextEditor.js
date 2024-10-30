@@ -30,7 +30,9 @@ const TextEditor = ({
   const [fileName, setFileName] = useState(null);
 
   const onSend = () => {
-    if (isImage || fileId || editorData.trim()) {
+    const cleanedData = editorData.replace(/<[^>]*>/g, "").trim();
+    if (isImage || fileId || cleanedData) {
+      console.log('cleanedData', cleanedData);
       handleSend(editorData, isImage ? imageId : fileId);
       setIsImage(false);
       setEditorData("");
@@ -49,7 +51,7 @@ const TextEditor = ({
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       if (e.shiftKey) {
-        document.execCommand("insertHTML", false, "<br><br>");
+        setEditorData((prev) => `${prev}<br><br>`);
         e.preventDefault();
       } else {
         e.preventDefault();
