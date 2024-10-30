@@ -18,6 +18,7 @@ import { removeVietnameseTones } from "@/utils/utils";
 import AttachmentIcon from "@/public/icons/attachment.svg";
 import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
+import { debounce } from "lodash";
 
 const ChatDetail = ({
   chatId,
@@ -65,31 +66,8 @@ const ChatDetail = ({
 
   const { response, sendMessage } = useSocket(wsUrl, token);
 
-  const isDuplicateMessage = (newMessage, messages) => {
-    return messages.some((message) => message._id === newMessage._id);
-  };
-
   useEffect(() => {
-    if (!response) return; // Case 3: No response, do nothing
-
-    // if (Array.isArray(response) && response.length > 0) {
-    //   // Case 1: Thread with existing messages
-    //   const uniqueMessages = response.filter(
-    //     (newMessage) => !isDuplicateMessage(newMessage, messages)
-    //   );
-    //   if (uniqueMessages.length > 0) {
-    //     setMessages((prevMessages) => [
-    //       ...uniqueMessages.reverse(),
-    //       ...prevMessages,
-    //     ]);
-    //   }
-    // } else if (typeof response === 'object' && !Array.isArray(response)) {
-    //   // Case 2: New incoming message
-    //   if (!isDuplicateMessage(response, messages)) {
-    //     setMessages((prevMessages) => [response, ...prevMessages]);
-    //   }
-    // }
-
+    if (!response) return; 
     setMessages(response?.reverse());
 
     setIsLoading(false);
@@ -118,24 +96,19 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
+    debouncedHandleSend(content, image);
+  };
+
+  const debouncedHandleSend = debounce((content, image) => {
     setIsLoadingMessage(true);
     if ((!content || content === "&nbsp;") && !image) {
       setIsLoadingMessage(false);
       return;
     }
-    const data = {
-      content: content,
-    };
-
-    if (image) {
-      data.media = [image];
-    } else {
-      data.media = [];
-    }
-
+    const data = { content, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
-  };
+  }, 300);
 
   const handlePin = () => {
     const data = {

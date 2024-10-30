@@ -31,19 +31,18 @@ const TextEditor = ({
 
   const onSend = () => {
     if (isImage || fileId || editorData.trim()) {
-      // Ensure the editor data is not just whitespace
       handleSend(editorData, isImage ? imageId : fileId);
       setIsImage(false);
       setEditorData("");
       if (editorRef.current) {
-        editorRef.current.innerHTML = ""; // Clear editor
+        editorRef.current.innerHTML = ""; 
         setTempImage(null);
         setTempFile(null);
         setImageId(null);
         setFileId(null)
         setFileName(null);
       }
-      editorRef.current.focus(); // Refocus the editor after sending
+      editorRef.current.focus();
     }
   };
 
@@ -70,13 +69,12 @@ const TextEditor = ({
         const res = await uploadFile(data);
         const fileUrl = res.file;
 
-        // Determine if the uploaded file is an image
         if (file.type.startsWith("image/")) {
           setTempImage(fileUrl);
           setIsImage(true);
           setImageId(res.id);
         } else {
-          setTempFile(fileUrl); // Store non-image file URL
+          setTempFile(fileUrl);
           setIsImage(false);
           setFileName(res.name);
           setFileId(res.id);
@@ -89,7 +87,7 @@ const TextEditor = ({
         setIsImage(false);
         setTempImage(null);
         setFileName(null);
-        setTempFile(null); // Reset on error
+        setTempFile(null);
         setIsLoading(false);
 
       }
@@ -103,14 +101,11 @@ const TextEditor = ({
       const editor = editorRef.current;
       editor.focus();
 
-      // Tạo một node chứa emoji và chèn vào cuối nội dung
       const emojiNode = document.createElement("span");
-      emojiNode.innerHTML = emojiHtml; // Sử dụng innerHTML để chèn emoji đúng cách
+      emojiNode.innerHTML = emojiHtml;
 
-      // Chèn emoji vào cuối nội dung
       editor.appendChild(emojiNode);
 
-      // Di chuyển con trỏ đến cuối editor
       const range = document.createRange();
       range.setStartAfter(emojiNode);
       range.collapse(true);
@@ -119,7 +114,6 @@ const TextEditor = ({
       selection.removeAllRanges();
       selection.addRange(range);
 
-      // Cập nhật dữ liệu editor
       setEditorData(editor.innerHTML);
     }
 
@@ -128,19 +122,19 @@ const TextEditor = ({
 
   const handleRemoveImage = () => {
     setTempImage(null);
-    setTempFile(null); // Reset non-image file
+    setTempFile(null);
     setIsImage(false);
     setFileName(null);
     setImageId(null);
     setFileId(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset the file input
+      fileInputRef.current.value = "";
     }
   };
 
   useEffect(() => {
     if (isDetail) {
-      setHaveImage(isImage || Boolean(tempFile)); // Check if there's an image or non-image file
+      setHaveImage(isImage || Boolean(tempFile));
     }
   }, [tempImage, tempFile]);
 
@@ -182,7 +176,6 @@ const TextEditor = ({
                 height={16}
               />
               <span className="text-white text-[12px] ml-2">{fileName?.length > 15 ? fileName.slice(0, 15) + "..." : fileName}</span>{" "}
-              {/* Show file name */}
             </div>
             <div className="cursor-pointer" onClick={handleRemoveImage}>
               <Image src={TrashIcon} alt="Delete" width={20} height={20} />
