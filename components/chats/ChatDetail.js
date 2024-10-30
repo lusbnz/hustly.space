@@ -96,7 +96,6 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
-    console.log('content', content);
     debouncedHandleSend(content, image);
   };
 
@@ -107,10 +106,9 @@ const ChatDetail = ({
       return;
     }
     const data = { content, media: image ? [image] : [] };
-    console.log('data', data);
     sendMessage(data);
     setIsLoadingMessage(false);
-  }, 500);
+  }, 100);
 
   // const handleSend = (content, image) => {
   //   setIsLoadingMessage(true);

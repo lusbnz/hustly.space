@@ -34,7 +34,6 @@ const TextEditor = ({
     setIsSend(true);
     const cleanedData = editorData.replace(/<[^>]*>/g, "").trim();
     if (isImage || fileId || cleanedData) {
-      console.log('cleanedData', cleanedData);
       handleSend(editorData, isImage ? imageId : fileId);
       setEditorData("");
       if (editorRef.current) {
