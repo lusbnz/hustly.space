@@ -2,7 +2,7 @@
 
 import { uploadFile } from "@/api/file";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import UploadIcon from "@/public/icons/image-icon.svg";
 import SendIcon from "@/public/icons/send-icon.svg";
 import EmojiPicker from "emoji-picker-react";
@@ -28,13 +28,14 @@ const TextEditor = ({
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isImage, setIsImage] = useState(false);
   const [fileName, setFileName] = useState(null);
+  const [isSend, setIsSend] = useState(false);
 
   const onSend = () => {
+    setIsSend(true);
     const cleanedData = editorData.replace(/<[^>]*>/g, "").trim();
     if (isImage || fileId || cleanedData) {
       console.log('cleanedData', cleanedData);
       handleSend(editorData, isImage ? imageId : fileId);
-      setIsImage(false);
       setEditorData("");
       if (editorRef.current) {
         editorRef.current.innerHTML = ""; 
@@ -46,6 +47,7 @@ const TextEditor = ({
       }
       editorRef.current.focus();
     }
+    setIsSend(false)
   };
 
   const handleKeyDown = (e) => {
@@ -55,7 +57,9 @@ const TextEditor = ({
         e.preventDefault();
       } else {
         e.preventDefault();
-        onSend();
+        if(!isSend){
+          onSend();
+        }
       }
     }
   };

@@ -110,7 +110,7 @@ const ChatDetail = ({
     console.log('data', data);
     sendMessage(data);
     setIsLoadingMessage(false);
-  }, 700);
+  }, 500);
 
   // const handleSend = (content, image) => {
   //   setIsLoadingMessage(true);
