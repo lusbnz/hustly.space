@@ -95,33 +95,33 @@ const ChatDetail = ({
     return message.sender !== recipientInfo?.id;
   };
 
-  // const handleSend = (content, image) => {
-  //   console.log('content', content);
-  //   debouncedHandleSend(content, image);
-  // };
-
-  // const debouncedHandleSend = debounce((content, image) => {
-  //   setIsLoadingMessage(true);
-  //   if ((!content || content === "&nbsp;") && !image) {
-  //     setIsLoadingMessage(false);
-  //     return;
-  //   }
-  //   const data = { content, media: image ? [image] : [] };
-  //   console.log('data', data);
-  //   sendMessage(data);
-  //   setIsLoadingMessage(false);
-  // }, 300);
-
   const handleSend = (content, image) => {
+    console.log('content', content);
+    debouncedHandleSend(content, image);
+  };
+
+  const debouncedHandleSend = debounce((content, image) => {
     setIsLoadingMessage(true);
     if ((!content || content === "&nbsp;") && !image) {
       setIsLoadingMessage(false);
       return;
     }
     const data = { content, media: image ? [image] : [] };
+    console.log('data', data);
     sendMessage(data);
     setIsLoadingMessage(false);
-  };
+  }, 200);
+
+  // const handleSend = (content, image) => {
+  //   setIsLoadingMessage(true);
+  //   if ((!content || content === "&nbsp;") && !image) {
+  //     setIsLoadingMessage(false);
+  //     return;
+  //   }
+  //   const data = { content, media: image ? [image] : [] };
+  //   sendMessage(data);
+  //   setIsLoadingMessage(false);
+  // };
 
   const handlePin = () => {
     const data = {
