@@ -83,7 +83,7 @@
             display: flex;
             flex-direction: column;
             gap: calc((14 / 1080) * 100vh);
-            max-width: 80%;
+            max-width: 800px;
             .message-infomation{
                 color: #B9B9B9;
                 font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
