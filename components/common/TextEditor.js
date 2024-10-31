@@ -32,7 +32,7 @@ const TextEditor = ({
 
   const onSend = () => {
     setIsSend(true);
-    const cleanedData = editorData.replace(/<[^>]*>/g, "").trim();
+    const cleanedData = editorData.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, "").trim();
     if (isImage || fileId || cleanedData) {
       setTimeout(() => {
         console.log('02', editorData);
