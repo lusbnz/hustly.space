@@ -108,7 +108,7 @@ const ChatDetail = ({
     const data = { content, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
-  }, 100);
+  });
 
   // const handleSend = (content, image) => {
   //   setIsLoadingMessage(true);
