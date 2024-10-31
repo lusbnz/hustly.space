@@ -96,6 +96,7 @@ const ChatDetail = ({
   };
 
   const handleSend = (content, image) => {
+    console.log('03', content);
     debouncedHandleSend(content, image);
   };
 
@@ -105,21 +106,11 @@ const ChatDetail = ({
       setIsLoadingMessage(false);
       return;
     }
+    console.log('04', content);
     const data = { content, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
-  }, 500);
-
-  // const handleSend = (content, image) => {
-  //   setIsLoadingMessage(true);
-  //   if ((!content || content === "&nbsp;") && !image) {
-  //     setIsLoadingMessage(false);
-  //     return;
-  //   }
-  //   const data = { content, media: image ? [image] : [] };
-  //   sendMessage(data);
-  //   setIsLoadingMessage(false);
-  // };
+  }, 100);
 
   const handlePin = () => {
     const data = {

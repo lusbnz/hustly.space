@@ -34,17 +34,20 @@ const TextEditor = ({
     setIsSend(true);
     const cleanedData = editorData.replace(/<[^>]*>/g, "").trim();
     if (isImage || fileId || cleanedData) {
-      handleSend(editorData, isImage ? imageId : fileId);
-      setEditorData("");
-      if (editorRef.current) {
-        editorRef.current.innerHTML = ""; 
-        setTempImage(null);
-        setTempFile(null);
-        setImageId(null);
-        setFileId(null)
-        setFileName(null);
-      }
-      editorRef.current.focus();
+      setTimeout(() => {
+        console.log('02', editorData);
+        handleSend(editorData, isImage ? imageId : fileId);
+        if (editorRef.current) {
+          editorRef.current.innerHTML = ""; 
+          setTempImage(null);
+          setTempFile(null);
+          setImageId(null);
+          setFileId(null);
+          setFileName(null);
+          setEditorData("");
+        }
+        editorRef.current.focus();
+      }, 0);
     }
     setIsSend(false)
   };
@@ -57,11 +60,16 @@ const TextEditor = ({
       } else {
         e.preventDefault();
         if(!isSend){
+          console.log('01', editorData);
           onSend();
         }
       }
     }
   };
+
+  useEffect(() => {
+    console.log('00', editorData);
+  }, [editorData])
 
   const handleFileChange = async (e) => {
     setIsLoading(true);
