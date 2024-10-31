@@ -95,18 +95,13 @@ const ChatDetail = ({
     return message.sender !== recipientInfo?.id;
   };
 
-  const handleSend = (content, image) => {
-    console.log('03', content);
-    debouncedHandleSend(content, image);
-  };
-
-  const debouncedHandleSend = debounce((content, image) => {
+  const handleSend = debounce((content, image) => {
     setIsLoadingMessage(true);
     if ((!content || content === "&nbsp;") && !image) {
       setIsLoadingMessage(false);
       return;
     }
-    console.log('04', content);
+    console.log('03', content);
     const data = { content, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
