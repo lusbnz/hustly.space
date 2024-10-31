@@ -67,6 +67,12 @@ const TextEditor = ({
     }
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault(); 
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    document.execCommand("insertText", false, text);
+  };
+
   useEffect(() => {
     console.log('00', editorData);
   }, [editorData])
@@ -206,6 +212,7 @@ const TextEditor = ({
           placeholder="Your message..."
           onInput={() => setEditorData(editorRef.current.innerHTML)}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
         />
 
         <div className="flex items-center justify-between gap-[6px] w-100 mt-[10px] px-[20px]">
