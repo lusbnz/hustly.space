@@ -35,10 +35,10 @@ const TextEditor = ({
     const cleanedData = editorData.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, "").trim();
     if (isImage || fileId || cleanedData) {
       setTimeout(() => {
-        console.log('02', editorData);
+        console.log("02", editorData);
         handleSend(editorData, isImage ? imageId : fileId);
         if (editorRef.current) {
-          editorRef.current.innerHTML = ""; 
+          editorRef.current.innerHTML = "";
           setTempImage(null);
           setTempFile(null);
           setImageId(null);
@@ -49,18 +49,18 @@ const TextEditor = ({
         editorRef.current.focus();
       }, 0);
     }
-    setIsSend(false)
+    setIsSend(false);
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       if (e.shiftKey) {
-        setEditorData((prev) => `${prev}<br><br>`);
+        document.execCommand("insertHTML", false, "<br><br>");
         e.preventDefault();
       } else {
         e.preventDefault();
-        if(!isSend){
-          console.log('01', editorData);
+        if (!isSend) {
+          console.log("01", editorData);
           onSend();
         }
       }
@@ -68,14 +68,14 @@ const TextEditor = ({
   };
 
   const handlePaste = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     const text = (e.clipboardData || window.clipboardData).getData("text");
     document.execCommand("insertText", false, text);
   };
 
   useEffect(() => {
-    console.log('00', editorData);
-  }, [editorData])
+    console.log("00", editorData);
+  }, [editorData]);
 
   const handleFileChange = async (e) => {
     setIsLoading(true);
@@ -108,7 +108,6 @@ const TextEditor = ({
         setFileName(null);
         setTempFile(null);
         setIsLoading(false);
-
       }
     }
   };
@@ -194,7 +193,11 @@ const TextEditor = ({
                 width={16}
                 height={16}
               />
-              <span className="text-white text-[12px] ml-2">{fileName?.length > 15 ? fileName.slice(0, 15) + "..." : fileName}</span>{" "}
+              <span className="text-white text-[12px] ml-2">
+                {fileName?.length > 15
+                  ? fileName.slice(0, 15) + "..."
+                  : fileName}
+              </span>{" "}
             </div>
             <div className="cursor-pointer" onClick={handleRemoveImage}>
               <Image src={TrashIcon} alt="Delete" width={20} height={20} />
