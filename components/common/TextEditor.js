@@ -2,7 +2,7 @@
 
 import { uploadFile } from "@/api/file";
 import Image from "next/image";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UploadIcon from "@/public/icons/image-icon.svg";
 import SendIcon from "@/public/icons/send-icon.svg";
 import EmojiPicker from "emoji-picker-react";
