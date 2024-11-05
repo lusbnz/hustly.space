@@ -32,11 +32,16 @@ const TextEditor = ({
 
   const onSend = () => {
     setIsSend(true);
-    const cleanedData = editorData.replace(/^(<br\s*\/?>|\s)*|(<br\s*\/?>|\s)*$/g, "").trim();
-    if (isImage || fileId || cleanedData) {
+    const cleanedData = editorData
+      .replace(/^(<br\s*\/?>\s*)+|(<br\s*\/?>\s*)+$/g, "")
+      .trim();
+    
+    const hasNonBreakingSpaces = /(&nbsp;)+/g.test(cleanedData);
+
+    if (isImage || fileId || cleanedData && !hasNonBreakingSpaces) {
       setTimeout(() => {
-        console.log("02", editorData);
-        handleSend(editorData, isImage ? imageId : fileId);
+        console.log("02", cleanedData);
+        handleSend(cleanedData, isImage ? imageId : fileId);
         if (editorRef.current) {
           editorRef.current.innerHTML = "";
           setTempImage(null);
