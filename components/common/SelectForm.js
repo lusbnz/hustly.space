@@ -232,7 +232,7 @@ const SelectForm = ({
       : selectedOption?.value || "";
 
     handleChangeFilter(name, value);
-    if (onChange) {
+    if (!!onChange) {
       onChange(value);
     }
   };

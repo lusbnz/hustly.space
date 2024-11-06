@@ -145,7 +145,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     if (isNaN(ageValue) || ageValue < 18 || ageValue > 100) {
       setError("age", {
         type: "manual",
-        message: "Age must be a number and greater than or equal to 18 and less than or equal to 100.",
+        message:
+          "Age must be a number and greater than or equal to 18 and less than or equal to 100.",
       });
       return;
     }
@@ -276,6 +277,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   ];
 
   const handleChangeFilter = (name, value) => {
+    if (name === "domain_1") {
+      setValue("sub_domain_1", null);
+    }
+    if(name === "domain_2") {
+      setValue("sub_domain_2", null);
+    }
     setValue(name, value);
   };
 
@@ -529,7 +536,13 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             )} */}
 
             <SelectForm
-              options={domainOptions}
+              options={
+                watch("domain_2")
+                  ? domainOptions.filter(
+                      (item) => item.value !== watch("domain_2")
+                    )
+                  : domainOptions
+              }
               label={`Domain (1/2)`}
               placeholder={"Domain"}
               noIcon={true}
@@ -604,7 +617,9 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
             {numberDomain === 2 && (
               <>
                 <SelectForm
-                  options={domainOptions}
+                  options={domainOptions.filter(
+                    (item) => item.value !== watch("domain_1")
+                  )}
                   label={`Domain (2/2)`}
                   placeholder={"Domain"}
                   noIcon={true}
