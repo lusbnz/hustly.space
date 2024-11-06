@@ -15,6 +15,12 @@ const InputForm = ({
   isNumber,
   isAuth
 }) => {
+  const handleKeyDown = (e) => {
+    if (isNumber && ["e", "E", "+", "-"].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className="input-form">
       <label>{title}</label>
@@ -32,6 +38,8 @@ const InputForm = ({
           {...(register && register(name, { required }))}
           defaultValue={defaultValue}
           onChange={onChange}
+          min={isNumber ? 18 : undefined}
+          onKeyDown={handleKeyDown}
         />
       )}
     </div>

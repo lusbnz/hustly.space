@@ -140,12 +140,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   };
 
   const handleUpdateSetting = (data) => {
-    const ageValue = Number(data.age) || 18;
+    const ageValue = Number(data.age);
 
-    if (isNaN(ageValue) || ageValue < 18) {
+    if (isNaN(ageValue) || ageValue < 18 || ageValue > 100) {
       setError("age", {
         type: "manual",
-        message: "Age must be a number and greater than or equal to 18",
+        message: "Age must be a number and greater than or equal to 18 and less than or equal to 100.",
       });
       return;
     }
@@ -425,12 +425,11 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 register={register}
               />
             </div>
-            {errors.age ||
-              (errors.gender && (
-                <div className="text-[#ff0000] text-[12px] mb-3">
-                  {"This field is required"}
-                </div>
-              ))}
+            {(errors.age || errors.gender) && (
+              <div className="text-[#ff0000] text-[12px] mb-3">
+                {errors.age?.message || "This field is required"}
+              </div>
+            )}
             <div className="form-double-item">
               <SelectForm
                 options={psOptions}
@@ -805,7 +804,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                 placeholder="https://"
                 onChange={(e) => {
                   setValue(`link_${openSocial}`, e.target.value);
-                }}  
+                }}
               ></input>
             )}
 
