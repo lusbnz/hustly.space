@@ -43,6 +43,10 @@ const Sidebar = ({
   const [ageV, setAgeV] = useState({ min: 18, max: 40 });
   const [isUnread, setIsUnread] = useState(false);
 
+  useEffect(() => {
+    console.log('isUnread', isUnread)
+  }, [isUnread])
+
   const profileId = userInfo?.id;
   const token = getAuthToken();
 
@@ -63,7 +67,7 @@ const Sidebar = ({
       if (response?.length > 0) {
         setIsUnread(response?.some((item) => item.unread_count > 0));
       } else {
-        setIsUnread(true);
+        setIsUnread(false);
       }
     }
   }, [response]);
