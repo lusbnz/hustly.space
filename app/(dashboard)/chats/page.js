@@ -14,6 +14,7 @@ import PinIcon from "@/public/icons/pin-icon.svg";
 import { useSelector } from "react-redux";
 import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
+import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const Chats = () => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
@@ -80,7 +81,9 @@ const Chats = () => {
     setHasUnreadMessages(
       listThread.some(
         (thread) =>
-          (!thread?.is_match && thread?.last_message?.sender !== userInfo?.id) || thread.unread_count > 0
+          (!thread?.is_match &&
+            thread?.last_message?.sender !== userInfo?.id) ||
+          thread.unread_count > 0
       )
     );
   }, [listThread, userInfo?.id]);
@@ -238,7 +241,7 @@ const Chats = () => {
                         return (
                           thread.unread_count > 0 ||
                           (!thread?.is_match &&
-                          thread?.last_message?.sender !== userInfo?.id)
+                            thread?.last_message?.sender !== userInfo?.id)
                         );
                       }
                       return true;
@@ -288,20 +291,21 @@ const Chats = () => {
                         >
                           <div className="flex items-center gap-[6px]">
                             <div className="chat-avatar">
-                              {thread?.recipient?.avatar?.file && (
-                                <Image
-                                  src={thread?.recipient?.avatar?.file}
-                                  alt="avatar"
-                                  width={64}
-                                  height={64}
-                                  style={{
-                                    objectFit: "cover",
-                                    height: "100%",
-                                    width: "100%",
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                              )}
+                              <Image
+                                src={
+                                  thread?.recipient?.avatar?.file ||
+                                  DefaultAvatar
+                                }
+                                alt="avatar"
+                                width={64}
+                                height={64}
+                                style={{
+                                  objectFit: "cover",
+                                  height: "100%",
+                                  width: "100%",
+                                  borderRadius: "50%",
+                                }}
+                              />
                             </div>
                             <div className="chat-infomation">
                               <div className="flex items-center w-100">

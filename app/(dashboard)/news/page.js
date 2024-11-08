@@ -14,6 +14,7 @@ import { removeVietnameseTones } from "@/utils/utils";
 import { BeatLoader } from "react-spinners";
 import { getSuggestions } from "@/api/profile";
 import InfiniteScroll from "react-infinite-scroller";
+import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const News = () => {
   const filterData = useSelector((state) => state.suggestion.filterData);
@@ -197,20 +198,18 @@ const News = () => {
                   >
                     <div className="card-header flex">
                       <div className="avatar">
-                        {item?.avatar?.file && (
-                          <Image
-                            src={item?.avatar?.file}
-                            alt="avatar"
-                            width={64}
-                            height={64}
-                            style={{
-                              objectFit: "cover",
-                              height: "100%",
-                              width: "100%",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        )}
+                        <Image
+                          src={item?.avatar?.file || DefaultAvatar}
+                          alt="avatar"
+                          width={64}
+                          height={64}
+                          style={{
+                            objectFit: "cover",
+                            height: "100%",
+                            width: "100%",
+                            borderRadius: "50%",
+                          }}
+                        />
                       </div>
                       <div className="flex flex-col info justify-center">
                         <span className="name flex items-center gap-[4px]">
@@ -300,7 +299,11 @@ const News = () => {
         </InfiniteScroll>
       </div>
       {isModalOpen !== false && (
-        <ModalDetail isOpen={isModalOpen} setIsOpen={setIsModalOpen} check={check} />
+        <ModalDetail
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          check={check}
+        />
       )}
     </>
   );

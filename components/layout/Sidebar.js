@@ -24,6 +24,7 @@ import { removeVietnameseTones } from "@/utils/utils";
 import { checkUnread } from "@/api/profile";
 import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
+import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const Sidebar = ({
   toggleOpenModalSetting,
@@ -44,8 +45,8 @@ const Sidebar = ({
   const [isUnread, setIsUnread] = useState(false);
 
   useEffect(() => {
-    console.log('isUnread', isUnread)
-  }, [isUnread])
+    console.log("isUnread", isUnread);
+  }, [isUnread]);
 
   const profileId = userInfo?.id;
   const token = getAuthToken();
@@ -64,16 +65,15 @@ const Sidebar = ({
 
   useEffect(() => {
     if (response) {
-      console.log('response', response);
-  
+      console.log("response", response);
+
       if (Array.isArray(response)) {
         if (response.length > 0) {
           setIsUnread(response.some((item) => item.unread_count > 0));
         } else {
           setIsUnread(false);
         }
-      }
-      else if (typeof response === 'object') {
+      } else if (typeof response === "object") {
         setIsUnread(response.unread_count > 0);
       }
     }
@@ -433,20 +433,16 @@ const Sidebar = ({
             </div>
             <div className="sidebar-footer pt-2 z-[1]">
               <div className="flex items-center gap-[12px]">
-                {userInfo?.avatar ? (
-                  <div className="avatar-image">
-                    <Image
-                      src={userInfo?.avatar?.file}
-                      alt="avatar"
-                      className="avatar-image"
-                      width={64}
-                      height={64}
-                      objectFit="cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="avatar"></div>
-                )}
+                <div className="avatar-image">
+                  <Image
+                    src={userInfo?.avatar?.file || DefaultAvatar}
+                    alt="avatar"
+                    className="avatar-image"
+                    width={64}
+                    height={64}
+                    objectFit="cover"
+                  />
+                </div>
                 <div className="flex flex-col info">
                   <span className="title">
                     {userInfo?.first_name?.length > 15

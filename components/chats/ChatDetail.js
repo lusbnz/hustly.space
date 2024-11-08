@@ -19,6 +19,7 @@ import AttachmentIcon from "@/public/icons/attachment.svg";
 import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
 import { debounce } from "lodash";
+import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const ChatDetail = ({
   chatId,
@@ -188,20 +189,18 @@ const ChatDetail = ({
           <div className="cd-header">
             <div className="flex items-center gap-[12px]">
               <div className="chat-avatar">
-                {recipientInfo?.avatar?.file && (
-                  <Image
-                    src={recipientInfo?.avatar?.file}
-                    alt="avatar"
-                    width={64}
-                    height={64}
-                    style={{
-                      objectFit: "cover",
-                      height: "100%",
-                      width: "100%",
-                      borderRadius: "50%",
-                    }}
-                  />
-                )}
+                <Image
+                  src={recipientInfo?.avatar?.file || DefaultAvatar}
+                  alt="avatar"
+                  width={64}
+                  height={64}
+                  style={{
+                    objectFit: "cover",
+                    height: "100%",
+                    width: "100%",
+                    borderRadius: "50%",
+                  }}
+                />
               </div>
               <div className="chat-infomation">
                 <span className="chat-name">
@@ -248,20 +247,18 @@ const ChatDetail = ({
                 >
                   {!checkIsMe(message) ? (
                     <div className="message-avatar">
-                      {recipientInfo?.avatar?.file && (
-                        <Image
-                          src={recipientInfo?.avatar?.file}
-                          alt="avatar"
-                          width={64}
-                          height={64}
-                          style={{
-                            objectFit: "cover",
-                            height: "100%",
-                            width: "100%",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      )}
+                      <Image
+                        src={recipientInfo?.avatar?.file || DefaultAvatar}
+                        alt="avatar"
+                        width={64}
+                        height={64}
+                        style={{
+                          objectFit: "cover",
+                          height: "100%",
+                          width: "100%",
+                          borderRadius: "50%",
+                        }}
+                      />
                     </div>
                   ) : (
                     <></>

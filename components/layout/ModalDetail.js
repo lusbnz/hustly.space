@@ -27,6 +27,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Badge from "../common/Badge";
 import { setIsLoadingR, setReceiveInfo } from "@/reducers/userInfoSlice";
+import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   const dispatch = useDispatch();
@@ -189,30 +190,18 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
             <>
               <div className="card-header flex">
                 <div className="avatar">
-                  {!!userInfo?.avatar?.file ? (
-                    <Image
-                      src={userInfo?.avatar?.file}
-                      alt="avatar"
-                      width={64}
-                      height={64}
-                      style={{
-                        objectFit: "cover",
-                        height: "100%",
-                        width: "100%",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: "calc((64 / 1920) * 100vw)",
-                        height: "calc((64 / 1920) * 100vw)",
-                        backgroundColor: "#B8B8B8",
-                        borderRadius: "100%",
-                        marginRight: "8px",
-                      }}
-                    ></div>
-                  )}
+                  <Image
+                    src={userInfo?.avatar?.file || DefaultAvatar}
+                    alt="avatar"
+                    width={64}
+                    height={64}
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                      width: "100%",
+                      borderRadius: "50%",
+                    }}
+                  />
                 </div>
                 <div className="flex flex-col justify-center info gap-[8px]">
                   <span className="name flex items-center gap-[4px]">
