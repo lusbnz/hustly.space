@@ -300,7 +300,7 @@ const News = () => {
         </InfiniteScroll>
       </div>
       {isModalOpen !== false && (
-        <ModalDetail isOpen={isModalOpen} check={check} />
+        <ModalDetail isOpen={isModalOpen} setIsOpen={setIsModalOpen} check={check} />
       )}
     </>
   );

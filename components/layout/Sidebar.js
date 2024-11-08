@@ -63,11 +63,18 @@ const Sidebar = ({
   const { response } = useSocket(wsUrl, token);
 
   useEffect(() => {
-    if (!!response) {
-      if (response?.length > 0) {
-        setIsUnread(response?.some((item) => item.unread_count > 0));
-      } else {
-        setIsUnread(false);
+    if (response) {
+      console.log('response', response);
+  
+      if (Array.isArray(response)) {
+        if (response.length > 0) {
+          setIsUnread(response.some((item) => item.unread_count > 0));
+        } else {
+          setIsUnread(false);
+        }
+      }
+      else if (typeof response === 'object') {
+        setIsUnread(response.unread_count > 0);
       }
     }
   }, [response]);

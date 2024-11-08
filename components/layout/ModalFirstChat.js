@@ -13,7 +13,12 @@ import BackIcon from "@/public/icons/back-icon.svg";
 import { createThread } from "@/api/thread";
 import { removeVietnameseTones } from "@/utils/utils";
 
-const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
+const ModalFirstChat = ({
+  isOpen,
+  userInfo,
+  toggleOpenModal,
+  setIsOpenDetail,
+}) => {
   const user = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +63,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
           })
           .finally(() => {
             toggleOpenModal();
+            setIsOpenDetail();
             setIsLoading(false);
           });
       })
@@ -85,7 +91,10 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
           ) : (
             <>
               <div className="card-header flex mb-4">
-                <div onClick={toggleOpenModal} className="cursor-pointer mr-2 mt-3">
+                <div
+                  onClick={toggleOpenModal}
+                  className="cursor-pointer mr-2 mt-3"
+                >
                   <Image
                     src={BackIcon}
                     alt="back-icon"
@@ -128,7 +137,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
                         width={14}
                         height={14}
                       />
-                      {userInfo?.age || '18'}
+                      {userInfo?.age || "18"}
                     </span>
                     <span className="location flex items-center gap-[4px]">
                       <Image
@@ -143,11 +152,12 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
                 </div>
               </div>
               <div>
-                <TextEditor handleSend={handleSend} 
-                isDetail={false}
-                setHaveImage={() => {}}
-                isLoading={isLoading}
-                setIsLoading={() => {}}
+                <TextEditor
+                  handleSend={handleSend}
+                  isDetail={false}
+                  setHaveImage={() => {}}
+                  isLoading={isLoading}
+                  setIsLoading={() => {}}
                 />
               </div>
             </>

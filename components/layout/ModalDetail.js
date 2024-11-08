@@ -28,7 +28,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Badge from "../common/Badge";
 import { setIsLoadingR, setReceiveInfo } from "@/reducers/userInfoSlice";
 
-const ModalDetail = ({ isOpen, check }) => {
+const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   const dispatch = useDispatch();
   const userInfomation = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
@@ -528,6 +528,7 @@ const ModalDetail = ({ isOpen, check }) => {
       {openFirstChat && (
         <ModalFirstChat
           isOpen={openFirstChat}
+          setIsOpenDetail={() => setIsOpen(false)}
           userInfo={userInfo}
           toggleOpenModal={toggleFirstChat}
         />
