@@ -6,6 +6,9 @@ import "./styles.css";
 import InstagramIcon from "@/public/icons/instagram-icon.svg";
 import FacebookIcon from "@/public/icons/facebook-icon.svg";
 import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
+import InstagramIcon2 from "@/public/icons/instagram-icon-copy.svg";
+import FacebookIcon2 from "@/public/icons/facebook-icon-copy.svg";
+import LinkedInIcon2 from "@/public/icons/linkedin-icon-copy.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
 import { usePathname, useRouter } from "next/navigation";
@@ -277,7 +280,14 @@ const ModalDetail = ({ isOpen, check }) => {
                         }
                       }}
                     >
-                      <Image src={InstagramIcon} alt="image" />
+                      <Image
+                        src={
+                          !!userInfo?.social_link?.instagram
+                            ? InstagramIcon2
+                            : InstagramIcon
+                        }
+                        alt="image"
+                      />
                     </div>
                     <div
                       className="social-icon"
@@ -292,7 +302,14 @@ const ModalDetail = ({ isOpen, check }) => {
                         }
                       }}
                     >
-                      <Image src={FacebookIcon} alt="image" />
+                      <Image
+                        src={
+                          !!userInfo?.social_link?.mail
+                            ? FacebookIcon2
+                            : FacebookIcon
+                        }
+                        alt="image"
+                      />
                     </div>
                     <div
                       className="social-icon"
@@ -307,7 +324,14 @@ const ModalDetail = ({ isOpen, check }) => {
                         }
                       }}
                     >
-                      <Image src={LinkedInIcon} alt="image" />
+                      <Image
+                        src={
+                          !!userInfo?.social_link?.linkedin
+                            ? LinkedInIcon2
+                            : LinkedInIcon
+                        }
+                        alt="image"
+                      />
                     </div>
                   </div>
                   <div className="flex w-100 gap-[6px] action-wrapper">

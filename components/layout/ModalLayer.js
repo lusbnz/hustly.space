@@ -10,6 +10,9 @@ import EditIcon from "@/public/icons/edit-icon.svg";
 import InstagramIcon from "@/public/icons/instagram-icon.svg";
 import FacebookIcon from "@/public/icons/facebook-icon.svg";
 import LinkedInIcon from "@/public/icons/linkedin-icon.svg";
+import InstagramIcon2 from "@/public/icons/instagram-icon-copy.svg";
+import FacebookIcon2 from "@/public/icons/facebook-icon-copy.svg";
+import LinkedInIcon2 from "@/public/icons/linkedin-icon-copy.svg";
 import TrashIcon from "@/public/icons/trash-icon.svg";
 import Image from "next/image";
 import { uploadFile } from "@/api/file";
@@ -782,7 +785,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={InstagramIcon} alt="image" />
+                  <Image src={!!watch('link_1') ? InstagramIcon2 : InstagramIcon} alt="image" />
                 </div>
                 <div
                   className="social-icon"
@@ -794,7 +797,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={FacebookIcon} alt="image" />
+                  <Image src={!!watch('link_2') ? FacebookIcon2 : FacebookIcon} alt="image" />
                 </div>
                 <div
                   className="social-icon"
@@ -806,7 +809,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={LinkedInIcon} alt="image" />
+                  <Image src={!!watch('link_3') ? LinkedInIcon2 : LinkedInIcon} alt="image" />
                 </div>
               </div>
             </div>

@@ -33,7 +33,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
   const uni = universityOptions.find((item) => item.id === userInfo?.city);
 
   const handleSend = (content, image) => {
-    if (content === "" && !image) {
+    if ((content === "" && !image) || isLoading) {
       return;
     }
     let threadId;
@@ -57,8 +57,8 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
             console.log(err);
           })
           .finally(() => {
-            setIsLoading(true);
             toggleOpenModal();
+            setIsLoading(false);
           });
       })
       .catch((err) => {
@@ -146,7 +146,7 @@ const ModalFirstChat = ({ isOpen, userInfo, toggleOpenModal }) => {
                 <TextEditor handleSend={handleSend} 
                 isDetail={false}
                 setHaveImage={() => {}}
-                isLoading={false}
+                isLoading={isLoading}
                 setIsLoading={() => {}}
                 />
               </div>
