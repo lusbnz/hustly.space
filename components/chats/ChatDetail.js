@@ -37,6 +37,7 @@ const ChatDetail = ({
   setIsModalOpen,
   setSideRender,
   setListThread,
+  isDeleted,
 }) => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   // const recipientInfo = JSON.parse(localStorage.getItem("receive"));
@@ -67,7 +68,7 @@ const ChatDetail = ({
   const { response, sendMessage } = useSocket(wsUrl, token);
 
   useEffect(() => {
-    if (!response) return; 
+    if (!response) return;
     setMessages(response?.reverse());
 
     setIsLoading(false);
@@ -101,7 +102,7 @@ const ChatDetail = ({
       setIsLoadingMessage(false);
       return;
     }
-    console.log('03', content);
+    console.log("03", content);
     const data = { content, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
@@ -340,8 +341,9 @@ const ChatDetail = ({
               isLoading={isLoadingMessage}
               setIsLoading={(e) => setIsLoadingMessage(e)}
             />
-          ) : messages?.length === 1 &&
-            messages[0]?.sender !== recipientInfo?.id ? (
+          ) : (messages?.length === 1 &&
+              messages[0]?.sender !== recipientInfo?.id) ||
+            isDeleted ? (
             <></>
           ) : (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">

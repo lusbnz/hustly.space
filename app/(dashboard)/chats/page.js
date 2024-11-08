@@ -30,7 +30,9 @@ const Chats = () => {
   const [isLoadingChat, setIsLoadingChat] = useState(true);
   const [isMatch, setIsMatch] = useState(false);
   const [isPin, setIsPin] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [lastSender, setLastSender] = useState(null);
+  const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
 
   const profileId = userInfo?.id;
   const token = getAuthToken();
@@ -75,6 +77,15 @@ const Chats = () => {
   }, [response]);
 
   useEffect(() => {
+    setHasUnreadMessages(
+      listThread.some(
+        (thread) =>
+          (!thread?.is_match && thread?.last_message?.sender !== userInfo?.id) || thread.unread_count > 0
+      )
+    );
+  }, [listThread, userInfo?.id]);
+
+  useEffect(() => {
     if (!token) {
       router.push("/auth-login");
     }
@@ -98,7 +109,8 @@ const Chats = () => {
           thread.recipient.id,
           thread.is_match,
           thread?.last_message?.sender,
-          thread?.is_pin
+          thread?.is_pin,
+          thread?.delete_by
         );
         setIsModalOpen(recipientId);
       }
@@ -121,7 +133,8 @@ const Chats = () => {
     recipient_id,
     is_match,
     last_sender,
-    is_pin
+    is_pin,
+    delete_by
   ) => {
     setIsLoadingChat(true);
     setIsActiveChat(thread_id);
@@ -129,6 +142,7 @@ const Chats = () => {
     setLastSender(last_sender);
     setIsMatch(is_match);
     setIsPin(is_pin);
+    setIsDeleted(delete_by !== userInfo?.id);
     if (thread_id === null) {
       setIsModalOpen(false);
     } else {
@@ -187,7 +201,7 @@ const Chats = () => {
                       Pinned
                     </div>
                     <div
-                      className={`tab-item flex items-center justify-center ${
+                      className={`tab-item flex items-center justify-center relative ${
                         isActiveTab === "unread"
                           ? "bg-[#ffffff] text-[#343434]"
                           : "text-[#ffffff]"
@@ -195,6 +209,9 @@ const Chats = () => {
                       onClick={() => handleSelectTab("unread")}
                     >
                       Unread
+                      {hasUnreadMessages && (
+                        <div className="w-[10px] h-[10px] bg-red-500 rounded-full absolute top-[-2px] right-[-2px]"></div>
+                      )}
                     </div>
                   </div>
                 </>
@@ -219,8 +236,9 @@ const Chats = () => {
                       }
                       if (isActiveTab === "unread") {
                         return (
-                          !thread?.is_match &&
-                          thread?.last_message?.sender !== userInfo?.id
+                          thread.unread_count > 0 ||
+                          (!thread?.is_match &&
+                          thread?.last_message?.sender !== userInfo?.id)
                         );
                       }
                       return true;
@@ -262,7 +280,8 @@ const Chats = () => {
                                 thread?.recipient?.id,
                                 thread?.is_match,
                                 thread?.last_message?.sender,
-                                thread?.is_pin
+                                thread?.is_pin,
+                                thread?.delete_by
                               );
                             }
                           }}
@@ -379,6 +398,7 @@ const Chats = () => {
               setIsModalOpen={setIsModalOpen}
               setSideRender={() => setIsSideRender(!isSideRender)}
               setListThread={(e) => setListThread(e)}
+              isDeleted={isDeleted}
             />
           </div>
           {isModalOpen && <ModalDetail isOpen={isModalOpen} />}
