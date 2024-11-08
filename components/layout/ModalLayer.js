@@ -145,6 +145,25 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
   const handleUpdateSetting = (data) => {
     const ageValue = Number(data.age);
 
+    if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
+      setError("sub_domain_1", {
+        type: "manual",
+        message: "Please select at least one sub-domain.",
+      });
+      return;
+    }
+
+    if (
+      data.domain_2 &&
+      (!data.sub_domain_2 || data.sub_domain_2.length === 0)
+    ) {
+      setError("sub_domain_2", {
+        type: "manual",
+        message: "Please select at least one sub-domain.",
+      });
+      return;
+    }
+
     if (isNaN(ageValue) || ageValue < 18 || ageValue > 100) {
       setError("age", {
         type: "manual",
@@ -227,6 +246,8 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       });
   };
 
+  console.log("errors", errors);
+
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
@@ -283,7 +304,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
     if (name === "domain_1") {
       setValue("sub_domain_1", null);
     }
-    if(name === "domain_2") {
+    if (name === "domain_2") {
       setValue("sub_domain_2", null);
     }
     setValue(name, value);
@@ -697,6 +718,12 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
               </div>
             )}
 
+            {(errors.sub_domain_1 || errors.sub_domain_2) && (
+              <div className="text-[#ff0000] text-[12px] mb-3">
+                Please select at least one sub-domain.
+              </div>
+            )}
+
             <SelectForm
               options={s}
               label={"Skill set"}
@@ -744,10 +771,16 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                       isEditor={true}
                       // required={true}
                       defaultValue={achievement?.description}
+                      required={true}
                     />
                   </div>
                 ))}
               </>
+            )}
+            {errors.archivement && (
+              <div className="text-[#ff0000] text-[12px] mb-3">
+                {"This field is required"}
+              </div>
             )}
 
             <InputForm
@@ -785,7 +818,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={!!watch('link_1') ? InstagramIcon2 : InstagramIcon} alt="image" />
+                  <Image
+                    src={!!watch("link_1") ? InstagramIcon2 : InstagramIcon}
+                    alt="image"
+                  />
                 </div>
                 <div
                   className="social-icon"
@@ -797,7 +833,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={!!watch('link_2') ? FacebookIcon2 : FacebookIcon} alt="image" />
+                  <Image
+                    src={!!watch("link_2") ? FacebookIcon2 : FacebookIcon}
+                    alt="image"
+                  />
                 </div>
                 <div
                   className="social-icon"
@@ -809,7 +848,10 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     }
                   }}
                 >
-                  <Image src={!!watch('link_3') ? LinkedInIcon2 : LinkedInIcon} alt="image" />
+                  <Image
+                    src={!!watch("link_3") ? LinkedInIcon2 : LinkedInIcon}
+                    alt="image"
+                  />
                 </div>
               </div>
             </div>
