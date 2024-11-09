@@ -71,7 +71,7 @@ const ModalFirstChat = ({
       .catch((err) => {
         console.log(err);
       });
-  }, 100);
+  }, 200);
 
   return (
     <>
