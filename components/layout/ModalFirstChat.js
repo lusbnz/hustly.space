@@ -12,6 +12,7 @@ import { sendMessage } from "@/api/message";
 import BackIcon from "@/public/icons/back-icon.svg";
 import { createThread } from "@/api/thread";
 import { removeVietnameseTones } from "@/utils/utils";
+import { debounce } from "lodash";
 
 const ModalFirstChat = ({
   isOpen,
@@ -37,7 +38,7 @@ const ModalFirstChat = ({
 
   const uni = universityOptions.find((item) => item.id === userInfo?.city);
 
-  const handleSend = (content, image) => {
+  const handleSend = debounce((content, image) => {
     if ((content === "" && !image) || isLoading) {
       return;
     }
@@ -70,7 +71,7 @@ const ModalFirstChat = ({
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, 100);
 
   return (
     <>
