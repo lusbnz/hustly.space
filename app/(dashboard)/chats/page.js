@@ -145,7 +145,7 @@ const Chats = () => {
     setLastSender(last_sender);
     setIsMatch(is_match);
     setIsPin(is_pin);
-    setIsDeleted(delete_by !== userInfo?.id);
+    setIsDeleted(!!delete_by && delete_by !== userInfo?.id);
     if (thread_id === null) {
       setIsModalOpen(false);
     } else {
