@@ -53,7 +53,12 @@ const Chats = () => {
   useEffect(() => {
     if (!!response) {
       if (response?.length > 0) {
-        setListThread(response);
+        setListThread((prev) => {
+          const uniqueResponse = response.filter(
+            (newItem) => !prev.some((item) => item.thread_id === newItem.thread_id)
+          );
+          return [...uniqueResponse, ...prev];
+        });
       } else {
         setListThread((prev) => {
           const index = prev.findIndex(
@@ -81,7 +86,7 @@ const Chats = () => {
     setHasUnreadMessages(
       listThread.some(
         (thread) =>
-          (!thread?.is_match &&
+          (!thread?.is_match && !thread?.delete_by &&
             thread?.last_message?.sender !== userInfo?.id) ||
           thread.unread_count > 0
       )
