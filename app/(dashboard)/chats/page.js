@@ -234,9 +234,9 @@ const Chats = () => {
                     ?.filter((thread) => {
                       if (isActiveTab === "all") {
                         return (
-                          thread?.is_match === true ||
+                          (thread?.is_match === true ||
                           (!thread.is_match &&
-                            thread?.last_message?.sender === userInfo?.id)
+                            thread?.last_message?.sender === userInfo?.id)) && !thread?.delete_by
                         );
                       }
                       if (isActiveTab === "pinned") {
@@ -246,7 +246,7 @@ const Chats = () => {
                         return (
                           thread.unread_count > 0 ||
                           (!thread?.is_match &&
-                            thread?.last_message?.sender !== userInfo?.id)
+                            thread?.last_message?.sender !== userInfo?.id) || !!thread?.delete_by
                         );
                       }
                       return true;
