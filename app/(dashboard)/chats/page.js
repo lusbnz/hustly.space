@@ -253,7 +253,7 @@ const Chats = () => {
                         );
                       }
                       if (isActiveTab === "pinned") {
-                        return thread?.is_pin === true;
+                        return (thread?.is_pin === true && thread?.is_match === true);
                       }
                       if (isActiveTab === "unread") {
                         return (
@@ -343,7 +343,7 @@ const Chats = () => {
                                   </span>
                                 </div>
                                 <div className="w-[12px] chat-name flex items-center">
-                                  {thread.is_pin && (
+                                  {thread.is_pin && thread.is_match && (
                                     <div className="chat-pin">
                                       <Image
                                         src={PinIcon}

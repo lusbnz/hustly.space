@@ -222,14 +222,16 @@ const ChatDetail = ({
                   </span>
                 </div>
               </div>
-              <div className="cd-action">
-                <div className="cd-icon" onClick={handlePin}>
-                  <Image src={Pin} alt="pin" className="image" />
+              {isMatch && (
+                <div className="cd-action">
+                  <div className="cd-icon" onClick={handlePin}>
+                    <Image src={Pin} alt="pin" className="image" />
+                  </div>
+                  <div className="cd-icon" onClick={handleDelete}>
+                    <Image src={Trash} alt="trash" className="image" />
+                  </div>
                 </div>
-                <div className="cd-icon" onClick={handleDelete}>
-                  <Image src={Trash} alt="trash" className="image" />
-                </div>
-              </div>
+              )}
             </div>
             <div
               className="cd-content"
