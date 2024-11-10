@@ -31,7 +31,7 @@ const Chats = () => {
   const [isLoadingChat, setIsLoadingChat] = useState(true);
   const [isMatch, setIsMatch] = useState(false);
   const [isPin, setIsPin] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(null);
   const [lastSender, setLastSender] = useState(null);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
 
@@ -123,6 +123,19 @@ const Chats = () => {
         setIsModalOpen(recipientId);
       }
     }
+
+
+    const abc = listThread?.find(item => item.thread_id === isActiveChat);
+
+    if (!!abc){
+      setIsMatch(abc?.is_match)
+    }
+
+    if (!!abc?.delete_by){
+      setIsDeleted(abc?.delete_by !== userInfo.id ? 'is_deleted' : 'deleted')
+    } else{
+      setIsDeleted(null)
+    }
   }, [listThread]);
 
   const handleSelectTab = (tab) => {
@@ -150,7 +163,7 @@ const Chats = () => {
     setLastSender(last_sender);
     setIsMatch(is_match);
     setIsPin(is_pin);
-    setIsDeleted(!!delete_by && delete_by !== userInfo?.id);
+    setIsDeleted(!!delete_by && delete_by !== userInfo?.id ? 'is_deleted' : 'deleted');
     if (thread_id === null) {
       setIsModalOpen(false);
     } else {

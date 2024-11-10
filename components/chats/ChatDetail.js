@@ -148,9 +148,9 @@ const ChatDetail = ({
     // setListThread((prev) => {
     //   return prev.filter((item) => item.thread_id !== chatId);
     // });
-    handleOpenDetail(null);
-    setChatId(null);
-    setIsModalOpen(false);
+    // handleOpenDetail(null);
+    // setChatId(null);
+    // setIsModalOpen(false);
   };
 
   const handleAccept = () => {
@@ -346,7 +346,7 @@ const ChatDetail = ({
             />
           ) : (messages?.length === 1 &&
               messages[0]?.sender !== recipientInfo?.id) ||
-            isDeleted ? (
+            isDeleted === 'is_deleted' ? (
             <></>
           ) : (
             <div className="flex items-center gap-[6px] w-100 mt-[40px]">
