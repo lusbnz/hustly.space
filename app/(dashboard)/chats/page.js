@@ -86,9 +86,9 @@ const Chats = () => {
     setHasUnreadMessages(
       listThread.some(
         (thread) =>
-          (!thread?.is_match && !thread?.delete_by &&
+          ((!thread?.is_match && !thread?.delete_by &&
             thread?.last_message?.sender !== userInfo?.id) ||
-          thread.unread_count > 0
+          thread.unread_count > 0) && thread.thread_id !== isActiveChat
       )
     );
   }, [listThread, userInfo?.id]);
