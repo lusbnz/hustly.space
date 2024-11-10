@@ -58,6 +58,8 @@ const ChatDetail = ({
     `wss://backend.hustlyspace.com/ws/${profileId}/thread/${chatId}/message/`
   );
 
+  const [threadWsUrl, setThreadWsUrl] = useState(`wss://backend.hustlyspace.com/ws/${profileId}/thread/`)
+
   useEffect(() => {
     if (!!chatId && !!profileId) {
       setWsUrl(
@@ -67,6 +69,7 @@ const ChatDetail = ({
   }, [profileId, chatId]);
 
   const { response, sendMessage } = useSocket(wsUrl, token);
+  const { deleteThreadWs } = useSocket(threadWsUrl, token);
 
   useEffect(() => {
     if (!response) return;
@@ -138,10 +141,13 @@ const ChatDetail = ({
   };
 
   const handleDelete = () => {
-    deleteThread(userInfo?.id, chatId);
-    setListThread((prev) => {
-      return prev.filter((item) => item.thread_id !== chatId);
-    });
+    const data = { is_match: false, thread_id: chatId };
+    deleteThreadWs(data);
+
+    // deleteThread(userInfo?.id, chatId);
+    // setListThread((prev) => {
+    //   return prev.filter((item) => item.thread_id !== chatId);
+    // });
     handleOpenDetail(null);
     setChatId(null);
     setIsModalOpen(false);
