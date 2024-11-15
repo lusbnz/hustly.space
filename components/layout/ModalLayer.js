@@ -764,7 +764,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                     <InputForm
                       title={`Achievement`}
                       placeholder={
-                        "An academic or professional achievement, an award you've won, or something impressive you've built."
+                        "Give us a brief of your academic achievements. Nah you know what? It can be any achievement, you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!"
                       }
                       register={register}
                       name={`archivement[0].description`}

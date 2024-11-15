@@ -21,6 +21,7 @@ import useSocket from "@/hooks/useSocket";
 import { debounce } from "lodash";
 import DefaultAvatar from "@/public/images/user-default.jpg";
 import ModalDeleteConfirm from "../layout/ModalDeleteConfirm";
+import ModalRejectConfirm from "../layout/ModalRejectConfirm";
 
 const ChatDetail = ({
   chatId,
@@ -52,6 +53,7 @@ const ChatDetail = ({
   const [haveImage, setHaveImage] = useState(false);
   const [isLoadingMessage, setIsLoadingMessage] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isRejecting, setIsRejecting] = useState(false);
 
   const profileId = userInfo?.id;
   const token = getAuthToken();
@@ -148,9 +150,23 @@ const ChatDetail = ({
     setIsDeleting(true);
   };
 
+  const handleReject = () => {
+    setIsRejecting(true);
+  };
+
   const handleDeleteConfirm = () => {
     const data = { is_match: false, thread_id: chatId };
     deleteThreadWs(data);
+  };
+
+  const handleRejectConfirm = () => {
+    deleteThread(userInfo?.id, chatId);
+    setListThread((prev) => {
+      return prev.filter((item) => item.thread_id !== chatId);
+    });
+    handleOpenDetail(null);
+    setChatId(null);
+    setIsModalOpen(false);
   };
 
   const handleAccept = () => {
@@ -365,7 +381,7 @@ const ChatDetail = ({
                   border
                   backgroundColor={"transparent"}
                   color={"#ffffff"}
-                  onClick={handleDelete}
+                  onClick={handleReject}
                 />
                 <ButtonComponent
                   type={"button"}
@@ -386,6 +402,15 @@ const ChatDetail = ({
             setIsDeleting(false);
           }}
           handleConfirm={handleDeleteConfirm}
+        />
+      )}
+      {isRejecting && (
+        <ModalRejectConfirm
+          isOpen={isRejecting}
+          toggleOpenModal={() => {
+            setIsRejecting(false);
+          }}
+          handleConfirm={handleRejectConfirm}
         />
       )}
     </>
