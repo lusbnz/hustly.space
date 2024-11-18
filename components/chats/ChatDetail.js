@@ -5,6 +5,7 @@ import "./chats.css";
 import Pin from "@/public/icons/pin-icon.svg";
 import Dots from "@/public/icons/dots-icon.svg";
 import Trash from "@/public/icons/trash-icon.svg";
+import Hide from "@/public/icons/hide-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
 import { getMessage } from "@/api/message";
@@ -244,7 +245,7 @@ const ChatDetail = ({
                     <Image src={Pin} alt="pin" className="image" />
                   </div>
                   <div className="cd-icon" onClick={handleDelete}>
-                    <Image src={Trash} alt="trash" className="image" />
+                    <Image src={Hide} alt="trash" className="image" />
                   </div>
                 </div>
               )}

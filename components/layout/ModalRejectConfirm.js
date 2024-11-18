@@ -24,9 +24,9 @@ const ModalRejectConfirm = ({ isOpen, toggleOpenModal, handleConfirm }) => {
             Are you sure you want to reject this user?{" "}
           </span>
           <span className="font-[400] text-[14px] text-gray-400">
-            If you hide this conversation, this box chat will be hidden until
-            one of you text again. Are you sure you want to hide this
-            conversation?
+            If you reject this person, they won't be able to reach out to you
+            again, unless you reach out to them first. Are you sure you want to
+            reject them? They might be sad 😞
           </span>
           <div className="flex items-center gap-[24px] w-100 justify-end mt-[12px]">
             <div
