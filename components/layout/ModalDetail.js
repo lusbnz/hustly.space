@@ -249,7 +249,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
               <div className="card-body">
                 <span
                   className="description"
-                  style={{ color: "rgba(255, 255, 255, 0.60)" }}
+                  style={{ color: "rgba(255, 255, 255, 0.60)", lineHeight: '1.5' }}
                 >
                   {userInfo?.bio}
                 </span>
@@ -331,7 +331,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                       backgroundColor={"transparent"}
                       color={"#ffffff"}
                       onClick={() => {
-                        const textToCopy = `${window.location.href}?rel=${isOpen}`;
+                        const textToCopy = `https://hustlyspace.com/news?rel=${isOpen}`;
 
                         navigator.clipboard
                           .writeText(textToCopy)

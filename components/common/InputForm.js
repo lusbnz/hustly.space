@@ -13,7 +13,7 @@ const InputForm = ({
   defaultValue,
   onChange,
   isNumber,
-  isAuth
+  isAuth,
 }) => {
   const handleKeyDown = (e) => {
     if (isNumber && ["e", "E", "+", "-"].includes(e.key)) {
@@ -32,7 +32,11 @@ const InputForm = ({
         />
       ) : (
         <input
-          style={isAuth ? {height: "46px"} : {}}
+          style={
+            isAuth
+              ? { height: "46px", lineHeight: "1.5" }
+              : { lineHeight: "1.5" }
+          }
           placeholder={placeholder}
           type={isPassword ? "password" : isNumber ? "number" : "text"}
           {...(register && register(name, { required }))}

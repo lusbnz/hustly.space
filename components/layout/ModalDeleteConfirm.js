@@ -21,12 +21,13 @@ const ModalDeleteConfirm = ({ isOpen, toggleOpenModal, handleConfirm }) => {
       <div className="w-[100vw] h-[90vh] bg-transparent opacity-100 fixed top-0 left-0 z-30 p-[22px] flex items-center justify-center">
         <div className="w-[600px] fisrt-chat flex flex-col gap-[20px] max-h-[100vh] p-[28px] text-white bg-[#171717] rounded-[20px] relative z-50">
           <span className="font-[600] text-[20px]">
-            Are you sure you want to hide this user?{" "}
+            Are you sure you want to block this user?{" "}
           </span>
           <span className="font-[400] text-[14px] text-gray-400">
-            If you hide this conversation, this box chat will be hidden until
-            one of you text again. Are you sure you want to hide this
-            conversation?
+            Blocking this person will move the chat to unread. You can later
+            choose to accept them back (they can’t message you until then) or
+            delete the conversation. You can still find each other on the search
+            page.
           </span>
           <div className="flex items-center gap-[24px] w-100 justify-end mt-[12px]">
             <div
