@@ -370,6 +370,22 @@ const ChatDetail = ({
                 isLoading={isLoadingMessage}
                 setIsLoading={(e) => setIsLoadingMessage(e)}
               />
+            ) : isDeleted === "deleted" ? (
+              <div className="flex items-center gap-[6px] w-100 mt-[40px]">
+                <ButtonComponent
+                  type={"button"}
+                  title={"Delete"}
+                  border
+                  backgroundColor={"transparent"}
+                  color={"#ffffff"}
+                  onClick={handleReject}
+                />
+                <ButtonComponent
+                  type={"button"}
+                  title={"Accept"}
+                  onClick={handleAccept}
+                />
+              </div>
             ) : (messages?.length === 1 &&
                 messages[0]?.sender !== recipientInfo?.id) ||
               isDeleted === "is_deleted" ? (

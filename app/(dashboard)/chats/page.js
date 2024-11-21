@@ -55,7 +55,8 @@ const Chats = () => {
       if (response?.length > 0) {
         setListThread((prev) => {
           const uniqueResponse = response.filter(
-            (newItem) => !prev.some((item) => item.thread_id === newItem.thread_id)
+            (newItem) =>
+              !prev.some((item) => item.thread_id === newItem.thread_id)
           );
           return [...uniqueResponse, ...prev];
         });
@@ -86,9 +87,11 @@ const Chats = () => {
     setHasUnreadMessages(
       listThread.some(
         (thread) =>
-          ((!thread?.is_match && !thread?.delete_by &&
+          ((!thread?.is_match &&
+            !thread?.delete_by &&
             thread?.last_message?.sender !== userInfo?.id) ||
-          thread.unread_count > 0) && thread.thread_id !== isActiveChat
+            thread.unread_count > 0) &&
+          thread.thread_id !== isActiveChat
       )
     );
   }, [listThread, userInfo?.id]);
@@ -118,23 +121,23 @@ const Chats = () => {
           thread.is_match,
           thread?.last_message?.sender,
           thread?.is_pin,
-          thread?.delete_by
+          thread?.delete_by,
+          thread?.user_id
         );
         setIsModalOpen(recipientId);
       }
     }
 
+    const abc = listThread?.find((item) => item.thread_id === isActiveChat);
 
-    const abc = listThread?.find(item => item.thread_id === isActiveChat);
-
-    if (!!abc){
-      setIsMatch(abc?.is_match)
+    if (!!abc) {
+      setIsMatch(abc?.is_match);
     }
 
-    if (!!abc?.delete_by){
-      setIsDeleted(abc?.delete_by !== userInfo.id ? 'is_deleted' : 'deleted')
-    } else{
-      setIsDeleted(null)
+    if (!!abc?.delete_by) {
+      setIsDeleted(abc?.delete_by !== abc.user_id ? "is_deleted" : "deleted");
+    } else {
+      setIsDeleted(null);
     }
   }, [listThread]);
 
@@ -155,7 +158,8 @@ const Chats = () => {
     is_match,
     last_sender,
     is_pin,
-    delete_by
+    delete_by,
+    user_id
   ) => {
     setIsLoadingChat(true);
     setIsActiveChat(thread_id);
@@ -163,7 +167,13 @@ const Chats = () => {
     setLastSender(last_sender);
     setIsMatch(is_match);
     setIsPin(is_pin);
-    setIsDeleted(!!delete_by && delete_by !== userInfo?.id ? 'is_deleted' : 'deleted');
+    setIsDeleted(
+      !!delete_by && delete_by !== user_id
+        ? "is_deleted"
+        : !!delete_by
+        ? "deleted"
+        : null
+    );
     if (thread_id === null) {
       setIsModalOpen(false);
     } else {
@@ -248,18 +258,22 @@ const Chats = () => {
                       if (isActiveTab === "all") {
                         return (
                           (thread?.is_match === true ||
-                          (!thread.is_match &&
-                            thread?.last_message?.sender === userInfo?.id)) && !thread?.delete_by
+                            (!thread.is_match &&
+                              thread?.last_message?.sender === userInfo?.id)) &&
+                          !thread?.delete_by
                         );
                       }
                       if (isActiveTab === "pinned") {
-                        return (thread?.is_pin === true && thread?.is_match === true);
+                        return (
+                          thread?.is_pin === true && thread?.is_match === true
+                        );
                       }
                       if (isActiveTab === "unread") {
                         return (
                           thread.unread_count > 0 ||
                           (!thread?.is_match &&
-                            thread?.last_message?.sender !== userInfo?.id) || !!thread?.delete_by
+                            thread?.last_message?.sender !== userInfo?.id) ||
+                          !!thread?.delete_by
                         );
                       }
                       return true;
@@ -302,7 +316,8 @@ const Chats = () => {
                                 thread?.is_match,
                                 thread?.last_message?.sender,
                                 thread?.is_pin,
-                                thread?.delete_by
+                                thread?.delete_by,
+                                thread?.user_id
                               );
                             }
                           }}
