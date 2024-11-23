@@ -43,7 +43,7 @@ const ModalDeleteConfirm = ({ isOpen, toggleOpenModal, handleConfirm }) => {
                 toggleOpenModal();
               }}
             >
-              Hide
+              Block
             </div>
           </div>
         </div>

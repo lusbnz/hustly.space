@@ -394,7 +394,7 @@ const ChatDetail = ({
               <div className="flex items-center gap-[6px] w-100 mt-[40px]">
                 <ButtonComponent
                   type={"button"}
-                  title={"Delete"}
+                  title={isDeleted !== null ? "Delete" : "Reject"}
                   border
                   backgroundColor={"transparent"}
                   color={"#ffffff"}
@@ -428,6 +428,7 @@ const ChatDetail = ({
             setIsRejecting(false);
           }}
           handleConfirm={handleRejectConfirm}
+          isTypeDelete={isDeleted === null ? false : true}
         />
       )}
     </>
