@@ -91,8 +91,8 @@ const Chats = () => {
           ((!thread?.is_match &&
             thread?.last_message?.sender !== userInfo?.id) ||
             (!thread?.delete_by &&
-              thread?.last_message?.sender !== userInfo?.id) ||
-            thread.unread_count > 0) &&
+              thread?.last_message?.sender !== userInfo?.id)) &&
+          thread.unread_count > 0 &&
           thread.thread_id !== isActiveChat
       )
     );
