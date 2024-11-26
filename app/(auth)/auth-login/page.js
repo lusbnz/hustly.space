@@ -44,7 +44,9 @@ const AuthLogin = () => {
     const sp = isClient ? new URLSearchParams(window.location.search) : null;
     const res = sp ? sp.get("register") : null;
     if (!!res) {
-      toast.success("Check your email to verify your account.");
+      toast.success("Check your email to verify your account.", {
+        autoClose: false,
+      });
     }
     const ser = sp ? sp.get("verify") : null;
     if (!!ser) {
