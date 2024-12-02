@@ -36,6 +36,13 @@ const SelectForm = ({
       : null
   );
 
+  useEffect(() => {
+    if (isClear) {
+      setSelectedValue(null);
+      handleChangeFilter(name, isMulti ? [] : "");
+    }
+  }, [isClear, handleChangeFilter, name, isMulti]);
+
   const { ref, onChange = () => {}, ...rest } = register
   ? register(name, { required })
   : {};
