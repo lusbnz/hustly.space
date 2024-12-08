@@ -46,7 +46,7 @@ export default function Layout({ children }) {
     // if(!userInfo?.id && !isFirstRender) {
     //   fetchProfile()
     // }
-  }, [userInfo])
+  }, [userInfo]);
 
   const toggleOpenModalSetting = () => {
     setOpenModalSetting(!openModalSetting);
@@ -89,7 +89,7 @@ export default function Layout({ children }) {
         university__id: filter.university__id,
         team_member_count: filter.team_member_count,
         city: filter.city,
-      competition__id: filter.competition__id,
+        competition__id: filter.competition__id,
         domain__id: filter.domain__id,
         skill_set: Array.isArray(filter.skill_set)
           ? filter.skill_set.join(",")

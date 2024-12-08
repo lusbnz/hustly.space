@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { BeatLoader } from "react-spinners";
 import { removeVietnameseTones } from "@/utils/utils";
+import { toast, ToastContainer } from "react-toastify";
 
 const ModalLayer = ({ toggleOpenModalSetting }) => {
   const dispatch = useDispatch();
@@ -108,6 +109,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
     if (file) {
       try {
         const data = new FormData();
@@ -117,6 +119,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
         setValue("avatar", res.id);
         setIsEdit(false);
       } catch (error) {
+        toast.error("Image too large to upload");
         console.error("Error uploading file:", error);
       }
     }
@@ -967,6 +970,7 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
