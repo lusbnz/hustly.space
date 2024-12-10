@@ -35,10 +35,10 @@ const TextEditor = ({
     const cleanedData = editorData
       .replace(/^(<br\s*\/?>\s*)+|(<br\s*\/?>\s*)+$/g, "")
       .trim();
-    
+
     const hasNonBreakingSpaces = /(&nbsp;)+/g.test(cleanedData);
 
-    if (isImage || fileId || cleanedData && !hasNonBreakingSpaces) {
+    if (isImage || fileId || (cleanedData && !hasNonBreakingSpaces)) {
       setTimeout(() => {
         console.log("02", cleanedData);
         handleSend(cleanedData, isImage ? imageId : fileId);
@@ -215,6 +215,9 @@ const TextEditor = ({
           style={{
             width: "-webkit-fill-available",
             height: "calc(130 /1080 * 100vh)",
+            wordWrap: "break-word",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
           }}
           contentEditable
           placeholder="Your message..."
