@@ -16,6 +16,7 @@ import { setDomain } from "@/reducers/domainSlice";
 import { setFilterData, setSuggestion } from "@/reducers/suggestionSlice";
 import { getAuthToken } from "@/libs/clients";
 import Head from "next/head";
+import ModalChangePassword from "@/components/layout/ModalChangePassword";
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function Layout({ children }) {
     competition__year: "",
   });
   const [isFirstSetting, setIsFirstSetting] = useState(false);
+  const [isChangePassword, setIsChangePassword] = useState(false);
 
   const isHaveSidebar = pathname === "/news";
 
@@ -49,6 +51,7 @@ export default function Layout({ children }) {
   }, [userInfo]);
 
   const toggleOpenModalSetting = () => {
+    setIsChangePassword(false);
     setOpenModalSetting(!openModalSetting);
   };
 
@@ -175,6 +178,11 @@ export default function Layout({ children }) {
       });
   };
 
+  const toggleOpenChangePassword = () => {
+    setOpenModalSetting(false);
+    setIsChangePassword(!isChangePassword);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (isHaveSidebar && isFirstRenderFilter) {
@@ -219,6 +227,13 @@ export default function Layout({ children }) {
           <ModalLayer
             toggleOpenModalSetting={toggleOpenModalSetting}
             isFirstSetting={isFirstSetting}
+            toggleOpenChangePassword={toggleOpenChangePassword}
+          />
+        )}
+
+        {isChangePassword && (
+          <ModalChangePassword
+            toggleOpenModalSetting={toggleOpenModalSetting}
           />
         )}
       </div>

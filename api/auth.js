@@ -24,3 +24,8 @@ export const verifyEmail = async (data) => {
   const res = await API.post(`/authentication/verify_email`, data);
   return res.data;
 };
+
+export const changePassword = async (data) => {
+  const res = await API.post(`/profile/change_password`, data);
+  return res.data;
+};

@@ -14,6 +14,7 @@ import InstagramIcon2 from "@/public/icons/instagram-icon-copy.svg";
 import FacebookIcon2 from "@/public/icons/facebook-icon-copy.svg";
 import LinkedInIcon2 from "@/public/icons/linkedin-icon-copy.svg";
 import TrashIcon from "@/public/icons/trash-icon.svg";
+import LockIcon from "@/public/icons/lock.svg";
 import Image from "next/image";
 import { uploadFile } from "@/api/file";
 import { updateProfile } from "@/api/profile";
@@ -34,7 +35,7 @@ import { BeatLoader } from "react-spinners";
 import { removeVietnameseTones } from "@/utils/utils";
 import { toast, ToastContainer } from "react-toastify";
 
-const ModalLayer = ({ toggleOpenModalSetting }) => {
+const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
@@ -249,8 +250,6 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
       });
   };
 
-  console.log("errors", errors);
-
   const competitionOptions = competition?.map((item) => {
     return {
       value: item.id,
@@ -374,9 +373,19 @@ const ModalLayer = ({ toggleOpenModalSetting }) => {
                   </div>
                 )}
                 {!isEdit ? (
-                  <div className="flex items-center gap-[6px]">
-                    <span className="m-name">{watch("first_name")}</span>
-                    <span className="m-name">{watch("last_name")}</span>
+                  <div className="flex flex-col gap-[6px]">
+                    <div className="flex items-center gap-[6px]">
+                      <span className="m-name">{watch("first_name")}</span>
+                      <span className="m-name">{watch("last_name")}</span>
+                    </div>
+                    {userInfo?.is_update_setting && (
+                      <div
+                        className="cursor-pointer"
+                        onClick={toggleOpenChangePassword}
+                      >
+                        <Image src={LockIcon} alt={""} />
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex items-center gap-[6px]">
