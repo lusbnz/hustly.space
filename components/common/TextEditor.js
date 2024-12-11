@@ -165,7 +165,7 @@ const TextEditor = ({
   return (
     <div className={`relative`}>
       <div
-        className={`w-100 bg-[#222] rounded-[8px] mt-[12px]`}
+        className={`w-100 bg-[#222] rounded-[8px] mt-[12px] flex flex-col`}
         style={{
           height:
             tempImage || tempFile
@@ -215,7 +215,7 @@ const TextEditor = ({
           className="bg-transparent outline-none text-[#ffffff] p-[12px] overflow-y-auto"
           style={{
             width: "-webkit-fill-available",
-            height: "calc(130 /1080 * 100vh)",
+            flex: "1",
             wordWrap: "break-word",
             wordBreak: "break-word",
             overflowWrap: "break-word",
@@ -227,7 +227,7 @@ const TextEditor = ({
           onPaste={handlePaste}
         />
 
-        <div className="flex items-center justify-between gap-[6px] w-100 mt-[10px] px-[20px]">
+        <div className="flex items-center justify-between gap-[6px] w-100 mt-[10px] px-[20px] pb-[12px]">
           <div className="flex items-center gap-[12px]">
             <input
               type="file"

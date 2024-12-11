@@ -274,10 +274,10 @@ const Sidebar = ({
                     renderTrack={({ props, children }) => {
                       const trackStyle = {
                         height: "4px",
-                        width: "calc((180 / 1920) * 100vw)",
                         background: "#222",
                         borderRadius: "2px",
                         position: "relative",
+                        flex: "1",
                       };
 
                       const left = ((ageV.min - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị min
@@ -316,6 +316,7 @@ const Sidebar = ({
                   <div
                     className="text-white hidden lg:flex"
                     style={{
+                      width: "40px",
                       fontSize: "clamp(8px, 10px, 12px)",
                     }}
                   >
