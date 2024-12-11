@@ -14,10 +14,20 @@ const InputForm = ({
   onChange,
   isNumber,
   isAuth,
+  maxValue,
 }) => {
   const handleKeyDown = (e) => {
     if (isNumber && ["e", "E", "+", "-"].includes(e.key)) {
       e.preventDefault();
+    }
+  };
+
+  const handleChange = (e) => {
+    if (maxValue && e.target.value.length > maxValue) {
+      e.target.value = e.target.value.slice(0, maxValue);
+    }
+    if (onChange) {
+      onChange(e);
     }
   };
 
@@ -28,6 +38,7 @@ const InputForm = ({
         <textarea
           placeholder={placeholder}
           style={tstyle}
+          maxLength={maxValue}
           {...(register && register(name, { required }))}
         />
       ) : (
@@ -41,9 +52,10 @@ const InputForm = ({
           type={isPassword ? "password" : isNumber ? "number" : "text"}
           {...(register && register(name, { required }))}
           defaultValue={defaultValue}
-          onChange={onChange}
+          onChange={handleChange}
           min={isNumber ? 18 : undefined}
           onKeyDown={handleKeyDown}
+          maxLength={maxValue}
         />
       )}
     </div>

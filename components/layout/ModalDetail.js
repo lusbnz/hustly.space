@@ -13,9 +13,6 @@ import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
 import { usePathname, useRouter } from "next/navigation";
 import { getUser } from "@/api/profile";
-import moment from "moment";
-import { createThread } from "@/api/thread";
-import UserIcon from "@/public/icons/user-icon.svg";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
@@ -142,38 +139,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
     return subOption ? subOption?.label : "Not found";
   }
 
-  function hexToRgb(hex) {
-    hex = hex.replace("#", "");
-    let bigint = parseInt(hex, 16);
-    let r = (bigint >> 16) & 255;
-    let g = (bigint >> 8) & 255;
-    let b = bigint & 255;
-    return [r, g, b];
-  }
-
-  function rgbToHex(r, g, b) {
-    return (
-      "#" +
-      ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
-    );
-  }
-
-  function lightenColor(hex, factor = 0.5) {
-    let [r, g, b] = hexToRgb(hex);
-    r = Math.round(r + (255 - r) * factor);
-    g = Math.round(g + (255 - g) * factor);
-    b = Math.round(b + (255 - b) * factor);
-    return rgbToHex(r, g, b);
-  }
-
-  function darkenColor(hex, factor = 0.5) {
-    let [r, g, b] = hexToRgb(hex);
-    r = Math.round(r * (1 - factor));
-    g = Math.round(g * (1 - factor));
-    b = Math.round(b * (1 - factor));
-    return rgbToHex(r, g, b);
-  }
-
   return (
     <>
       <div
@@ -249,7 +214,10 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
               <div className="card-body">
                 <span
                   className="description"
-                  style={{ color: "rgba(255, 255, 255, 0.60)", lineHeight: '1.5' }}
+                  style={{
+                    color: "rgba(255, 255, 255, 0.60)",
+                    lineHeight: "1.5",
+                  }}
                 >
                   {userInfo?.bio}
                 </span>
@@ -281,11 +249,11 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                     <div
                       className="social-icon"
                       onClick={() => {
-                        if (!!userInfo?.social_link?.mail) {
+                        if (!!userInfo?.social_link?.email) {
                           const mailUrl =
-                            userInfo?.social_link?.mail.startsWith("http")
-                              ? userInfo?.social_link?.mail
-                              : `https://${userInfo?.social_link?.mail}`;
+                            userInfo?.social_link?.email.startsWith("http")
+                              ? userInfo?.social_link?.email
+                              : `https://${userInfo?.social_link?.email}`;
 
                           window.open(mailUrl, "_blank");
                         }
@@ -293,7 +261,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                     >
                       <Image
                         src={
-                          !!userInfo?.social_link?.mail
+                          !!userInfo?.social_link?.email
                             ? FacebookIcon2
                             : FacebookIcon
                         }

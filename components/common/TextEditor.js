@@ -33,12 +33,13 @@ const TextEditor = ({
   const onSend = () => {
     setIsSend(true);
     const cleanedData = editorData
+      .replace(/(&nbsp;)+/g, " ")
       .replace(/^(<br\s*\/?>\s*)+|(<br\s*\/?>\s*)+$/g, "")
       .trim();
 
-    const hasNonBreakingSpaces = /(&nbsp;)+/g.test(cleanedData);
+    const isValidContent = cleanedData !== "";
 
-    if (isImage || fileId || (cleanedData && !hasNonBreakingSpaces)) {
+    if (isImage || fileId || (cleanedData && isValidContent)) {
       setTimeout(() => {
         console.log("02", cleanedData);
         handleSend(cleanedData, isImage ? imageId : fileId);

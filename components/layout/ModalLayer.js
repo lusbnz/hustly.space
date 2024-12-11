@@ -135,11 +135,16 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
           const data = new FormData();
           data.append("file", file);
           const res = await uploadFile(data);
-          return res;
+          if (res) {
+            return res;
+          } else {
+            return null;
+          }
         })
       );
       setValue("bio_image", [...(watch("bio_image") || []), ...uploadedFiles]);
     } catch (error) {
+      toast.error("Image too large to upload");
       console.error("Error uploading file:", error);
     } finally {
       setIsLoadingBioImage(false);
@@ -774,7 +779,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 {achievements?.slice(0, 1).map((achievement, index) => (
                   <div className="relative" key={index}>
                     <InputForm
-                      title={`Achievement`}
+                      title={`About me`}
                       placeholder={
                         "Give us a brief of your academic achievements. Nah you know what? It can be any achievement, you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!"
                       }
@@ -784,6 +789,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                       // required={true}
                       defaultValue={achievement?.description}
                       required={true}
+                      maxValue={250}
                     />
                   </div>
                 ))}
@@ -798,12 +804,13 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
             <InputForm
               title={"Tldr"}
               placeholder={
-                "I am Quoc Anh from neu, I study finance and like to eat banh bao + play basketball."
+                "name + age + school/company + fav dish + hobbies (e.g., piano, football, swim, etc)"
               }
               register={register}
               name={"bio"}
               isEditor={true}
               required={true}
+              maxValue={100}
             />
             {errors.bio && (
               <div className="text-[#ff0000] text-[12px] mb-3">

@@ -109,12 +109,16 @@ const ChatDetail = ({
 
   const handleSend = debounce((content, image) => {
     setIsLoadingMessage(true);
-    if ((!content || content === "&nbsp;") && !image) {
+    console.log("content", content);
+    const cleanContent = content.replace(/&nbsp;/g, "").trim();
+    console.log("cleanContent", cleanContent);
+    if (!cleanContent && !image) {
+      console.log("113");
       setIsLoadingMessage(false);
       return;
     }
-    console.log("03", content);
-    const data = { content, media: image ? [image] : [] };
+    console.log("03", cleanContent);
+    const data = { content: cleanContent, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
   }, 100);
