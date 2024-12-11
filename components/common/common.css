@@ -46,6 +46,7 @@
         background-color: transparent;
         color: #ffffff;
         font-size:  clamp(10px, calc((14 / 1920) * 100vw), 26px);
+        line-height: 1.5;
 
         &:active{
             outline: none;
