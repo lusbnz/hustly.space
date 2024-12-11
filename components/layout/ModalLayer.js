@@ -107,6 +107,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   });
 
   const achievements = watch("archivement");
+  const bio = watch("bio");
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -804,13 +805,14 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
             <InputForm
               title={"Tldr"}
               placeholder={
-                "name + age + school/company + fav dish + hobbies (e.g., piano, football, swim, etc)"
+                "Name + Age + School/Company + Fav dish + Hobbies (e.g., piano, football, swim, etc)"
               }
               register={register}
               name={"bio"}
               isEditor={true}
               required={true}
               maxValue={250}
+              defaultValue={bio}
             />
             {errors.bio && (
               <div className="text-[#ff0000] text-[12px] mb-3">

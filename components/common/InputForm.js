@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./common.css";
 
 const InputForm = ({
@@ -16,6 +16,8 @@ const InputForm = ({
   isAuth,
   maxValue,
 }) => {
+  const [value, setValue] = useState(defaultValue || "");
+
   const handleKeyDown = (e) => {
     if (isNumber && ["e", "E", "+", "-"].includes(e.key)) {
       e.preventDefault();
@@ -23,9 +25,11 @@ const InputForm = ({
   };
 
   const handleChange = (e) => {
-    if (maxValue && e.target.value.length > maxValue) {
+    const newValue = e.target.value;
+    if (maxValue && newValue.length > maxValue) {
       return;
     }
+    setValue(newValue);
     if (onChange) {
       onChange(e);
     }
@@ -33,13 +37,21 @@ const InputForm = ({
 
   return (
     <div className="input-form">
-      <label>{title}</label>
+      <label>
+        {title}
+        {maxValue && (
+          <span className="value-counter">
+            {` (${value.length}/${maxValue})`}
+          </span>
+        )}
+      </label>
       {isEditor ? (
         <textarea
           placeholder={placeholder}
           style={tstyle}
           maxLength={maxValue}
           {...(register && register(name, { required }))}
+          onChange={handleChange}
         />
       ) : (
         <input
