@@ -313,6 +313,12 @@ const ChatDetail = ({
                         }`}
                       >
                         <div
+                          style={{
+                            width: "-webkit-fill-available",
+                            wordWrap: "break-word",
+                            wordBreak: "break-word",
+                            overflowWrap: "break-word",
+                          }}
                           dangerouslySetInnerHTML={{ __html: message.content }}
                         />
                         {message.media?.length > 0 && (
