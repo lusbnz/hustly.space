@@ -19,6 +19,10 @@ button:hover{
     scrollbar-color: #888 #f1f1f1;
 }
 
+.select-form * {
+  box-sizing: border-box;
+}
+
 /* styles/fonts.css */
 @font-face {
     font-family: 'Articulat CF';

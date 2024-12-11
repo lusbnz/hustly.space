@@ -43,9 +43,11 @@ const SelectForm = ({
     }
   }, [isClear, handleChangeFilter, name, isMulti]);
 
-  const { ref, onChange = () => {}, ...rest } = register
-  ? register(name, { required })
-  : {};
+  const {
+    ref,
+    onChange = () => {},
+    ...rest
+  } = register ? register(name, { required }) : {};
 
   const CustomSingleValue = ({ data, children, ...props }) => {
     return (
@@ -166,8 +168,7 @@ const SelectForm = ({
   const customStyles = {
     container: (provided) => ({
       ...provided,
-      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
-      minHeight: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "36px",
     }),
     control: (provided, state) => ({
       ...provided,
@@ -179,15 +180,13 @@ const SelectForm = ({
       "&:hover": {
         borderColor: state.isFocused ? "#2e2e2e" : "#2e2e2e",
       },
-      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
-      minHeight: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "36px",
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
       margin: 0,
       padding: 0,
-      height: isMulti ? "auto" : "calc((52 / 1080) * 100vh)",
-      minHeight: "calc((52 / 1080) * 100vh)",
+      height: isMulti ? "auto" : "36px",
     }),
     indicatorSeparator: () => ({
       display: "none",
