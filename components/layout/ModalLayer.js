@@ -789,7 +789,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                       // required={true}
                       defaultValue={achievement?.description}
                       required={true}
-                      maxValue={50}
+                      maxValue={1250}
                     />
                   </div>
                 ))}
@@ -810,7 +810,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
               name={"bio"}
               isEditor={true}
               required={true}
-              maxValue={100}
+              maxValue={250}
             />
             {errors.bio && (
               <div className="text-[#ff0000] text-[12px] mb-3">
