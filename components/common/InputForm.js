@@ -24,7 +24,7 @@ const InputForm = ({
 
   const handleChange = (e) => {
     if (maxValue && e.target.value.length > maxValue) {
-      e.target.value = e.target.value.slice(0, maxValue);
+      return;
     }
     if (onChange) {
       onChange(e);
