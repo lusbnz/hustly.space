@@ -789,7 +789,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                       // required={true}
                       defaultValue={achievement?.description}
                       required={true}
-                      maxValue={250}
+                      maxValue={500}
                     />
                   </div>
                 ))}
