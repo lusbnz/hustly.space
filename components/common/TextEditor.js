@@ -244,7 +244,7 @@ const TextEditor = ({
                   handleFileChange(e); // Gọi hàm xử lý nếu file hợp lệ
                 }
               }}
-              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt"
+              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.heic"
               className="hidden"
             />
             <div

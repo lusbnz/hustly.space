@@ -366,7 +366,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                   <div className="relative m-upload bg-[#7a7a7a]">
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic"
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       onChange={handleImageChange}
                     />
@@ -945,7 +945,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                     <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="image/*,.heic"
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         onChange={handleUploadBio}
                       />
