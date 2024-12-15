@@ -10,6 +10,7 @@ import TrashIcon from "@/public/icons/trash-icon.svg";
 import AttachmentIcon from "@/public/icons/attachment.svg";
 import { BeatLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
 
 const TextEditor = ({
   handleSend,
@@ -239,9 +240,9 @@ const TextEditor = ({
                   alert(
                     "File size exceeds 20MB. Please select a smaller file."
                   );
-                  e.target.value = ""; // Reset input file để không chọn tệp lớn
+                  e.target.value = "";
                 } else {
-                  handleFileChange(e); // Gọi hàm xử lý nếu file hợp lệ
+                  handleFileChange(e);
                 }
               }}
               accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.heic"
@@ -259,11 +260,17 @@ const TextEditor = ({
               </div>
             )}
             <div
+              id="upload-tooltip"
               className="text-white cursor-pointer"
               onClick={() => fileInputRef.current.click()}
             >
               <Image src={UploadIcon} alt="upload" width={20} height={20} />
             </div>
+
+            <Tooltip anchorSelect="#upload-tooltip" place="top">
+              Supported format: image/*, .pdf, .doc, .docx,.ppt, .pptx, .txt,
+              .heic
+            </Tooltip>
           </div>
 
           {isLoading ? (

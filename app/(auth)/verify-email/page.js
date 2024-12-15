@@ -25,13 +25,22 @@ const VerifyEmail = () => {
         verifyEmail({ email, token })
           .then((res) => {
             if (res.error_messages) {
-              router.push("/auth-login?verify=false");
+              toast.error("Verify Failed!", { autoClose: 1000 });
+              setTimeout(() => {
+                router.push("/auth-login?verify=false");
+              }, 1000);
             } else {
-              router.push("/auth-login?verify=true");
+              toast.success("Verify Successful!", { autoClose: 1000 });
+              setTimeout(() => {
+                router.push("/auth-login?verify=true");
+              }, 1000);
             }
           })
           .catch((err) => {
-            router.push("/auth-login?verify=false");
+            toast.error("Verify Failed!", { autoClose: 1000 });
+            setTimeout(() => {
+              router.push("/auth-login?verify=false");
+            }, 1000);
           });
       }
     }, 1000);

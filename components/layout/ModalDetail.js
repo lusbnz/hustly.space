@@ -427,7 +427,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-[6px]">
-                      <span className="key">ACHIEVEMENT</span>
+                      <span className="key">ABOUT ME</span>
                       <div>
                         {userInfo?.archivement?.length > 0 && (
                           <div className="flex flex-wrap gap-[6px]">

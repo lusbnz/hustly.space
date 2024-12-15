@@ -81,6 +81,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      avatar: userInfo?.avatar,
       first_name: userInfo?.first_name,
       last_name: userInfo?.last_name,
       age: userInfo?.age,
@@ -111,7 +112,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (file) {
       try {
         const data = new FormData();
@@ -386,10 +386,16 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                     </div>
                     {userInfo?.is_update_setting && (
                       <div
-                        className="cursor-pointer"
+                        className="cursor-pointer flex items-end gap-[8px]"
                         onClick={toggleOpenChangePassword}
                       >
                         <Image src={LockIcon} alt={""} />
+                        <span
+                          className="text-[12px] text-[#666] font-[400]"
+                          style={{ lineHeight: "1" }}
+                        >
+                          Change Password
+                        </span>
                       </div>
                     )}
                   </div>
@@ -767,7 +773,9 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 <InputForm
                   title={"Archivement"}
                   placeholder={
-                    "An academic or professional achievement, an award you've won, or something impressive you've built."
+                    "1. Can you briefly introduce yourself and share something unique about your personality? \n\n" +
+                    "2. What are the achievements you’re most proud of and why? \n(It can be any achievement: you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!)\n\n" +
+                    "3. What are your main goals or expectations when joining hustly?"
                   }
                   register={register}
                   name={`archivement[0].description`}
@@ -782,7 +790,9 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                     <InputForm
                       title={`About me`}
                       placeholder={
-                        "Give us a brief of your academic achievements. Nah you know what? It can be any achievement, you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!"
+                        "1. Can you briefly introduce yourself and share something unique about your personality? \n" +
+                        "2. What are the achievements you’re most proud of and why? \n(It can be any achievement: you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!)\n" +
+                        "3. What are your main goals or expectations when joining hustly?"
                       }
                       register={register}
                       name={`archivement[0].description`}
@@ -960,6 +970,9 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                   )}
                 </div>
               )}
+              <span className="text-[12px] text-[#666666] font-[400]">
+                Supported format: jpg, jpeg, png, heic
+              </span>
             </div>
             {errors.bio_image && (
               <div className="text-[#ff0000] text-[12px] mb-3">
