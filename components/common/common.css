@@ -38,7 +38,7 @@
         border: 1px solid #2E2E2E;
         border-radius: 10px;
         width: 100%;
-        height: calc((180 / 1080) * 100vh);
+        height: calc((200 / 1080) * 100vh);
         padding-left: calc((20 / 1920) * 100vw);
         padding-top: calc((20 / 1920) * 100vw);
         padding-right: calc((20 / 1920) * 100vw);
@@ -58,7 +58,7 @@
     }
 
     textarea::placeholder {
-        font-size: clamp(10px, calc((16 / 1920) * 100vw), 26px);
+        font-size: clamp(10px, calc((14 / 1920) * 100vw), 24px);
         color: #434343;
     }
 }

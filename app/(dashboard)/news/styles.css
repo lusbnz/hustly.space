@@ -39,6 +39,10 @@
     .avatar{
         width: calc((64 / 1920) * 100vw);
         height: calc((64 / 1920) * 100vw);
+        max-width: calc((64 / 1920) * 100vw);
+        max-height: calc((64 / 1920) * 100vw);
+        min-width: calc((64 / 1920) * 100vw);
+        min-height: calc((64 / 1920) * 100vw);
         background-color: #B8B8B8;
         border-radius: 50%;
         margin-right: calc((12 / 1920) * 100vw);

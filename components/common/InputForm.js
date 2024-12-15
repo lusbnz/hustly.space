@@ -57,8 +57,8 @@ const InputForm = ({
         <input
           style={
             isAuth
-              ? { height: "46px", lineHeight: "1.5" }
-              : { height: "36px", lineHeight: "1.5" }
+              ? { height: "46px", lineHeight: "1.5", fontSize: "12px" }
+              : { height: "36px", lineHeight: "1.5", fontSize: "12px" }
           }
           placeholder={placeholder}
           type={isPassword ? "password" : isNumber ? "number" : "text"}
