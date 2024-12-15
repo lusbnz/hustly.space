@@ -153,7 +153,16 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   };
 
   const handleUpdateSetting = (data) => {
+    console.log("data:", data);
     const ageValue = Number(data.age);
+
+    // if (!data.avatar) {
+    //   setError("avatar", {
+    //     type: "manual",
+    //     message: "Please select an avatar.",
+    //   });
+    //   return;
+    // }
 
     if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
       setError("sub_domain_1", {
@@ -344,7 +353,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
             <span className="m-title">Profile Setting</span>
           </div>
           <div className="mb-[40px] max-h-[70vh] overflow-y-auto pb-12">
-            <div className="flex items-center justify-between my-[22px] gap-[12px]">
+            <div className="flex items-center justify-between mt-[22px] mb-[12px] gap-[12px]">
               <div className="flex items-center gap-[12px]">
                 {(selectedImage || userInfo?.avatar?.file) && !isEdit ? (
                   <div className="m-av rounded-full overflow-hidden w-[90px] h-[90px]">
@@ -423,6 +432,12 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 onClick={() => setIsEdit(!isEdit)}
               />
             </div>
+
+            {errors.avatar && (
+              <div className="text-[#ff0000] text-[12px] mb-3">
+                {"Avatar is required"}
+              </div>
+            )}
 
             <div>
               <label className="m-label">Who are you in your team?</label>
