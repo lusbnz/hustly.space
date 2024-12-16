@@ -164,8 +164,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
       return;
     }
 
-    data.avatar = data.avatar.id;
-
     if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
       setError("sub_domain_1", {
         type: "manual",
