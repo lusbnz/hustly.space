@@ -118,7 +118,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
         data.append("file", file);
         const res = await uploadFile(data);
         setSelectedImage(URL.createObjectURL(file));
-        setValue("avatar", res.id);
+        setValue("avatar", res);
         setIsEdit(false);
       } catch (error) {
         toast.error("Image too large to upload");
@@ -156,13 +156,13 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     console.log("data:", data);
     const ageValue = Number(data.age);
 
-    // if (!data.avatar) {
-    //   setError("avatar", {
-    //     type: "manual",
-    //     message: "Please select an avatar.",
-    //   });
-    //   return;
-    // }
+    if (!data.avatar) {
+      setError("avatar", {
+        type: "manual",
+        message: "Please select an avatar.",
+      });
+      return;
+    }
 
     if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
       setError("sub_domain_1", {
