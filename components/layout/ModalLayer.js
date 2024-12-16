@@ -81,7 +81,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      avatar: userInfo?.avatar,
+      avatar: userInfo?.avatar?.id,
       first_name: userInfo?.first_name,
       last_name: userInfo?.last_name,
       age: userInfo?.age,
@@ -118,7 +118,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
         data.append("file", file);
         const res = await uploadFile(data);
         setSelectedImage(URL.createObjectURL(file));
-        setValue("avatar", res);
+        setValue("avatar", res.id);
         setIsEdit(false);
       } catch (error) {
         toast.error("Image too large to upload");
@@ -163,6 +163,8 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
       });
       return;
     }
+
+    data.avatar = data.avatar.id;
 
     if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
       setError("sub_domain_1", {
