@@ -438,7 +438,12 @@ const Sidebar = ({
                     objectFit="cover"
                   />
                 </div>
-                <div className="flex flex-col info">
+                <div
+                  className="flex flex-col info"
+                  style={{
+                    width: "calc(100vw - (64 / 1920) * 100vw)",
+                  }}
+                >
                   <span className="title">
                     {userInfo?.first_name?.length > 15
                       ? userInfo?.first_name?.slice(0, 15) + "..."

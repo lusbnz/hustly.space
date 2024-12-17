@@ -40,6 +40,25 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   const [openFirstChat, setOpenFirstChat] = useState(false);
   const [threadId, setThreadId] = useState(null);
 
+  const universityOptions = university?.map((item) => {
+    return {
+      value: String(item.id),
+      label: removeVietnameseTones(item.name),
+    };
+  });
+
+  const [uni, setUni] = useState();
+
+  useEffect(() => {
+    setUni(
+      universityOptions.find(
+        (item) => parseInt(item.value) === parseInt(userInfo?.university)
+      )
+    );
+  }, [userInfo]);
+
+  console.log("uni", uni);
+
   const toggleFirstChat = () => {
     setOpenFirstChat(false);
   };
@@ -107,15 +126,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   //   value: null,
   //   label: "",
   // });
-
-  const universityOptions = university?.map((item) => {
-    return {
-      value: String(item.id),
-      label: removeVietnameseTones(item.name),
-    };
-  });
-
-  const uni = universityOptions.find((item) => item.id === userInfo?.city);
   let com;
 
   if (userInfo?.competition?.length > 0) {

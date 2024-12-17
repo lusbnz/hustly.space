@@ -200,6 +200,10 @@ const News = () => {
                       <div className="avatar">
                         <Image
                           src={item?.avatar?.file || DefaultAvatar}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = DefaultAvatar;
+                          }}
                           alt="avatar"
                           width={64}
                           height={64}

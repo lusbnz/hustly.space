@@ -46,6 +46,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   const [numberDomain, setNumberDomain] = useState(0);
   const [numberArchivement, setNumberArchivement] = useState(1);
   const [openSocial, setOpenSocial] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (userInfo?.domain) {
@@ -78,6 +79,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     setValue,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -111,6 +113,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   const bio = watch("bio");
 
   const handleImageChange = async (e) => {
+    setIsUploading(true);
     const file = e.target.files[0];
     if (file) {
       try {
@@ -123,6 +126,8 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
       } catch (error) {
         toast.error("Image too large to upload");
         console.error("Error uploading file:", error);
+      } finally {
+        setIsUploading(false);
       }
     }
   };
@@ -359,6 +364,10 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                   <div className="m-av rounded-full overflow-hidden w-[90px] h-[90px]">
                     <Image
                       src={selectedImage || userInfo?.avatar?.file}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = DefaultAvatar;
+                      }}
                       alt="avatar"
                       width={90}
                       height={90}
@@ -369,6 +378,14 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                         objectPosition: "center",
                         objectFit: "cover",
                       }}
+                    />
+                  </div>
+                ) : isUploading ? (
+                  <div className="relative m-upload bg-[#7a7a7a] flex justify-center items-center">
+                    <BeatLoader
+                      color="#ffffff"
+                      loading={isUploading}
+                      size={6}
                     />
                   </div>
                 ) : (
@@ -649,6 +666,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                               : "#595959",
                         }}
                         onClick={() => {
+                          clearErrors("sub_domain_1");
                           const update = watch("sub_domain_1") || [];
                           if (update?.includes(item.value)) {
                             setValue(
@@ -1003,7 +1021,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 />
               )}
               <ButtonComponent
-                type={"submit"}
+                type={"button"}
                 title={"Save"}
                 onClick={handleSubmit(handleUpdateSetting)}
               />
