@@ -440,9 +440,9 @@ const Sidebar = ({
                 </div>
                 <div
                   className="flex flex-col info"
-                  style={{
-                    width: "calc(100vw - (64 / 1920) * 100vw)",
-                  }}
+                  // style={{
+                  //   width: "calc((150px - (64 / 1920) * 100vw)",
+                  // }}
                 >
                   <span className="title">
                     {userInfo?.first_name?.length > 15
