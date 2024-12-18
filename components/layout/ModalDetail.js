@@ -446,26 +446,12 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                       <div>
                         {userInfo?.archivement?.length > 0 && (
                           <div className="flex flex-wrap gap-[6px]">
-                            {userInfo?.archivement?.map((archivement) => {
-                              if (!!archivement.description) {
-                                return (
-                                  // <span
-                                  //   key={archivement.id}
-                                  //   className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                                  // >
-                                  //   {archivement.description}
-                                  // </span>
-                                  <Badge
-                                    key={archivement.id}
-                                    backgroundColor={"#323232"}
-                                    color={"#A7A7A7"}
-                                    name={archivement.description}
-                                  />
-                                );
-                              } else {
-                                return null;
-                              }
-                            })}
+                            <Badge
+                              key={userInfo?.archivement?.[0]?.id}
+                              backgroundColor={"#323232"}
+                              color={"#A7A7A7"}
+                              name={userInfo?.archivement?.[0]?.description}
+                            />
                           </div>
                         )}
                       </div>

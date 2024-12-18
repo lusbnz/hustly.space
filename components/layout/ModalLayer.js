@@ -802,39 +802,18 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
               </div>
             )}
 
-            {achievements?.length === 0 ? (
-              <div className="relative">
-                <InputForm
-                  title={"Archivement"}
-                  placeholder={
-                    "1. Can you briefly introduce yourself and share something unique about your personality? \n\n" +
-                    "2. What are the achievements you’re most proud of and why? \n(It can be any achievement: you are able to eat 10 pizzas a day, published your own music, won first place with your basketball team? Write that shit down, don't be shy!)\n\n" +
-                    "3. What are your main goals or expectations when joining hustly?"
-                  }
-                  register={register}
-                  name={`archivement[0].description`}
-                  isEditor={true}
-                  // required={true}
-                />
-              </div>
-            ) : (
-              <>
-                {achievements?.slice(0, 1).map((achievement, index) => (
-                  <div className="relative" key={index}>
-                    <InputForm
-                      title="About me"
-                      placeholder={`1. Can you briefly introduce yourself and share something unique about your personality?\n\n2. What are the achievements you’re most proud of and why? (It can be any achievement: you can eat 10 pizzas a day, published your own music, etc)\n\n3. What are your main goals or expectations when joining hustly?`}
-                      register={register}
-                      name="archivement[0].description"
-                      isEditor={true}
-                      defaultValue={achievement?.description}
-                      required={true}
-                      maxValue={1250}
-                    />
-                  </div>
-                ))}
-              </>
-            )}
+            <div className="relative">
+              <InputForm
+                title="About me"
+                placeholder={`1. Can you briefly introduce yourself and share something unique about your personality?\n\n2. What are the achievements you’re most proud of and why? (It can be any achievement: you can eat 10 pizzas a day, published your own music, etc)\n\n3. What are your main goals or expectations when joining hustly?`}
+                register={register}
+                name="archivement[0].description"
+                isEditor={true}
+                defaultValue={achievements[0]?.description}
+                required={true}
+                maxValue={1250}
+              />
+            </div>
             {errors.archivement && (
               <div className="text-[#ff0000] text-[12px] mb-3">
                 {"This field is required"}
