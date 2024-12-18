@@ -979,7 +979,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 </div>
               )}
               <span className="text-[12px] text-[#666666] font-[400]">
-                Supported format: jpg, jpeg, png, heic
+                {"Supported format: jpg, jpeg, png and video capacity < 5mb"}
               </span>
             </div>
             {errors.bio_image && (
