@@ -113,6 +113,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   const bio = watch("bio");
 
   const handleImageChange = async (e) => {
+    clearErrors("avatar");
     setIsUploading(true);
     const file = e.target.files[0];
     if (file) {
@@ -428,12 +429,12 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 ) : (
                   <div className="flex items-center gap-[6px]">
                     <input
-                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[60px]"
+                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[120px]"
                       {...register("first_name")}
                       required={true}
                     />
                     <input
-                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[60px]"
+                      className="outline-0 bg-transparent border-b-[1px] border-b-[#fff] w-[120px]"
                       {...register("last_name")}
                       required={true}
                     />

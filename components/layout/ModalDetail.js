@@ -16,7 +16,7 @@ import { getUser } from "@/api/profile";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
-import { s } from "@/data/data";
+import { p, s } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
 import { removeVietnameseTones } from "@/utils/utils";
@@ -56,8 +56,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
       )
     );
   }, [userInfo]);
-
-  console.log("uni", uni);
 
   const toggleFirstChat = () => {
     setOpenFirstChat(false);
@@ -114,6 +112,8 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   //   value: null,
   //   label: "",
   // });
+
+  const loc = p.find((item) => item.id === userInfo?.city);
 
   const competitionOptions = competition?.map((item) => {
     return {
@@ -221,7 +221,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                         width={14}
                         height={14}
                       />
-                      {uni?.label || "Hanoi"}
+                      {loc?.label || "Hanoi"}
                     </span>
                   </div>
                 </div>
@@ -338,7 +338,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                   <div className="infomation">
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">UNIVERSITY</span>
-                      <span className="value">{uni?.label || "Hanoi"}</span>
+                      <span className="value">{uni?.label}</span>
                     </div>
                     <div className="flex flex-col gap-[6px]">
                       <span className="key">COMPETITION</span>
