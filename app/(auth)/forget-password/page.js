@@ -40,12 +40,12 @@ const ForgetPassword = () => {
     setErrors({ email: "", server: "" });
 
     if (!validateEmail(Email)) {
-        setErrors((prev) => ({
-          ...prev,
-          email: "Please enter a valid email address.",
-        }));
-        return;
-      }
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address.",
+      }));
+      return;
+    }
 
     setIsLoading(true);
     forgetPassword({ email: Email })
@@ -56,7 +56,7 @@ const ForgetPassword = () => {
         console.log(err);
         setErrors((prev) => ({
           ...prev,
-          server: 'Something went wrong. Please try again later.',
+          server: "Something went wrong. Please try again later.",
         }));
       })
       .finally(() => {
@@ -65,7 +65,6 @@ const ForgetPassword = () => {
   };
 
   const validateEmail = (email) => {
-    // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };

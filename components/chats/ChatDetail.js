@@ -3,16 +3,13 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import "./chats.css";
 import Pin from "@/public/icons/pin-icon.svg";
-import Dots from "@/public/icons/dots-icon.svg";
-import Trash from "@/public/icons/trash-icon.svg";
 import Hide from "@/public/icons/hide-icon.svg";
 import Image from "next/image";
 import ButtonComponent from "../common/ButtonComponent";
-import { getMessage } from "@/api/message";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import TextEditor from "../common/TextEditor";
-import { p } from "@/data/data";
+import { location } from "@/data/data";
 import { deleteThread, updateThread } from "@/api/thread";
 import { useSelector } from "react-redux";
 import { removeVietnameseTones } from "@/utils/utils";
@@ -27,7 +24,6 @@ import ModalRejectConfirm from "../layout/ModalRejectConfirm";
 const ChatDetail = ({
   chatId,
   handleOpenDetail,
-  tab,
   setChatId,
   isChangeChat,
   isLoading,
@@ -37,14 +33,11 @@ const ChatDetail = ({
   isPin,
   setIsPin,
   setIsActiveTab,
-  lastSender,
   setIsModalOpen,
-  setSideRender,
   setListThread,
   isDeleted,
 }) => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
-  // const recipientInfo = JSON.parse(localStorage.getItem("receive"));
   const recipientInfo = useSelector((state) => state.userInfo.receiveInfo);
   const isLoadingR = useSelector((state) => state.userInfo.isLoadingR);
 
@@ -86,7 +79,7 @@ const ChatDetail = ({
     setIsFirstRender(false);
   }, [response]);
 
-  const psOptions = p?.map((item) => {
+  const psOptions = location?.map((item) => {
     return {
       value: item.code,
       label: removeVietnameseTones(item.name),
@@ -109,15 +102,11 @@ const ChatDetail = ({
 
   const handleSend = debounce((content, image) => {
     setIsLoadingMessage(true);
-    console.log("content", content);
     const cleanContent = content.replace(/&nbsp;/g, "").trim();
-    console.log("cleanContent", cleanContent);
     if (!cleanContent && !image) {
-      console.log("113");
       setIsLoadingMessage(false);
       return;
     }
-    console.log("03", cleanContent);
     const data = { content: cleanContent, media: image ? [image] : [] };
     sendMessage(data);
     setIsLoadingMessage(false);
@@ -200,8 +189,6 @@ const ChatDetail = ({
       .finally(() => {
         setIsActiveTab("all");
         setIsMatch(true);
-        // setChatId(null);
-        // setIsModalOpen(false);
       });
   };
 
@@ -268,8 +255,6 @@ const ChatDetail = ({
             >
               {messages.map((message, index) => (
                 <>
-                  {/* {index === 2 && <div className="separator-date">today</div>} */}
-
                   <div
                     key={`${message._id}-${index}`}
                     className={`message ${checkIsMe(message) && "own"}`}
@@ -325,7 +310,6 @@ const ChatDetail = ({
                           <>
                             {message.media[0]?.file && (
                               <div>
-                                {/* Check if the media is an image or not */}
                                 {message.media[0]?.file.endsWith(".jpg") ||
                                 message.media[0]?.file.endsWith(".jpeg") ||
                                 message.media[0]?.file.endsWith(".png") ? (
@@ -336,11 +320,10 @@ const ChatDetail = ({
                                     height={100}
                                   />
                                 ) : (
-                                  // Render non-image file with AttachmentIcon
                                   <div className="file-preview flex items-center justify-center p-2 min-w-[100px] h-[32px] rounded-[4px] cursor-pointer">
                                     <a
-                                      href={message.media[0]?.file} // URL of the file to download
-                                      download={message.media[0]?.file} // Name of the file
+                                      href={message.media[0]?.file}
+                                      download={message.media[0]?.file}
                                       className="flex items-center"
                                       target="_blank"
                                     >
@@ -357,7 +340,6 @@ const ChatDetail = ({
                                               15
                                             ) + "..."
                                           : message?.media[0]?.name}{" "}
-                                        {/* Show file name */}
                                       </span>
                                     </a>
                                   </div>

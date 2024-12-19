@@ -5,7 +5,6 @@ import "./styles.css";
 import { useRouter } from "next/navigation";
 import ChatDetail from "@/components/chats/ChatDetail";
 import ModalDetail from "@/components/layout/ModalDetail";
-import { getThread } from "@/api/thread";
 import BackIcon from "@/public/icons/back-icon.svg";
 import moment from "moment";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -18,7 +17,6 @@ import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const Chats = () => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
-  const receiveInfo = useSelector((state) => state.userInfo.receiveInfo);
 
   const router = useRouter();
   const [isActiveTab, setIsActiveTab] = useState("all");
@@ -67,13 +65,11 @@ const Chats = () => {
           );
 
           if (index !== -1) {
-            // Thay thế thread có thread_id trùng
             const newList = [...prev];
 
             newList[index] = response;
             return newList;
           } else {
-            // Nếu không có thread_id trùng, thêm mới
             return [response, ...prev];
           }
         });
@@ -142,8 +138,6 @@ const Chats = () => {
 
   const handleSelectTab = (tab) => {
     setIsActiveTab(tab);
-    // setIsActiveChat(null);
-    // setIsModalOpen(false);
     if (tab === "all") {
       router.replace(`/chats`, undefined, { shallow: true });
     } else {

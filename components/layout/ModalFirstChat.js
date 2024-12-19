@@ -2,7 +2,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
-import moment from "moment";
 import "./layout.css";
 import "./styles.css";
 import { useSelector } from "react-redux";

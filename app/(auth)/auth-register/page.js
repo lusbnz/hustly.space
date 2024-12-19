@@ -9,12 +9,10 @@ import Link from "next/link";
 import InputForm from "@/components/common/InputForm";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { authRegister, verifyEmail } from "@/api/auth";
 import { BeatLoader } from "react-spinners";
 import { getAuthToken } from "@/libs/clients";
 import Head from "next/head";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AuthRegister = () => {
@@ -123,16 +121,15 @@ const AuthRegister = () => {
   };
 
   const validateEmail = (email) => {
-    // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const validatePassword = (password) => {
-    const hasUpperCase = /[A-Z]/.test(password); // Kiểm tra có chữ hoa
-    const hasLowerCase = /[a-z]/.test(password); // Kiểm tra có chữ thường
-    const hasNumber = /\d/.test(password); // Kiểm tra có số
-    const hasMinLength = password.length >= 8; // Kiểm tra độ dài >= 8 ký tự
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasMinLength = password.length >= 8;
 
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
@@ -175,7 +172,6 @@ const AuthRegister = () => {
                   <InputForm
                     title="First name"
                     placeholder="First name..."
-                    // register={register}
                     name="first_name"
                     required={true}
                     isAuth={true}
@@ -187,7 +183,6 @@ const AuthRegister = () => {
                   <InputForm
                     title="Last name"
                     placeholder="Last name..."
-                    // register={register}
                     name="last_name"
                     required={true}
                     isAuth={true}
@@ -205,7 +200,6 @@ const AuthRegister = () => {
                 <InputForm
                   title="Email"
                   placeholder="Enter your email..."
-                  // register={register}
                   name="email"
                   isAuth={true}
                   required={true}
@@ -222,7 +216,6 @@ const AuthRegister = () => {
                 <InputForm
                   title="Password"
                   placeholder="Enter your password..."
-                  // register={register}
                   name="password"
                   isAuth={true}
                   required={true}
@@ -271,7 +264,6 @@ const AuthRegister = () => {
           <Image src={Banner} alt="banner" className="banner-auth" />
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

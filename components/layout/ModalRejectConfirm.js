@@ -8,13 +8,6 @@ const ModalRejectConfirm = ({
   handleConfirm,
   isTypeDelete,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
   return (
     <>
       <div

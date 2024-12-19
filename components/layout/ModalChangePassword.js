@@ -24,10 +24,10 @@ const ModalChangePassword = ({ toggleOpenModalSetting }) => {
   });
 
   const validatePassword = (password) => {
-    const hasUpperCase = /[A-Z]/.test(password); // Kiểm tra có chữ hoa
-    const hasLowerCase = /[a-z]/.test(password); // Kiểm tra có chữ thường
-    const hasNumber = /\d/.test(password); // Kiểm tra có số
-    const hasMinLength = password.length >= 8; // Kiểm tra độ dài >= 8 ký tự
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasMinLength = password.length >= 8;
 
     return hasUpperCase && hasLowerCase && hasNumber && hasMinLength;
   };
@@ -94,7 +94,7 @@ const ModalChangePassword = ({ toggleOpenModalSetting }) => {
       })
       .catch((err) => {
         toast.error("Error updating password");
-        console.log("err", err);
+        console.log(err);
       })
       .finally(() => {
         toggleOpenModalSetting();

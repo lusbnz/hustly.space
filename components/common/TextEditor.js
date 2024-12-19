@@ -42,7 +42,6 @@ const TextEditor = ({
 
     if (isImage || fileId || (cleanedData && isValidContent)) {
       setTimeout(() => {
-        console.log("02", cleanedData);
         handleSend(cleanedData, isImage ? imageId : fileId);
         if (editorRef.current) {
           editorRef.current.innerHTML = "";
@@ -67,7 +66,6 @@ const TextEditor = ({
       } else {
         e.preventDefault();
         if (!isSend) {
-          console.log("01", editorData);
           onSend();
         }
       }
@@ -79,10 +77,6 @@ const TextEditor = ({
     const text = (e.clipboardData || window.clipboardData).getData("text");
     document.execCommand("insertText", false, text);
   };
-
-  useEffect(() => {
-    console.log("00", editorData);
-  }, [editorData]);
 
   const handleFileChange = async (e) => {
     setIsLoading(true);
@@ -245,7 +239,7 @@ const TextEditor = ({
                   handleFileChange(e);
                 }
               }}
-              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.heic"
+              accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt"
               className="hidden"
             />
             <div

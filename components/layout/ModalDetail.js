@@ -16,7 +16,7 @@ import { getUser } from "@/api/profile";
 import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import { BeatLoader } from "react-spinners";
-import { p, s } from "@/data/data";
+import { location, skills } from "@/data/data";
 import { useDispatch, useSelector } from "react-redux";
 import ModalFirstChat from "./ModalFirstChat";
 import { removeVietnameseTones } from "@/utils/utils";
@@ -28,7 +28,6 @@ import DefaultAvatar from "@/public/images/user-default.jpg";
 
 const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   const dispatch = useDispatch();
-  const userInfomation = useSelector((state) => state.userInfo.userInfo);
   const university = useSelector((state) => state.university);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
@@ -38,7 +37,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
   const [userInfo, setUserInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openFirstChat, setOpenFirstChat] = useState(false);
-  const [threadId, setThreadId] = useState(null);
 
   const universityOptions = university?.map((item) => {
     return {
@@ -108,12 +106,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
     };
   });
 
-  // domainOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
-
-  const loc = p.find((item) => item.id === userInfo?.city);
+  const loc = location.find((item) => item.id === userInfo?.city);
 
   const competitionOptions = competition?.map((item) => {
     return {
@@ -122,12 +115,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
     };
   });
 
-  // competitionOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
   let com;
-
   if (userInfo?.competition?.length > 0) {
     com = competitionOptions.find(
       (item) => item.value === userInfo?.competition[0]?.id
@@ -319,7 +307,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                         navigator.clipboard
                           .writeText(textToCopy)
                           .then(() => {
-                            console.log("Copied to clipboard successfully!");
                             toast.success("Copied to clipboard");
                           })
                           .catch((err) => {
@@ -362,18 +349,13 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                         {userInfo?.skill_set && (
                           <div className="skills flex flex-wrap gap-[6px]">
                             {userInfo.skill_set.map((skill) => (
-                              // <span
-                              //   key={skill}
-                              //   className="value py-[6px] px-[8px] rounded-[4px] bg-[#323232] text-[#a7a7a7] text-[14px] font-[500]"
-                              // >
-                              //   {s?.find((item) => item.value === skill)?.label}
-                              // </span>
                               <Badge
                                 key={skill}
                                 backgroundColor={"#323232"}
                                 color={"#A7A7A7"}
                                 name={
-                                  s?.find((item) => item.value === skill)?.label
+                                  skills?.find((item) => item.value === skill)
+                                    ?.label
                                 }
                               />
                             ))}
@@ -386,7 +368,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                       <div>
                         {userInfo?.domain?.length > 0 && (
                           <span className="flex flex-wrap gap-[6px]">
-                            {/* Hiển thị domain chính */}
                             {userInfo.domain.map((domain) => {
                               const domainLabel = findLabelById(
                                 domain.id,
@@ -407,8 +388,6 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                                   >
                                     {domainLabel}
                                   </div>{" "}
-                                  {/* Hiển thị text của domain cha */}
-                                  {/* Hiển thị sub-domains */}
                                   {domain.sub_domains?.length > 0 && (
                                     <span className="flex flex-wrap gap-[6px]">
                                       {domain.sub_domains.map((subId) => {
@@ -421,7 +400,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
                                             .find((d) => d.value === domain.id)
                                             ?.subOptions?.find(
                                               (e) => e.value === subId
-                                            )?.color || "#fff"; // Lấy màu của sub-domain
+                                            )?.color || "#fff";
 
                                         return (
                                           <Badge

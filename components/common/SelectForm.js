@@ -13,7 +13,6 @@ const SelectForm = ({
   label,
   noIcon,
   noLabel,
-  haveSub,
   cstyle,
   sub,
   handleChangeFilter,
@@ -94,7 +93,6 @@ const SelectForm = ({
           )}
           {children?.length > 20 ? children?.slice(0, 20) + "..." : children}
         </div>
-        {/* {haveSub && <div className="h-[20px] flex w-100 flex-wrap">abc</div>} */}
       </components.SingleValue>
     );
   };
@@ -140,11 +138,11 @@ const SelectForm = ({
       <components.Option {...props}>
         <div
           style={{
-            display: "inline-flex", // Đặt hình và text cùng dòng
-            alignItems: "center", // Căn giữa theo trục dọc
-            gap: "calc((8 / 1920) * 100vw)", // Khoảng cách giữa hình và text
-            whiteSpace: "normal", // Cho phép xuống dòng
-            overflow: "visible", // Cho phép hiển thị nội dung không bị ẩn
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "calc((8 / 1920) * 100vw)",
+            whiteSpace: "normal",
+            overflow: "visible",
             textOverflow: "ellipsis",
             width: "100%",
           }}
@@ -213,8 +211,8 @@ const SelectForm = ({
     }),
     multiValue: (provided) => ({
       ...provided,
-      fontSize: "calc((16 / 1920) * 100vw)", // Giảm kích thước font
-      padding: "calc((2 / 1920) * 100vw) calc((4 / 1920) * 100vw)", // Giảm padding bên trong mỗi giá trị
+      fontSize: "calc((16 / 1920) * 100vw)",
+      padding: "calc((2 / 1920) * 100vw) calc((4 / 1920) * 100vw)",
     }),
   };
 

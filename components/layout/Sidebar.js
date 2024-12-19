@@ -14,14 +14,19 @@ import SkillIcon from "@/public/icons/skill-icon.svg";
 import PlaceIcon from "@/public/icons/place-icon.svg";
 import SignoutIcon from "@/public/icons/sign-out.svg";
 import Settings from "@/public/icons/settings-icon.svg";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import SelectForm from "../common/SelectForm";
-import { genderChoices, memberOptions, p, s, yearOptions } from "@/data/data";
+import {
+  genderChoices,
+  memberOptions,
+  location,
+  skills,
+  yearOptions,
+} from "@/data/data";
 import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { Range } from "react-range";
 import { removeVietnameseTones } from "@/utils/utils";
-import { checkUnread } from "@/api/profile";
 import { getAuthToken } from "@/libs/clients";
 import useSocket from "@/hooks/useSocket";
 import DefaultAvatar from "@/public/images/user-default.jpg";
@@ -34,14 +39,13 @@ const Sidebar = ({
   setFilter,
 }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const university = useSelector((state) => state.university);
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   const competition = useSelector((state) => state.competition);
   const domain = useSelector((state) => state.domain);
   const [searchValue, setSearchValue] = useState("");
   const [isClear, setIsClear] = useState(false);
-  const [ageV, setAgeV] = useState({ min: 18, max: 40 });
+  const [ageValue, setAgeValue] = useState({ min: 18, max: 40 });
   const [isUnread, setIsUnread] = useState(false);
 
   const profileId = userInfo?.id;
@@ -73,21 +77,17 @@ const Sidebar = ({
     }
   }, [response]);
 
-  const handleChangeAge = (rangeValue) => {
-    setAgeV(rangeValue);
-  };
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setFilter({
         ...filter,
-        age__gte: ageV.min,
-        age__lte: ageV.max,
+        age__gte: ageValue.min,
+        age__lte: ageValue.max,
       });
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [ageV]);
+  }, [ageValue]);
 
   const handleOpenChat = (e) => {
     router.push(`/chats`);
@@ -148,7 +148,7 @@ const Sidebar = ({
     setIsClear(true);
   };
 
-  const psOptions = p?.map((item) => {
+  const psOptions = location?.map((item) => {
     return {
       value: item.code,
       label: removeVietnameseTones(item.name),
@@ -162,11 +162,6 @@ const Sidebar = ({
     };
   });
 
-  // competitionOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
-
   const domainOptions = domain?.map((item) => {
     return {
       value: item.id,
@@ -178,11 +173,6 @@ const Sidebar = ({
       })),
     };
   });
-
-  // domainOptions.unshift({
-  //   value: null,
-  //   label: "",
-  // });
 
   const handleSignout = () => {
     window.localStorage.removeItem("accessToken");
@@ -267,9 +257,9 @@ const Sidebar = ({
                     step={1}
                     min={18}
                     max={40}
-                    values={[ageV.min, ageV.max]}
+                    values={[ageValue.min, ageValue.max]}
                     onChange={(values) =>
-                      setAgeV({ min: values[0], max: values[1] })
+                      setAgeValue({ min: values[0], max: values[1] })
                     }
                     renderTrack={({ props, children }) => {
                       const trackStyle = {
@@ -280,8 +270,9 @@ const Sidebar = ({
                         flex: "1",
                       };
 
-                      const left = ((ageV.min - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị min
-                      const right = 100 - ((ageV.max - 18) / (40 - 18)) * 100; // Tính toán phần trăm cho giá trị max
+                      const left = ((ageValue.min - 18) / (40 - 18)) * 100;
+                      const right =
+                        100 - ((ageValue.max - 18) / (40 - 18)) * 100;
 
                       return (
                         <div {...props} style={trackStyle}>
@@ -291,7 +282,7 @@ const Sidebar = ({
                               height: "4px",
                               left: `${left}%`,
                               right: `${right}%`,
-                              background: "#ccc", // Màu của phần đã chọn
+                              background: "#ccc",
                               borderRadius: "2px",
                             }}
                           />
@@ -320,7 +311,7 @@ const Sidebar = ({
                       fontSize: "clamp(8px, 10px, 12px)",
                     }}
                   >
-                    {ageV.min} - {ageV.max}
+                    {ageValue.min} - {ageValue.max}
                   </div>
                 </div>
               </div>
@@ -400,10 +391,8 @@ const Sidebar = ({
                 options={domainOptions}
                 name={"domain__id"}
                 isClear={isClear}
-                // isMulti={true}
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={DomainIcon} alt="domain" className="image" />}
-                // defaultValue={filter.domain__id}
                 clearBtn={true}
                 handleDelete={handleDelete}
                 isSidebar={true}
@@ -412,7 +401,7 @@ const Sidebar = ({
                 label={"Skill set"}
                 placeholder={"Skill set"}
                 name={"skill_set"}
-                options={s}
+                options={skills}
                 isClear={isClear}
                 handleChangeFilter={handleChangeFilter}
                 icon={<Image src={SkillIcon} alt="skill" className="image" />}
@@ -438,12 +427,7 @@ const Sidebar = ({
                     objectFit="cover"
                   />
                 </div>
-                <div
-                  className="flex flex-col info"
-                  // style={{
-                  //   width: "calc((150px - (64 / 1920) * 100vw)",
-                  // }}
-                >
+                <div className="flex flex-col info">
                   <span className="title">
                     {userInfo?.first_name?.length > 15
                       ? userInfo?.first_name?.slice(0, 15) + "..."

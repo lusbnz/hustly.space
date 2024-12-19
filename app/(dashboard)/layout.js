@@ -44,12 +44,6 @@ export default function Layout({ children }) {
 
   const isHaveSidebar = pathname === "/news";
 
-  useEffect(() => {
-    // if(!userInfo?.id && !isFirstRender) {
-    //   fetchProfile()
-    // }
-  }, [userInfo]);
-
   const toggleOpenModalSetting = () => {
     setIsChangePassword(false);
     setOpenModalSetting(!openModalSetting);
@@ -122,7 +116,6 @@ export default function Layout({ children }) {
 
     fetchSuggestion(data);
   };
-  // x
 
   const fetchProfile = () => {
     setIsSidebarLoading(true);

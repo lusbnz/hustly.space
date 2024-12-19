@@ -22,10 +22,10 @@ import { useForm } from "react-hook-form";
 import SelectForm from "../common/SelectForm";
 import {
   memberOptions,
-  p,
+  location,
   yearOptions,
-  d,
-  s,
+  district,
+  skills,
   genderChoices,
 } from "@/data/data";
 import AddIcon from "@/public/icons/add-icon.svg";
@@ -44,7 +44,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
 
   const [isLoadingBioImage, setIsLoadingBioImage] = useState(false);
   const [numberDomain, setNumberDomain] = useState(0);
-  const [numberArchivement, setNumberArchivement] = useState(1);
   const [openSocial, setOpenSocial] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -53,9 +52,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
       setNumberDomain(
         userInfo?.domain?.length > 0 ? userInfo?.domain?.length : 1
       );
-    }
-    if (userInfo?.archivement) {
-      setNumberArchivement(userInfo?.archivement?.length);
     }
   }, [userInfo]);
 
@@ -159,7 +155,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   };
 
   const handleUpdateSetting = (data) => {
-    console.log("data:", data);
     const ageValue = Number(data.age);
 
     if (!data.avatar) {
@@ -267,7 +262,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
         toggleOpenModalSetting();
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log(err);
       });
   };
 
@@ -285,14 +280,14 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     };
   });
 
-  const psOptions = p?.map((item) => {
+  const psOptions = location?.map((item) => {
     return {
       value: item.code,
       label: removeVietnameseTones(item.name),
     };
   });
 
-  const dsOptions = d
+  const dsOptions = district
     ?.filter((item) => String(item.province_code) === String(watch("city")))
     .map((item) => ({
       value: item.code,
@@ -393,7 +388,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                   <div className="relative m-upload bg-[#7a7a7a]">
                     <input
                       type="file"
-                      accept="image/*,.heic"
+                      accept="image/*"
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       onChange={handleImageChange}
                     />
@@ -587,7 +582,6 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 defaultValue={watch("competition")}
                 required={true}
                 clearBtn={true}
-                // register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
@@ -603,18 +597,12 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                 defaultValue={watch("year_competition")}
                 required={true}
                 clearBtn={true}
-                // register={register}
                 handleDelete={() => {
                   setValue("competition", undefined);
                   setValue("year_competition", undefined);
                 }}
               />
             </div>
-            {/* {(errors.competition || errors.year_competition) && (
-              <div className="text-[#ff0000] text-[12px] mb-3">
-                {"This field is required"}
-              </div>
-            )} */}
 
             <SelectForm
               options={
@@ -783,7 +771,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
             )}
 
             <SelectForm
-              options={s}
+              options={skills}
               label={"Skill set"}
               placeholder={"Skill set"}
               noIcon={true}
@@ -963,7 +951,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
                     <div className="w-[150px] h-[150px] rounded-[8px] bg-[#222] flex items-center justify-center relative">
                       <input
                         type="file"
-                        accept="image/*,.heic"
+                        accept="image/*"
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         onChange={handleUploadBio}
                       />
