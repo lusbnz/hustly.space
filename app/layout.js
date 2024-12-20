@@ -3,6 +3,7 @@
 import { Provider } from "react-redux";
 import "./globals.css";
 import store from "@/store/store";
+import { Analytics } from "@vercel/analytics/react";
 
 const metadata = {
   title: "hustly.space",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           <Provider store={store}>{children}</Provider>
+          <Analytics />
         </body>
       </html>
     </>
