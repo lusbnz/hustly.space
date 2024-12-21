@@ -294,7 +294,10 @@ const Chats = () => {
                           ""
                         );
 
-                      const avatar = thread?.recipient?.avatar || DefaultAvatar;
+                      const avatar =
+                        thread?.recipient?.avatar ||
+                        thread?.recipient?.avatar?.file ||
+                        DefaultAvatar;
                       return (
                         <div
                           className={`chat-item ${
