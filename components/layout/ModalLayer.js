@@ -356,10 +356,10 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
           <div className="mb-[40px] max-h-[70vh] overflow-y-auto pb-12">
             <div className="flex items-center justify-between mt-[22px] mb-[12px] gap-[12px]">
               <div className="flex items-center gap-[12px]">
-                {(selectedImage || userInfo?.avatar?.file) && !isEdit ? (
+                {(selectedImage || userInfo?.avatar) && !isEdit ? (
                   <div className="m-av rounded-full overflow-hidden w-[90px] h-[90px]">
                     <Image
-                      src={selectedImage || userInfo?.avatar?.file}
+                      src={selectedImage || userInfo?.avatar}
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = DefaultAvatar;

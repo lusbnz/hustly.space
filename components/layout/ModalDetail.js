@@ -154,7 +154,7 @@ const ModalDetail = ({ isOpen, setIsOpen, check }) => {
               <div className="card-header flex">
                 <div className="avatar">
                   <Image
-                    src={userInfo?.avatar?.file || DefaultAvatar}
+                    src={userInfo?.avatar || DefaultAvatar}
                     alt="avatar"
                     width={64}
                     height={64}

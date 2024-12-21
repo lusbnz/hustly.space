@@ -205,7 +205,7 @@ const ChatDetail = ({
               <div className="flex items-center gap-[12px]">
                 <div className="chat-avatar">
                   <Image
-                    src={recipientInfo?.avatar?.file || DefaultAvatar}
+                    src={recipientInfo?.avatar || DefaultAvatar}
                     alt="avatar"
                     width={64}
                     height={64}
@@ -263,7 +263,7 @@ const ChatDetail = ({
                     {!checkIsMe(message) ? (
                       <div className="message-avatar">
                         <Image
-                          src={recipientInfo?.avatar?.file || DefaultAvatar}
+                          src={recipientInfo?.avatar || DefaultAvatar}
                           alt="avatar"
                           width={64}
                           height={64}

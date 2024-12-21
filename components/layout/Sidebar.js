@@ -419,7 +419,7 @@ const Sidebar = ({
               <div className="flex items-center gap-[12px]">
                 <div className="avatar-image">
                   <Image
-                    src={userInfo?.avatar?.file || DefaultAvatar}
+                    src={userInfo?.avatar || DefaultAvatar}
                     alt="avatar"
                     className="avatar-image"
                     width={64}

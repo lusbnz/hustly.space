@@ -186,7 +186,7 @@ const News = () => {
                     <div className="card-header flex">
                       <div className="avatar">
                         <Image
-                          src={item?.avatar?.file || DefaultAvatar}
+                          src={item?.avatar || DefaultAvatar}
                           onError={(e) => {
                             e.target.onerror = null;
                             e.target.src = DefaultAvatar;
