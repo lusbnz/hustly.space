@@ -318,10 +318,6 @@ const Chats = () => {
                             <div className="chat-avatar">
                               <Image
                                 src={thread?.recipient?.avatar || DefaultAvatar}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = thread?.recipient?.avatar;
-                                }}
                                 alt="avatar"
                                 width={64}
                                 height={64}
