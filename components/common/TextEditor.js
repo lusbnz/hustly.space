@@ -262,8 +262,7 @@ const TextEditor = ({
             </div>
 
             <Tooltip anchorSelect="#upload-tooltip" place="top">
-              Supported format: image/*, .pdf, .doc, .docx,.ppt, .pptx, .txt,
-              .heic
+              Supported format: image/*, .pdf, .doc, .docx,.ppt, .pptx, .txt
             </Tooltip>
           </div>
 
