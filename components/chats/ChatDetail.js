@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./chats.css";
 import Pin from "@/public/icons/pin-icon.svg";
 import Hide from "@/public/icons/hide-icon.svg";

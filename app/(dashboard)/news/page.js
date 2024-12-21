@@ -9,7 +9,7 @@ import BirthdayIcon from "@/public/icons/birthday-icon.svg";
 import LocationIcon from "@/public/icons/location-icon.svg";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { checkThread, createThread } from "@/api/thread";
+import { createThread } from "@/api/thread";
 import { removeVietnameseTones } from "@/utils/utils";
 import { BeatLoader } from "react-spinners";
 import { getSuggestions } from "@/api/profile";
@@ -26,7 +26,6 @@ const News = () => {
   const suggestion = useSelector((state) => state.suggestion.results);
   const [check, setCheck] = useState(null);
   const [paramsData, setParamsData] = useState();
-  const [isClient, setIsClient] = useState(false);
 
   const loading = useRef(false);
   const [page, setPage] = useState(2);

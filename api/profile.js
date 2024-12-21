@@ -20,8 +20,3 @@ export const getUser = async (profileId, data) => {
   const res = await API.get(`/profile/${profileId}`, data);
   return res.data;
 };
-
-export const checkUnread = async (data) => {  
-  const res = await API.get(`/profile/remain_unread`, data);
-  return res.data;
-}

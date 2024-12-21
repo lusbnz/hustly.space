@@ -2,27 +2,25 @@
 
 import Sidebar from "@/components/layout/Sidebar";
 import "./styles.css";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ModalLayer from "@/components/layout/ModalLayer";
 import React, { useEffect, useState } from "react";
 import { getProfile, getSuggestions } from "@/api/profile";
 import { getCompetion, getDomain, getUniversity } from "@/api/option";
 import { BeatLoader } from "react-spinners";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/reducers/userInfoSlice";
 import { setCompetition } from "@/reducers/competitionSlice";
 import { setUniversity } from "@/reducers/universitySlice";
 import { setDomain } from "@/reducers/domainSlice";
 import { setFilterData, setSuggestion } from "@/reducers/suggestionSlice";
 import { getAuthToken } from "@/libs/clients";
-import Head from "next/head";
 import ModalChangePassword from "@/components/layout/ModalChangePassword";
 
 export default function Layout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.userInfo.userInfo);
   const [openModalSetting, setOpenModalSetting] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -194,11 +192,6 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Head>
-        <title>hustly.space</title>
-        <link rel="icon" href="/icons/logo-icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icons/logo-icon.svg" />
-      </Head>
       <div className="wrapper">
         {isHaveSidebar && (
           <Sidebar
