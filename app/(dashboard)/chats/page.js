@@ -293,11 +293,6 @@ const Chats = () => {
                           /<br\s*\/?>/gi,
                           ""
                         );
-
-                      const avatar =
-                        thread?.recipient?.avatar ||
-                        thread?.recipient?.avatar?.file ||
-                        DefaultAvatar;
                       return (
                         <div
                           className={`chat-item ${
@@ -322,7 +317,11 @@ const Chats = () => {
                           <div className="flex items-center gap-[6px]">
                             <div className="chat-avatar">
                               <Image
-                                src={avatar}
+                                src={
+                                  thread?.recipient?.avatar ||
+                                  thread?.recipient?.avatar?.file ||
+                                  DefaultAvatar
+                                }
                                 alt="avatar"
                                 width={64}
                                 height={64}
