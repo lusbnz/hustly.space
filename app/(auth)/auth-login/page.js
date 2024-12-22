@@ -221,7 +221,7 @@ const AuthLogin = () => {
           <Image src={Banner} alt="banner" className="banner-auth" />
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={false} />
     </>
   );
 };
