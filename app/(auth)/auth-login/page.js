@@ -52,13 +52,19 @@ const AuthLogin = () => {
       if (ser === "true") {
         toast.success("Your account has been verified.");
       } else {
-        toast.error("Your account has not been verified.");
+        toast.error("Your account has not been verified."),
+          {
+            autoClose: false,
+          };
       }
     }
     const ers = sp ? sp.get("forgot") : null;
     if (!!ers) {
       if (!!ers) {
-        toast.success("Check your email to get password.");
+        toast.success("Check your email to get password."),
+          {
+            autoClose: false,
+          };
       }
     }
   }, [isClient]);
