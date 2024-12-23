@@ -134,7 +134,7 @@ export default function Layout({ children }) {
         if (rel) {
           router.push(`/auth-login?rel=${rel}`);
         } else {
-          router.push("/auth-login?verify=false");
+          router.push("/auth-login");
         }
       });
   };
