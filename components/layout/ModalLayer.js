@@ -46,7 +46,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
   const [numberDomain, setNumberDomain] = useState(0);
   const [openSocial, setOpenSocial] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-
+  const [isUpdatedAvatar, setIsUpdatedAvatar] = useState(false);
   useEffect(() => {
     if (userInfo?.domain) {
       setNumberDomain(
@@ -79,7 +79,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      avatar: userInfo?.avatar?.id,
+      avatar: userInfo?.avatar,
       first_name: userInfo?.first_name,
       last_name: userInfo?.last_name,
       age: userInfo?.age,
@@ -124,6 +124,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
         toast.error("Image too large to upload");
         console.error("Error uploading file:", error);
       } finally {
+        setIsUpdatedAvatar(true);
         setIsUploading(false);
       }
     }
@@ -150,6 +151,7 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
       toast.error("Image too large to upload");
       console.error("Error uploading file:", error);
     } finally {
+      setIsUpdatedAvatar(true);
       setIsLoadingBioImage(false);
     }
   };
@@ -163,6 +165,10 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
         message: "Please select an avatar.",
       });
       return;
+    }
+
+    if (!isUpdatedAvatar) {
+      delete data.avatar;
     }
 
     if (!data.sub_domain_1 || data.sub_domain_1.length === 0) {
@@ -259,10 +265,12 @@ const ModalLayer = ({ toggleOpenModalSetting, toggleOpenChangePassword }) => {
     updateProfile(data)
       .then((res) => {
         dispatch(setUserInfo(res));
-        toggleOpenModalSetting();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        toggleOpenModalSetting();
       });
   };
 
