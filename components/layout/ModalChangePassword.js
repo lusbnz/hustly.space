@@ -45,12 +45,14 @@ const ModalChangePassword = ({ toggleOpenModalSetting }) => {
         ...prev,
         password: "Password is required.",
       }));
+      return;
     }
     if (!newPassword) {
       setErrors((prev) => ({
         ...prev,
         new_password: "New password is required.",
       }));
+      return;
     }
     if (!validatePassword(newPassword)) {
       setErrors((prev) => ({
@@ -65,6 +67,7 @@ const ModalChangePassword = ({ toggleOpenModalSetting }) => {
         ...prev,
         renew_password: "Confirm password is required.",
       }));
+      return;
     }
     if (!password || !newPassword || !renewPassword) {
       return;
@@ -90,14 +93,17 @@ const ModalChangePassword = ({ toggleOpenModalSetting }) => {
     };
     changePassword(updateData)
       .then((res) => {
-        toast.success("Change password successful!");
+        if (!!res.error_messages) {
+          toast.error(res.error_messages);
+        } else {
+          toast.success("Change password successful!");
+          setTimeout(() => {
+            toggleOpenModalSetting();
+          }, 1000);
+        }
       })
       .catch((err) => {
-        toast.error("Error updating password");
-        console.log(err);
-      })
-      .finally(() => {
-        toggleOpenModalSetting();
+        console.log("err", err);
       });
   };
 
