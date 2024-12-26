@@ -151,6 +151,11 @@ const ChatDetail = ({
   const handleDeleteConfirm = () => {
     const data = { is_match: false, thread_id: chatId };
     deleteThreadWs(data);
+    setListThread((prev) => {
+      return prev.map((prev) =>
+        prev.thread_id === chatId ? { ...prev, is_match: false } : prev
+      );
+    });
   };
 
   const handleRejectConfirm = () => {
