@@ -103,9 +103,9 @@ const ModalFirstChat = ({
                   />
                 </div>
                 <div className="avatar">
-                  {userInfo?.avatar?.file && (
+                  {userInfo?.avatar && (
                     <Image
-                      src={userInfo?.avatar?.file}
+                      src={userInfo?.avatar}
                       alt="avatar"
                       width={64}
                       height={64}
