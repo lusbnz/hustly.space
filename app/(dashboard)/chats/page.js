@@ -429,6 +429,7 @@ const Chats = () => {
               setSideRender={() => setIsSideRender(!isSideRender)}
               setListThread={(e) => setListThread(e)}
               isDeleted={isDeleted}
+              setIsDeleted={setIsDeleted}
             />
           </div>
           {isModalOpen && <ModalDetail isOpen={isModalOpen} />}

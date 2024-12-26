@@ -36,6 +36,7 @@ const ChatDetail = ({
   setIsModalOpen,
   setListThread,
   isDeleted,
+  setIsDeleted,
 }) => {
   const userInfo = useSelector((state) => state.userInfo.userInfo);
   const recipientInfo = useSelector((state) => state.userInfo.receiveInfo);
@@ -151,9 +152,12 @@ const ChatDetail = ({
   const handleDeleteConfirm = () => {
     const data = { is_match: false, thread_id: chatId };
     deleteThreadWs(data);
+    // setIsDeleted("deleted");
     setListThread((prev) => {
       return prev.map((prev) =>
-        prev.thread_id === chatId ? { ...prev, is_match: false } : prev
+        prev.thread_id === chatId
+          ? { ...prev, is_match: false, delete_by: userInfo.id }
+          : prev
       );
     });
   };
@@ -196,6 +200,8 @@ const ChatDetail = ({
         setIsMatch(true);
       });
   };
+
+  console.log("isDeleted", isDeleted);
 
   return (
     <>
